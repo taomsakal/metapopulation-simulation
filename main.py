@@ -8,6 +8,8 @@ The program flows through these steps in the function simulate().
 simulate() can be edited to put these steps in any order.
 """
 
+import logging
+
 def simulate():
 
     world = World()
@@ -16,4 +18,11 @@ def simulate():
     world.colonize()
     world.kill_patches()
 
+if __name__ == "__main__":
+    """ Run the program. """
+
+    logging.basicConfig(filename='simulation.log', level=logging.INFO)
+    logging.info('Started')
+    simulate()
+    logging.info('Finished')
 

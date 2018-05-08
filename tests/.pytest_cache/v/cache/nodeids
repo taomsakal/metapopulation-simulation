@@ -1,0 +1,6 @@
+[
+  "test_patch.py::test_init_defaults",
+  "test_patch.py::test_init_list",
+  "test_patch.py::test_basic_update",
+  "test_patch.py::test_custom_attribute_update"
+]
