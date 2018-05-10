@@ -14,12 +14,16 @@ The world also contains a Historian, which is a class that outputs
 
 
 """
-
+import logging
 from patch import Patch
 
-class World():
+def pass_():
+    """ Empty function for defaults. """
+    pass
 
-    def __init__(self, world_map, patch_update_function, colonize_function, kill_patches_function, census_function, dt=1):
+class World:
+
+    def __init__(self, world_map, patch_update_function=pass_, colonize_function=pass_, kill_patches_function=pass_, census_function=pass_, dt=1, name="World 1"):
         """
 
         Args:
@@ -31,7 +35,8 @@ class World():
             census_function: update function
 
         Notes:
-            See update_functions.py for details about the update functions requirements.
+            See patch_update_functions.py for details about the update functions requirements.
+            All the functions default to pass.
         """
 
         # Init the variables
@@ -42,9 +47,11 @@ class World():
         self.colonize = colonize_function
         self.kill_patches = kill_patches_function
         self.census = census_function
+        self.name = name
 
         self.current_iteration = 0
 
+        logging.info("{} created.".format(self.name))
 
     def init_patches(self, world_map):
         """
@@ -59,7 +66,7 @@ class World():
 
         patches = []
         for node in world_map.nodes():
-            new_patch = Patch(node) #Todo: give id and maybe attributes
+            new_patch = Patch(node, self) #Todo: give id and maybe attributes
             patches.append(new_patch)
 
         return patches
