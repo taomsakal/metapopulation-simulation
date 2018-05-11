@@ -11,11 +11,9 @@ simulate() can be edited to put these steps in any order.
 import logging
 import networkx as nx
 from world import World
-from worldmap import Worldmap
 
 
 def simulate():
-
     # Change these to the needed functions
     patch_update_function = None
     colonize_function = None
@@ -28,11 +26,14 @@ def simulate():
     world.colonize()
     world.kill_patches()
 
+    return world
+
+
 def setup_map():
     """
     Return a worldmap.
     """
-    return Worldmap(nx.complete_graph(20))
+    return nx.complete_graph(20)
 
 
 if __name__ == "__main__":
@@ -42,4 +43,3 @@ if __name__ == "__main__":
     logging.info('Started')
     simulate()
     logging.info('Finished')
-
