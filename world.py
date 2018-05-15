@@ -1,5 +1,5 @@
 """
-This holds the world, which describes the state of the system. We must give it specific laws for the update functions.
+This holds the world, which describes the state of the system. We must give it specific laws for the patch_update functions.
     -- patch_update() updates each patch
     -- colonize() simulates colonization
     -- kill_patches() simulates patch death
@@ -22,23 +22,24 @@ from patch import Patch
 
 class World:
 
-    def __init__(self, worldmap, patch_update_function=pass_, colonize_function=pass_, kill_patches_function=pass_,
+    def __init__(self, worldmap, default_patch_update_function=pass_, colonize_function=pass_,
+                 kill_patches_function=pass_,
                  census_function=pass_, dt=1, name="World 1"):
         """
-        Initialize the world with a specific worldmap, timestep length, and update functions.
+        Initialize the world with a specific worldmap, timestep length, and patch_update functions.
         (patch_update, colonize, kill_patches, and census.)
 
         Args:
             worldmap: a networkx graph
             dt: the size of the timestep. (Default is 1)
-            patch_update_function: update function
-            colonize_function: update function
-            kill_patches_function: update function
-            census_function: update function
+            default_patch_update_function: patch_update function
+            colonize_function: patch_update function
+            kill_patches_function: patch_update function
+            census_function: patch_update function
             name: Name of the world
 
         Notes:
-            See patch_update_functions.py for details about the update functions requirements.
+            See patch_update_functions.py for details about the patch_update functions requirements.
             All the functions default to pass.
         """
 
@@ -46,7 +47,9 @@ class World:
         self.worldmap = worldmap
         self.name = name
         self.dt = dt
-        self.patch_update = patch_update_function
+        self.patch_update = default_patch_update_function
+        self.patch_update_args = None
+        self.patch_update_kwargs = None
         self.colonize = colonize_function
         self.kill_patches = kill_patches_function
         self.census = census_function
@@ -60,6 +63,7 @@ class World:
     def init_patches(self, world_map):
         """
         Initialize the patches by generating them from the world map and adding them to the patches list.
+        Also sets the patch_update function for each patch to be the world's default patch patch_update function
 
         Args:
             world_map: networkx directed graph
@@ -70,11 +74,24 @@ class World:
 
         patches = []
         for node in world_map.nodes():
-            new_patch = Patch(node, self)
+            new_patch = Patch(node, self, update_function=self.patch_update, update_args=self.patch_update_args, update_kwargs=self.patch_update_kwargs)
             patches.append(new_patch)
             logging.info("Worldmap node {} mapped to patch {}.".format(str(node), new_patch.id))
 
         return patches
+
+    def update_patches(self):
+        """
+        Go through each patch and patch_update it with the patch_update function the patch owns.
+
+        Warnings: This assumes patch patch_update functions do not depend on other patches.
+        This goes through each patch is sequential order, and dynamics will change depending on the order if
+        patches interact during this step.
+        """
+
+        for patch in self.patches:
+            patch.update()
+
 
     # #The below don't work and always return the exceptions. This is not important, just annoying in the logs.
     # def __str__(self):

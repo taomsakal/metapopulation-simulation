@@ -10,8 +10,13 @@ logging.info('Started')
 
 
 def complete_world():
-    """ Returns a world with the world map a K_10 graph and all default update functions"""
+    """ Returns a world with the world map a K_10 graph and all default patch_update functions"""
     return World(nx.complete_graph(10))
+
+
+def path_world():
+    """ Return a world that's a path graph of 4 nodes. """
+    return World(nx.path_graph(4))
 
 
 def trivial_world():
@@ -91,7 +96,7 @@ class TestSetup:
 class TestMap():
     """ Test if the patches play well with the worldmap """
 
-    def test_neighbors(self):
+    def test_neighbors_complete_world(self):
         world = complete_world()
 
         assert world.patches[0].id == 0
@@ -101,6 +106,30 @@ class TestMap():
         logging.info(world.patches[0].neighbor_ids())
         assert world.patches[0].neighbor_ids() == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-        for n in range(0, 10):
-            nids = world.patches[n].neighbor_ids()
-            assert nids == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].remove(n)
+        for i, patch in enumerate(world.patches):
+            nids = patch.neighbor_ids()
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            l.remove(i)
+            assert nids == l
+
+    def test_neighbors_trivial_world(self):
+        world = trivial_world()
+
+        assert world.patches[0].id == 0
+        assert len(world.patches) == 1
+
+        logging.info(world.patches[0].neighbor_ids())
+        assert world.patches[0].neighbor_ids() == []
+
+    def test_neighbors_path_world(self):
+        world = path_world()
+
+        assert world.patches[0].id == 0
+        assert world.patches[3].id == 3
+        assert len(world.patches) == 4
+
+        logging.info(world.patches[0].neighbor_ids())
+        assert world.patches[0].neighbor_ids() == [1]
+        assert world.patches[1].neighbor_ids() == [0, 2]
+        assert world.patches[2].neighbor_ids() == [1, 3]
+        assert world.patches[3].neighbor_ids() == [2]

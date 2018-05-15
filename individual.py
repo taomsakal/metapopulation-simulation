@@ -8,5 +8,5 @@ The individuals. By default they have
 5. Genotype
 6. Phenotype
 
-An individual requires an update function. Generally this is just "pass," as the patch takes care of updating?
+An individual requires an patch_update function. Generally this is just "pass," as the patch takes care of updating?
 """

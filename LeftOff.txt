@@ -1,0 +1,5 @@
+5/14/2018
+There's problems passing a patch update function with parameters to the patch.
+
+It may be best to have each patch update function only take in the patch, and then force the patch to have a tuple of
+update arguments. Try this next.
