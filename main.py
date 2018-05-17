@@ -20,10 +20,12 @@ COLONIZE_FUNCTION = None
 KILL_PATCHES_FUNCTION = None
 CENSUS_FUNCTION = None
 
-class Simuation():
 
-    def __init__(self):
-       """ Init the simulation, which holds the world(s) and the default functions for it. """
+class Simulation:
+
+    def __init__(self, name):
+        """ Init the simulation, which holds the world(s) and the default functions for it. """
+        self.name = name
 
     def simulate(self, iterations):
         """
@@ -42,6 +44,7 @@ class Simuation():
             world.update_patches()
             world.colonize()
             world.kill_patches()
+            world.census()
 
         return world
 
@@ -52,11 +55,19 @@ class Simuation():
         """
         return nx.complete_graph(20)
 
+    def setup_patches(self):
+        """
+        Iterate though each patch finish setting it up if need be.
+        Returns:
 
-    if __name__ == "__main__":
-        """ Run the program. """
+        """
 
-        logging.basicConfig(filename='simulation.log', level=logging.INFO)
-        logging.info('Started')
-        simulate()
-        logging.info('Finished')
+
+if __name__ == "__main__":
+    """ Run the program. """
+
+    sim = Simulation("bob")
+    logging.basicConfig(filename='simulation.log', level=logging.INFO)
+    logging.info('Started')
+    sim.simulate()
+    logging.info('Finished')

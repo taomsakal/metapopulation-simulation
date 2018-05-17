@@ -4,7 +4,7 @@ import networkx as nx
 
 from world import World
 from patch import Patch
-from patch_update_functions import add_one, exponential_growth
+from specificfunctions import add_one, add_double, helper
 
 logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
 logging.info("--- Started " + "-" * 50)
@@ -54,6 +54,15 @@ class TestInit:
         assert world1.worldmap is not None
         assert world1.name == "World 1"
 
+        assert world1.patches[0].individuals == 0
+
+        world2 = World(nx.complete_graph(20), default_individuals=[], name="wowee")
+
+        assert world2.worldmap is not None
+        assert world2.name == "wowee"
+
+        assert world2.patches[0].individuals == []
+
 
     def test_worldmap(self):
         world1 = complete_world()
@@ -70,40 +79,48 @@ class TestPatchUpdates:
 
         world1 = World(nx.complete_graph(5), default_patch_update_function=add_one)
 
-        assert world1.patches[0].individual_num == 0
+        assert world1.patches[0].individuals == 0
         world1.update_patches()
-        assert world1.patches[0].individual_num == 1
+        assert world1.patches[0].individuals == 1
 
         world1.update_patches()
         for patch in world1.patches:
-            assert patch.individual_num == 2
+            assert patch.individuals == 2
 
         for i in range(1, 100):
             world1.update_patches()
             for patch in world1.patches:
-                assert patch.individual_num == 2 + i
+                assert patch.individuals == 2 + i
 
     def test_add_one_complex(self):
 
         world1 = World(nx.path_graph(4), default_patch_update_function=add_one)
 
-        world1.patches[0].individual_num = 3
-        assert world1.patches[0].individual_num == 3
-        assert world1.patches[1].individual_num == 0
-        assert world1.patches[2].individual_num == 0
-        assert world1.patches[3].individual_num == 0
+        world1.patches[0].individuals = 3
+        assert world1.patches[0].individuals == 3
+        assert world1.patches[1].individuals == 0
+        assert world1.patches[2].individuals == 0
+        assert world1.patches[3].individuals == 0
 
         world1.update_patches()
         world1.update_patches()
-        assert world1.patches[0].individual_num == 5
-        assert world1.patches[1].individual_num == 2
-        assert world1.patches[2].individual_num == 2
-        assert world1.patches[3].individual_num == 2
+        assert world1.patches[0].individuals == 5
+        assert world1.patches[1].individuals == 2
+        assert world1.patches[2].individuals == 2
+        assert world1.patches[3].individuals == 2
+
+        # Change the patch_update function to the same function
+        world1.patches[0].update_function = add_one
+        world1.update_patches()
+        assert world1.patches[0].individuals == 6
+        assert world1.patches[1].individuals == 3
+        assert world1.patches[2].individuals == 3
+        assert world1.patches[3].individuals == 3
 
         # Now change the patch_update function for only patch 0
-        world1.patches[0].change_update_function(exponential_growth, 2)
+        world1.patches[0].update_function = add_double
         world1.update_patches()
-        assert world1.patches[0].individual_num == 10
-        assert world1.patches[1].individual_num == 3
-        assert world1.patches[2].individual_num == 3
-        assert world1.patches[3].individual_num == 3
+        assert world1.patches[0].individuals == 6 + 12
+        assert world1.patches[1].individuals == 4
+        assert world1.patches[2].individuals == 4
+        assert world1.patches[3].individuals == 4

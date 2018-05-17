@@ -22,9 +22,9 @@ from patch import Patch
 
 class World:
 
-    def __init__(self, worldmap, default_patch_update_function=pass_, colonize_function=pass_,
+    def __init__(self, worldmap, default_patch_update_function=pass_, default_individuals=0, colonize_function=pass_,
                  kill_patches_function=pass_,
-                 census_function=pass_, dt=1, name="World 1"):
+                 census_function=pass_, patch_setup_function=pass_, dt=1, name="World 1"):
         """
         Initialize the world with a specific worldmap, timestep length, and patch_update functions.
         (patch_update, colonize, kill_patches, and census.)
@@ -35,15 +35,18 @@ class World:
             default_patch_update_function: patch_update function
             colonize_function: patch_update function
             kill_patches_function: patch_update function
+            patch_setup_function: additional setup for the patches.
             census_function: patch_update function
             name: Name of the world
 
         Notes:
-            See patch_update_functions.py for details about the patch_update functions requirements.
+            See specificfunctions.py for details about the patch_update functions requirements.
             All the functions default to pass.
         """
 
         # Init the variables
+        self.default_individuals = default_individuals
+        self.patch_setup_function = patch_setup_function
         self.worldmap = worldmap
         self.name = name
         self.dt = dt
@@ -64,6 +67,7 @@ class World:
         """
         Initialize the patches by generating them from the world map and adding them to the patches list.
         Also sets the patch_update function for each patch to be the world's default patch patch_update function
+        and the default individuals.
 
         Args:
             world_map: networkx directed graph
@@ -74,7 +78,7 @@ class World:
 
         patches = []
         for node in world_map.nodes():
-            new_patch = Patch(node, self, update_function=self.patch_update, update_args=self.patch_update_args, update_kwargs=self.patch_update_kwargs)
+            new_patch = Patch(node, self, update_function=self.patch_update, individuals=self.default_individuals)
             patches.append(new_patch)
             logging.info("Worldmap node {} mapped to patch {}.".format(str(node), new_patch.id))
 
