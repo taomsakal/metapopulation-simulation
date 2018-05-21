@@ -76,7 +76,7 @@ class TestSetup:
         assert patch.individuals == ['a', 'b', 'b', 'b', 'b', 'b']
 
     def test_add_one_ind_num(self):
-        from specificfunctions import add_one
+        from patchupdate_functions import add_one
         patch = Patch(0, trivial_world(), update_function=add_one, individuals=1)
         assert patch.individuals == 1
         patch.update()

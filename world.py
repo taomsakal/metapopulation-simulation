@@ -40,7 +40,7 @@ class World:
             name: Name of the world
 
         Notes:
-            See specificfunctions.py for details about the patch_update functions requirements.
+            See patchupdate_functions.py for details about the patch_update functions requirements.
             All the functions default to pass.
         """
 
@@ -95,6 +95,10 @@ class World:
 
         for patch in self.patches:
             patch.update()
+
+    def colonize_function(self):
+        """ Run the given colonize function. """
+        self.colonize_function(self)
 
 
     # #The below don't work and always return the exceptions. This is not important, just annoying in the logs.

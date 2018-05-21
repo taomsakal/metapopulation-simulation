@@ -1,3 +1,7 @@
+5/17/2018 1:13 PM
+The patch updates are working. Next I want to write the colonization and patch death functions.
+
+
 5/14/2018
 There's problems passing a patch update function with parameters to the patch.
 

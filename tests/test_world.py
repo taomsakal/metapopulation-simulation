@@ -4,7 +4,7 @@ import networkx as nx
 
 from world import World
 from patch import Patch
-from specificfunctions import add_one, add_double, helper
+from patchupdate_functions import add_one, add_double
 
 logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
 logging.info("--- Started " + "-" * 50)

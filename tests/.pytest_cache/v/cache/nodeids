@@ -1,4 +1,5 @@
 [
+  "test_general.py::test_sum_dicts",
   "test_patch.py::TestSetup::()::test_init_defaults",
   "test_patch.py::TestSetup::()::test_init_list",
   "test_patch.py::TestSetup::()::test_basic_update",
