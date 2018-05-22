@@ -6,6 +6,7 @@ def pass_(*args, **kwargs):
     """ Empty function for defaults. It accepts any number of parameters. """
     logging.warning("Using the empty pass_() function in the world. This function does nothing.")
     pass
+# Todo: Make this specific for each class
 
 
 def geometric_growth(num, r):

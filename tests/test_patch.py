@@ -4,19 +4,24 @@ import networkx as nx
 
 from world import World
 from patch import Patch
+import general
+from simrules import testrules
 
 logging.basicConfig(filename='test_patch.log', level=logging.DEBUG)
 logging.info('Started')
 
+def add_double(patch):
+    """ Doubles the number of populations. """
+    patch.populations = general.geometric_growth(patch.populations, 2)
 
 def complete_world():
     """ Returns a world with the world map a K_10 graph and all default patch_update functions"""
-    return World(nx.complete_graph(10))
+    return World(testrules.AddOne(nx.complete_graph(10)))
 
 
 def path_world():
     """ Return a world that's a path graph of 4 nodes. """
-    return World(nx.path_graph(4))
+    return World(testrules.AddOne(nx.path_graph(4)))
 
 
 def trivial_world():
@@ -34,57 +39,56 @@ class TestSetup:
     def test_init_defaults(self):
         patch = default_patch()
         assert patch.id == 0
-        assert patch.individuals == 0
+        assert patch.populations == 0
         patch.update()
-        assert patch.individuals == 0
+        assert patch.populations == 0
 
     def test_init_list(self):
-        patch = Patch(0, trivial_world(), individuals=[1, 2, 3, 'a', 'b', 'c'])
-        assert patch.individuals == [1, 2, 3, 'a', 'b', 'c']
+        patch = Patch(0, trivial_world(), populations=[1, 2, 3, 'a', 'b', 'c'])
+        assert patch.populations == [1, 2, 3, 'a', 'b', 'c']
 
     def test_basic_update(self):
         def update_function(patch):
-            patch.individuals.append("a")
+            patch.populations.append("a")
 
-        patch = Patch(0, trivial_world(), update_function=update_function, individuals=[])
+        patch = Patch(0, trivial_world(), update_function=update_function, populations=[])
 
-        assert patch.individuals == []
+        assert patch.populations == []
         patch.update()
-        assert patch.individuals == ['a']
+        assert patch.populations == ['a']
         patch.update()
-        assert patch.individuals == ['a', 'a']
+        assert patch.populations == ['a', 'a']
         patch.update()
         patch.update()
         patch.update()
-        assert patch.individuals == ['a', 'a', 'a', 'a', 'a']
+        assert patch.populations == ['a', 'a', 'a', 'a', 'a']
 
     def test_custom_attribute_update(self):
         def update_function(patch):
-            patch.individuals.append(patch.type)
+            patch.populations.append(patch.type)
 
-        patch = Patch(0, trivial_world(), update_function=update_function, individuals=['a'])
+        patch = Patch(0, trivial_world(), update_function=update_function, populations=['a'])
         patch.type = 'b'
 
-        assert patch.individuals == ['a']
+        assert patch.populations == ['a']
         patch.update()
-        assert patch.individuals == ['a', 'b']
+        assert patch.populations == ['a', 'b']
         patch.update()
-        assert patch.individuals == ['a', 'b', 'b']
+        assert patch.populations == ['a', 'b', 'b']
         patch.update()
         patch.update()
         patch.update()
-        assert patch.individuals == ['a', 'b', 'b', 'b', 'b', 'b']
+        assert patch.populations == ['a', 'b', 'b', 'b', 'b', 'b']
 
     def test_add_one_ind_num(self):
-        from patchupdate_functions import add_one
-        patch = Patch(0, trivial_world(), update_function=add_one, individuals=1)
-        assert patch.individuals == 1
+        patch = Patch(0, trivial_world(), update_function=add_one, populations=1)
+        assert patch.populations == 1
         patch.update()
-        assert patch.individuals == 2
+        assert patch.populations == 2
         patch.update()
-        assert patch.individuals == 3
+        assert patch.populations == 3
         patch.update()
-        assert patch.individuals == 4
+        assert patch.populations == 4
         assert patch.id == 0
 
 

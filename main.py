@@ -13,61 +13,32 @@ The Simulation itself is an object. This is so we can stop it, save it, and then
 import logging
 import networkx as nx
 from world import World
-
-# Change these to the needed functions
-DEFAULT_PATCH_UPDATE_FUNCTION = None
-COLONIZE_FUNCTION = None
-KILL_PATCHES_FUNCTION = None
-CENSUS_FUNCTION = None
+from simrules.one_species import OneSpecies
 
 
-class Simulation:
+def simulate(world):
+    """
+    Run the simulation on the world.
+    """
 
-    def __init__(self, name):
-        """ Init the simulation, which holds the world(s) and the default functions for it. """
-        self.name = name
+    while not world.rules.stop_condition():
+        world.update_patches()
+        world.colonize()
+        world.kill_patches()
+        world.census()
+        world.age += 1
 
-    def simulate(self, iterations):
-        """
-        Run the simulation.
-
-        Args:
-            iterations: number of timesteps to run for.
-
-        Returns: The world after the simulation is over.
-
-        """
-
-        world = World(self.setup_map(), DEFAULT_PATCH_UPDATE_FUNCTION, COLONIZE_FUNCTION, KILL_PATCHES_FUNCTION, CENSUS_FUNCTION, dt=1)
-
-        for i in range(0, iterations):
-            world.update_patches()
-            world.colonize()
-            world.kill_patches()
-            world.census()
-
-        return world
-
-
-    def setup_map(self):
-        """
-        Return a worldmap.
-        """
-        return nx.complete_graph(20)
-
-    def setup_patches(self):
-        """
-        Iterate though each patch finish setting it up if need be.
-        Returns:
-
-        """
+    logging.info(f"Finished simulating world {world.name}")
+    return world
 
 
 if __name__ == "__main__":
     """ Run the program. """
 
-    sim = Simulation("bob")
     logging.basicConfig(filename='simulation.log', level=logging.INFO)
     logging.info('Started')
-    sim.simulate()
+
+    world1 = World(OneSpecies(3, nx.complete_graph(10), 0.1, [1.1], 1000))
+    simulate(world1)
+
     logging.info('Finished')

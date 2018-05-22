@@ -3,8 +3,7 @@ The Patch class. This contains three parts
 
 1. The id of the patch (where it is on the world map)
 2. The patch_update function that moves the patch forward one time step.
-3. A list of individuals in the patch.
-4. A number of individuals. (Often we might ignore the individual list if we only care about numbers.)
+3. A list of populations in the patch. (These can just represent a single individual)
 5. A reference to the world that the patch is in. (Used so the patch knows information about the world.)
 
 Any other attributes should be defined during patch creation. This can be done with
@@ -18,30 +17,22 @@ from general import pass_
 
 class Patch:
 
-    def __init__(self, id_, world, update_function=pass_, individuals=None, additional_setup_func=pass_):
+    def __init__(self, id_, world, populations=None)
         """
         Args:
             id_: The id that corresponds to the patch in the world map
             world: The world that the patch is in.
             update_function: The function that runs when we
-            individuals: Some data structure to keep track of individuals. Defaults to the number 0.
+            populations: Some data structure to keep track of populations. Defaults to the number 0.
             additional_setup_func: function to do additional setup
-
-        Warnings: individual_num is not based off of individuals. It must be manually updated, and often one or the
-        other is ignored. They have different names for clarity.
         """
 
         # Init values
-        self.additional_setup_func = additional_setup_func
         self.id = id_
 
-        if individuals is None:
-            logging.warning(f"Patch {self.id} has no individuals. Defaulting to 0")
-            self.individuals = 0
-        else:
-            self.individuals = individuals
-
-        self.update_function = update_function
+        # Setup patch
+        reset_patch = world.rules.reset_patch
+        reset_patch()
 
         self.world = world
         if self.world is None:
@@ -52,14 +43,23 @@ class Patch:
             logging.critical(error)
             raise Exception(error)
 
-        self.additional_setup_func(self)  # Do any aditional setup needed
+
+        if populations is None:
+            logging.warning(f"Patch {self.id} has no populations. Defaulting to 0")
+            self.populations = 0
+        else:
+            self.populations = populations
 
         logging.info("Patch {} created".format(self.id))
         logging.debug("Patch {} values:{}".format(self.id, self.__dict__))
 
-    def update(self):
+    def update(self, use_local=True):
         """
         Update the patch using whatever patch_update function we've chosen.
+
+        Args:
+            use_local: if true uses the patches' update fuction. Otherwise use the world rule's one.
+            (These are generally the same, unless the patch function has been manually rewritten.)
         """
 
         logging.debug("Patch {} updating with patch_update function {}".format(self.id, self.update))

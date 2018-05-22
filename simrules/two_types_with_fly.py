@@ -1,4 +1,5 @@
 from collections import defaultdict
+import random
 from general import sum_dicts
 
 # Todo: this function isn't finished.
@@ -6,9 +7,9 @@ def mush_and_redistribute(world):
     """
     This does three things.
 
-    1. Take a sum of all competitors and colonizers
+    1. Take a sum of all yeast strains.
     2. Flies come eat some.
-    3. Each fly visits a random patch and distributes them.
+    3. Each fly visits a random patch and distributes those that survive the gut.
 
     Currently the function assumes that all patches die during it.
 
@@ -19,9 +20,6 @@ def mush_and_redistribute(world):
         dict_list.append(patch.individuals)
     merged_dict = sum_dicts(dict_list)
 
-    total_competitors = merged_dict['Competitors']
-    total_colonizers = merged_dict['Colonizers']
-
     # Reset all patches, make sure that the individuals are set correctly
 
     # Now for each patch the fly will pick some yeast up, digest some, and drop the survivors in a random patch.
@@ -29,16 +27,16 @@ def mush_and_redistribute(world):
         """ Function to generate a number of flies. """
         return 10
 
-    def pickup(competitors, colonizers):
-        pass  # todo
+    def pickup(dict):
+        pass
 
     for i in range(0, num_flies()):
-        hitchhikers = pickup(total_competitors, total_colonizers)
+        hitchhikers = pickup(merged_dict)
         hitchhikers[0] *= .2  # 20% of competitors survive the gut
         hitchhikers[1] *= .8  # 80% of colonizers survive
 
         # Drop off hitchhikers to new patch
-        drop_patch = general.random_patch(world)
+        drop_patch = random.choice(world.patches)
         drop_patch.individuals['Competitors'] = hitchhikers[0]
         drop_patch.individuals['Colonizers'] = hitchhikers[1]
 

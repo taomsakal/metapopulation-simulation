@@ -4,11 +4,24 @@ import networkx as nx
 
 from world import World
 from patch import Patch
-from patchupdate_functions import add_one, add_double
+import general
+
 
 logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
 logging.info("--- Started " + "-" * 50)
 
+
+def add_one(patch):
+    """
+    Adds one to the individual number.
+    This function is a simple one, mainly for testing.
+    """
+    patch.populations += 1
+
+
+def add_double(patch):
+    """ Doubles the number of populations. """
+    patch.populations = general.geometric_growth(patch.populations, 2)
 
 def complete_world():
     """ Returns a world with the world map a K_10 graph and all default patch_update functions"""
@@ -54,14 +67,14 @@ class TestInit:
         assert world1.worldmap is not None
         assert world1.name == "World 1"
 
-        assert world1.patches[0].individuals == 0
+        assert world1.patches[0].populations == 0
 
-        world2 = World(nx.complete_graph(20), default_individuals=[], name="wowee")
+        world2 = World(nx.complete_graph(20), default_populations=[], name="wowee")
 
         assert world2.worldmap is not None
         assert world2.name == "wowee"
 
-        assert world2.patches[0].individuals == []
+        assert world2.patches[0].populations == []
 
 
     def test_worldmap(self):
@@ -79,48 +92,48 @@ class TestPatchUpdates:
 
         world1 = World(nx.complete_graph(5), default_patch_update_function=add_one)
 
-        assert world1.patches[0].individuals == 0
+        assert world1.patches[0].populations == 0
         world1.update_patches()
-        assert world1.patches[0].individuals == 1
+        assert world1.patches[0].populations == 1
 
         world1.update_patches()
         for patch in world1.patches:
-            assert patch.individuals == 2
+            assert patch.populations == 2
 
         for i in range(1, 100):
             world1.update_patches()
             for patch in world1.patches:
-                assert patch.individuals == 2 + i
+                assert patch.populations == 2 + i
 
     def test_add_one_complex(self):
 
         world1 = World(nx.path_graph(4), default_patch_update_function=add_one)
 
-        world1.patches[0].individuals = 3
-        assert world1.patches[0].individuals == 3
-        assert world1.patches[1].individuals == 0
-        assert world1.patches[2].individuals == 0
-        assert world1.patches[3].individuals == 0
+        world1.patches[0].populations = 3
+        assert world1.patches[0].populations == 3
+        assert world1.patches[1].populations == 0
+        assert world1.patches[2].populations == 0
+        assert world1.patches[3].populations == 0
 
         world1.update_patches()
         world1.update_patches()
-        assert world1.patches[0].individuals == 5
-        assert world1.patches[1].individuals == 2
-        assert world1.patches[2].individuals == 2
-        assert world1.patches[3].individuals == 2
+        assert world1.patches[0].populations == 5
+        assert world1.patches[1].populations == 2
+        assert world1.patches[2].populations == 2
+        assert world1.patches[3].populations == 2
 
         # Change the patch_update function to the same function
         world1.patches[0].update_function = add_one
         world1.update_patches()
-        assert world1.patches[0].individuals == 6
-        assert world1.patches[1].individuals == 3
-        assert world1.patches[2].individuals == 3
-        assert world1.patches[3].individuals == 3
+        assert world1.patches[0].populations == 6
+        assert world1.patches[1].populations == 3
+        assert world1.patches[2].populations == 3
+        assert world1.patches[3].populations == 3
 
         # Now change the patch_update function for only patch 0
         world1.patches[0].update_function = add_double
         world1.update_patches()
-        assert world1.patches[0].individuals == 6 + 12
-        assert world1.patches[1].individuals == 4
-        assert world1.patches[2].individuals == 4
-        assert world1.patches[3].individuals == 4
+        assert world1.patches[0].populations == 6 + 12
+        assert world1.patches[1].populations == 4
+        assert world1.patches[2].populations == 4
+        assert world1.patches[3].populations == 4
