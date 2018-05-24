@@ -7,13 +7,14 @@ Each patch has a resource value R. A species on that patch multiplies by that re
 import random
 import logging
 from simrules import helpers
+from rules import Rules
 
 
-
-class OneSpecies:
+class OneSpecies(Rules):
 
     def __init__(self, num_strains, worldmap, prob_death, resource_values, stop_time):
 
+        super().__init__()
         self.num_strains = num_strains  # Number of strains. Must be integer
         self.worldmap = worldmap  # The graph
         self.prob_death = prob_death  # Probability of a patch dying.

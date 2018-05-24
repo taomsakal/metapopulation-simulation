@@ -5,6 +5,7 @@ import networkx as nx
 from world import World
 from patch import Patch
 import general
+from simrules import testrules
 
 
 logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
@@ -25,16 +26,16 @@ def add_double(patch):
 
 def complete_world():
     """ Returns a world with the world map a K_10 graph and all default patch_update functions"""
-    return World(nx.complete_graph(5))
+    return World(testrules.AddOne(nx.complete_graph(5)))
 
 def path_world():
     """ Return a world that's a path graph of 4 nodes. """
-    return World(nx.path_graph(4))
+    return World(testrules.AddOne(nx.path_graph(4)))
 
 
 def trivial_world():
     """Return a world made up of a single node"""
-    return World(nx.complete_graph(1))
+    return World(testrules.AddOne(nx.complete_graph(1)))
 
 
 def default_patch():
@@ -48,13 +49,13 @@ class TestInit:
         """ Test that correct number of patches are generated. """
 
         for n in range(1, 20):
-            map1 = nx.complete_graph(n)
-            map2 = nx.erdos_renyi_graph(n, 0.2)
-            map3 = nx.barabasi_albert_graph(n + 1, 1)
+            rules1 = testrules.AddOne(nx.complete_graph(n))
+            rules2 = testrules.AddOne(nx.erdos_renyi_graph(n, 0.2))
+            rules3 = testrules.AddOne(nx.barabasi_albert_graph(n + 1, 1))
 
-            world1 = World(map1, None, None, None, None)
-            world2 = World(map2, None, None, None, None)
-            world3 = World(map3, None, None, None, None)
+            world1 = World(rules1)
+            world2 = World(rules2)
+            world3 = World(rules3)
 
             assert len(world1.patches) == n
             assert len(world2.patches) == n
@@ -68,13 +69,15 @@ class TestInit:
         assert world1.name == "World 1"
 
         assert world1.patches[0].populations == 0
+        assert len(world1.patches) == 5
 
-        world2 = World(nx.complete_graph(20), default_populations=[], name="wowee")
+        world2 = World(testrules.AddOne(nx.path_graph(100)), name="wowee")
 
         assert world2.worldmap is not None
         assert world2.name == "wowee"
 
-        assert world2.patches[0].populations == []
+        assert world2.patches[0].populations == 0
+        assert len(world2.patches) == 100
 
 
     def test_worldmap(self):
@@ -90,7 +93,7 @@ class TestPatchUpdates:
 
     def test_add_one(self):
 
-        world1 = World(nx.complete_graph(5), default_patch_update_function=add_one)
+        world1 = World(complete_world())
 
         assert world1.patches[0].populations == 0
         world1.update_patches()
@@ -107,7 +110,7 @@ class TestPatchUpdates:
 
     def test_add_one_complex(self):
 
-        world1 = World(nx.path_graph(4), default_patch_update_function=add_one)
+        world1 = World(path_world())
 
         world1.patches[0].populations = 3
         assert world1.patches[0].populations == 3

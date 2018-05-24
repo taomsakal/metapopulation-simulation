@@ -21,7 +21,7 @@ from patch import Patch
 
 class World:
 
-    def __init__(self, rules, name="World1"):
+    def __init__(self, rules, name="World 1"):
         """
         Creates a world with a certain set of simrules
 
@@ -32,9 +32,9 @@ class World:
 
         # Init the variables
         self.rules = rules
-        self.worldmap = rules.worldmap
         self.name = name
         self.age = 0
+        self.worldmap = rules.worldmap
 
         self.patches = self.init_patches(self.worldmap)
 
@@ -57,7 +57,6 @@ class World:
         patches = []
         for node in world_map.nodes():
             new_patch = Patch(node, self)
-            self.rules.reset_patch(new_patch)
             patches.append(new_patch)
             logging.info("Worldmap node {} mapped to patch {}.".format(str(node), new_patch.id))
 

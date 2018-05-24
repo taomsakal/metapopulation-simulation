@@ -1,15 +1,8 @@
 {
-  "test_patch.py::TestMap::()::test_neighbors_complete_world": true,
-  "test_patch.py::TestMap::()::test_neighbors_path_world": true,
-  "test_patch.py::TestMap::()::test_neighbors_trivial_world": true,
   "test_patch.py::TestSetup::()::test_add_one_ind_num": true,
   "test_patch.py::TestSetup::()::test_basic_update": true,
   "test_patch.py::TestSetup::()::test_custom_attribute_update": true,
   "test_patch.py::TestSetup::()::test_init_defaults": true,
-  "test_patch.py::TestSetup::()::test_init_list": true,
-  "test_world.py::TestInit::()::test_make_world": true,
-  "test_world.py::TestInit::()::test_patch_generation": true,
-  "test_world.py::TestInit::()::test_worldmap": true,
   "test_world.py::TestPatchUpdates::()::test_add_one": true,
   "test_world.py::TestPatchUpdates::()::test_add_one_complex": true
 }

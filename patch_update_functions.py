@@ -8,10 +8,6 @@ import logging
 import general
 
 
-
-
-
-
 def three_cases(patch):
     """
     Have three cases: if both types on, only one type, or none. Give output values for these.
@@ -44,5 +40,3 @@ def three_cases(patch):
     else:
         populations['Colonizers'] = 0
         populations['Competitors'] = 0
-
-

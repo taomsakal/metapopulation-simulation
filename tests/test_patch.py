@@ -26,7 +26,7 @@ def path_world():
 
 def trivial_world():
     """Return a world made up of a single node"""
-    return World(nx.complete_graph(1))
+    return World(testrules.AddOne(nx.complete_graph(1)))
 
 
 def default_patch():

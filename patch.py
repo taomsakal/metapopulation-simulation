@@ -17,24 +17,23 @@ from general import pass_
 
 class Patch:
 
-    def __init__(self, id_, world, populations=None)
+    def __init__(self, id_, world, populations=None):
         """
         Args:
-            id_: The id that corresponds to the patch in the world map
+            id_: The id that corresponds to the patch in the world map.
             world: The world that the patch is in.
-            update_function: The function that runs when we
-            populations: Some data structure to keep track of populations. Defaults to the number 0.
-            additional_setup_func: function to do additional setup
+            populations: Some data structure to keep track of populations.
         """
 
         # Init values
         self.id = id_
-
-        # Setup patch
-        reset_patch = world.rules.reset_patch
-        reset_patch()
-
+        self.patch_update = world.rules.patch_update
         self.world = world
+
+        # Setup the patches
+        self.reset_patch = world.rules.reset_patch
+        self.reset_patch(self)
+
         if self.world is None:
             logging.critical("Patch {} belongs to no world!".format(self.id))
             raise Exception("Patch {} belongs to no world!".format(self.id))
@@ -43,10 +42,9 @@ class Patch:
             logging.critical(error)
             raise Exception(error)
 
-
+        # Test populations is good.
         if populations is None:
-            logging.warning(f"Patch {self.id} has no populations. Defaulting to 0")
-            self.populations = 0
+            logging.warning(f"Patch {self.id} has initiated with None for populations.")
         else:
             self.populations = populations
 
@@ -65,7 +63,7 @@ class Patch:
         logging.debug("Patch {} updating with patch_update function {}".format(self.id, self.update))
 
         try:
-            self.update_function(self)
+            self.patch_update(self)
         except:
             if isinstance(self.update, Callable):
                 raise TypeError("patch_update() for patch {} must be a function, not {}".format(self.id, type(
@@ -84,17 +82,12 @@ class Patch:
         neighbors = self.world.worldmap[self.id]  # This goes to the worldmap adjacency matrix to find all neighbors
         return list(neighbors)
 
-    def change_update_function(self, function):
+    def change_update_function(self, func):
         """
         Changes the patch_update function to something else.
-
-        Args:
-            function: function to change it to
-            *args: arguments of function
-            **kwargs: keyword arguments of function
         """
 
-        self.update_function = function
+        self.patch_update = func
 
     def census(self):
         pass
