@@ -93,7 +93,7 @@ class TestPatchUpdates:
 
     def test_add_one(self):
 
-        world1 = World(complete_world())
+        world1 = complete_world()
 
         assert world1.patches[0].populations == 0
         world1.update_patches()
@@ -110,7 +110,7 @@ class TestPatchUpdates:
 
     def test_add_one_complex(self):
 
-        world1 = World(path_world())
+        world1 = path_world()
 
         world1.patches[0].populations = 3
         assert world1.patches[0].populations == 3
@@ -134,7 +134,7 @@ class TestPatchUpdates:
         assert world1.patches[3].populations == 3
 
         # Now change the patch_update function for only patch 0
-        world1.patches[0].update_function = add_double
+        world1.patches[0].change_update_function(add_double)
         world1.update_patches()
         assert world1.patches[0].populations == 6 + 12
         assert world1.patches[1].populations == 4

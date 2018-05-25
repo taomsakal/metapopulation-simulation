@@ -50,5 +50,6 @@ class Rules:
         logging.warning(f"census() for {world.name} does nothing.")
 
     def stop_condition(self, world):
-        logging.warning(f"stop_condition() for {world.name} always returns true, so the program never stops running."
+        logging.warning(f"stop_condition() for {world.name} always returns true, so the program never stops running.")
         return True
+

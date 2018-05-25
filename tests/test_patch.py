@@ -10,9 +10,11 @@ from simrules import testrules
 logging.basicConfig(filename='test_patch.log', level=logging.DEBUG)
 logging.info('Started')
 
+
 def add_double(patch):
     """ Doubles the number of populations. """
     patch.populations = general.geometric_growth(patch.populations, 2)
+
 
 def complete_world():
     """ Returns a world with the world map a K_10 graph and all default patch_update functions"""
@@ -41,17 +43,18 @@ class TestSetup:
         assert patch.id == 0
         assert patch.populations == 0
         patch.update()
-        assert patch.populations == 0
+        assert patch.populations == 1
 
     def test_init_list(self):
-        patch = Patch(0, trivial_world(), populations=[1, 2, 3, 'a', 'b', 'c'])
+        patch = Patch(0, trivial_world(), initial_populations=[1, 2, 3, 'a', 'b', 'c'])
         assert patch.populations == [1, 2, 3, 'a', 'b', 'c']
 
     def test_basic_update(self):
         def update_function(patch):
             patch.populations.append("a")
 
-        patch = Patch(0, trivial_world(), update_function=update_function, populations=[])
+        patch = Patch(0, trivial_world(), initial_populations=[])
+        patch.change_update_function(update_function)
 
         assert patch.populations == []
         patch.update()
@@ -67,7 +70,8 @@ class TestSetup:
         def update_function(patch):
             patch.populations.append(patch.type)
 
-        patch = Patch(0, trivial_world(), update_function=update_function, populations=['a'])
+        patch = Patch(0, trivial_world(), initial_populations=['a'])
+        patch.change_update_function(update_function)
         patch.type = 'b'
 
         assert patch.populations == ['a']
@@ -81,7 +85,7 @@ class TestSetup:
         assert patch.populations == ['a', 'b', 'b', 'b', 'b', 'b']
 
     def test_add_one_ind_num(self):
-        patch = Patch(0, trivial_world(), update_function=add_one, populations=1)
+        patch = Patch(0, trivial_world(), initial_populations=1)
         assert patch.populations == 1
         patch.update()
         assert patch.populations == 2

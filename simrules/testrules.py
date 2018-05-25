@@ -1,7 +1,7 @@
 import logging
+from rules import Rules
 
-
-class AddOne:
+class AddOne(Rules):
 
     def __init__(self, worldmap):
         self.worldmap = worldmap

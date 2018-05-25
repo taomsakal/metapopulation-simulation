@@ -17,12 +17,12 @@ from general import pass_
 
 class Patch:
 
-    def __init__(self, id_, world, populations=None):
+    def __init__(self, id_, world, initial_populations=None):
         """
         Args:
             id_: The id that corresponds to the patch in the world map.
             world: The world that the patch is in.
-            populations: Some data structure to keep track of populations.
+            initial_populations: Overrides the initial population reset_patch gives, unless set to None.
         """
 
         # Init values
@@ -30,28 +30,36 @@ class Patch:
         self.patch_update = world.rules.patch_update
         self.world = world
 
+
         # Setup the patches
         self.reset_patch = world.rules.reset_patch
         self.reset_patch(self)
 
+        if initial_populations is not None:
+            self.populations = initial_populations  # Override
+
+        self._safety_check()
+
+        logging.info("Patch {} created".format(self.id))
+        logging.debug("Patch {} values:{}".format(self.id, self.__dict__))
+
+    def _safety_check(self):
+        """ A quick check to make sure all values are well defined after initialization. """
+
         if self.world is None:
             logging.critical("Patch {} belongs to no world!".format(self.id))
             raise Exception("Patch {} belongs to no world!".format(self.id))
+
         if not hasattr(self.world, "worldmap"):
             error = "Patch {} of world {} has no worldmap!".format(self.id, self.world)
             logging.critical(error)
             raise Exception(error)
 
         # Test populations is good.
-        if populations is None:
+        if self.populations is None:
             logging.warning(f"Patch {self.id} has initiated with None for populations.")
-        else:
-            self.populations = populations
 
-        logging.info("Patch {} created".format(self.id))
-        logging.debug("Patch {} values:{}".format(self.id, self.__dict__))
-
-    def update(self, use_local=True):
+    def update(self):
         """
         Update the patch using whatever patch_update function we've chosen.
 

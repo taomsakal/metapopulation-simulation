@@ -18,6 +18,7 @@ import logging
 
 from general import pass_
 from patch import Patch
+from rules import Rules
 
 class World:
 
@@ -30,7 +31,11 @@ class World:
             name: a name for the world
         """
 
-        # Init the variables
+        # Safety type check
+        if not issubclass(type(rules), Rules):
+            raise TypeError(f"The rules for {name} is of type {type(rules)}, which is not a subclass of Rules.")
+
+
         self.rules = rules
         self.name = name
         self.age = 0
