@@ -1,1 +1,3 @@
 Add support for directed graphs.
+
+Add queue for population changes, which then are all added at once.

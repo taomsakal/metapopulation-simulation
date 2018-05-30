@@ -79,7 +79,6 @@ class World:
         for patch in self.patches:
             patch.update()
 
-
     # #The below don't work and always return the exceptions. This is not important, just annoying in the logs.
     # def __str__(self):
     #     try:

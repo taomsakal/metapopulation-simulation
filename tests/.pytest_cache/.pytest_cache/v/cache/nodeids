@@ -1,0 +1,7 @@
+[
+  "test_integration.py::TestNStrainsSimple::()::test_no_death",
+  "test_integration.py::TestNStrainsSimple::()::test_high_death",
+  "test_integration.py::TestNStrainsSimple::()::test_stress",
+  "test_integration.py::TestNStrainsSimple::()::test_trivial",
+  "test_integration.py::TestNStrainsSimple::()::test_line"
+]

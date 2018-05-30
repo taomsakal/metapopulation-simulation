@@ -1,6 +1,7 @@
 from collections import defaultdict
-from general import sum_dicts
 import random
+from main import run
+import networkx as nx
 import logging
 from simrules import helpers
 from rules import Rules
@@ -8,57 +9,106 @@ from rules import Rules
 
 class SimpleCompetitionColonization(Rules):
     """
-    A simple competition colonization model.
+    A simple competition colonization model. There are two strains and possibilities:
+        1. A patch has both types
+        2. A patch has one type
+    Patches go to an equilibrium, then a fly comes, grabs n random cells, and distributes them.
     """
 
-    def __init__(self, num_strains, worldmap, prob_death, resource_values, stop_time):
+    def __init__(self):
 
         super().__init__()
-        self.num_strains = num_strains  # Number of strains. Must be integer
-        self.worldmap = worldmap  # The graph
-        self.prob_death = prob_death  # Probability of a patch dying.
-        self.resource_values = resource_values
-        self.stop_time = stop_time  # Iterations to run
+        self.worldmap = nx.complete_graph(14)  # The worldmap
+        self.prob_death = 0.05  # Probability of a patch dying.
+        self.stop_time = 1000  # Iterations to run
+
+        self.num_flies = 10  # Number of flies each colonization event
+        self.eqboth = (50, 200)  # Final values when both the competitor and colonizer are in the patch
+        self.eqr = (300, 0)  # ... when only colonizer
+        self.eqk = (0, 250)  # ... when only competitor
+
+        self.death_prob_r = 0.8  # Probability of colonizer surviving fly gut
+        self.death_prob_v = 0.2  # Probability of competitor surviving fly gut
+
+        self.fly_size = 10  # How many yeast cells one fly takes
+
+        self.reset_all_on_colonize = True
 
     def set_initial_conditions(self, world):
-        """ Initial conditions for the world. This starts one patch with one of each strain """
-        world.patches[0] = [1] * self.num_strains
+        """ Start with two patches, one of only competitors and one of colonizers. """
+        populations = world.patches[0].populations
+        populations['rv'] = 100
+        populations['kv'] = 100
 
     def reset_patch(self, patch):
         """
         Each patch starts with 0 of all individuals, unless changed by initial_conditions
-        and a random resource value from resource_values.
+        and a random resource value from resource_value.
         """
-        patch.populations = [0] * self.num_strains
-        patch.resource_level = random.choice(self.resource_values)
+
+        patch.populations = {'rv': 0, 'kv': 0}
+        print(f"Patch {patch.id} has been reset.")
 
     def patch_update(self, patch):
         """
         Each individual has fitness of resource_level and reproduces by that amount.
         """
 
-        for population in patch.populations:
-            population += patch.resource_level * population * patch.world.dt
+        pop = patch.populations
+
+        if pop['rv'] > 0 and pop['kv'] > 0:
+            pop['rv'], pop['kv'] = self.eqboth
+        elif pop['rv'] > 0:
+            pop['rv'], pop['kv'] = self.eqr
+        elif pop['kv'] > 0:
+            pop['rv'], pop['kv'] = self.eqk
 
     def colonize(self, world):
         """
-        A random individual is chosen from each patch and sent to a random neighbor patch.
+        This does three things.
+
+        1. Take a sum of all yeast strains.
+        2. Flies come eat some.
+        3. Each fly visits a random patch and distributes those that survive the gut.
+
+        We don't bother taking away the eaten yeast because so few are eaten.
+
         """
 
+        # Make a list of all the populations and merge them into one big dictionary.
+        dict_list = []
         for patch in world.patches:
+            dict_list.append(patch.populations)
+        pool = helpers.sum_dicts(dict_list)
 
-            if not helpers.has_positive(patch.populations):
-                s = f"Patch {patch.id} is empty, cannot colonize."
-                logging.info(s)
-                return s
+        if self.reset_all_on_colonize:
+            for patch in world.patches:
+                self.reset_patch(patch)
 
-            # Randomly select from patch, with chance proportional to population size
-            source_id = random.choices(range(0, len(patch.populations)), weights=patch.populations)
-            target_id = random.choice(patch.neighbor_ids())
+        for i in range(0, self.num_flies):
 
-            # Move the individual
-            patch.populations[source_id] -= 1
-            patch.populations[target_id] += 1
+            # Now each fly picks up fly_size yeast cells
+            chosen = helpers.choose_k(self.fly_size, pool)
+
+            # Each chosen cell has chance of dying. Colonizers have lower chance.
+            survivors = []
+            for yeast in chosen:
+                if yeast == 'rv':
+                    if random.random() < self.death_prob_r:
+                        survivors.append(yeast)
+                elif yeast == 'kv':
+                    if random.random() < self.death_prob_v:
+                        survivors.append(yeast)
+                else:
+                    raise Exception(f"The yeast {yeast} is not 'rv' or 'rs'.")
+
+            # Choose a patch and drop the survivors into it.
+            drop_patch = random.choice(world.patches)
+            for yeast in survivors:
+                if yeast == 'rv':
+                    drop_patch.populations['rv'] += 1
+                elif yeast == 'kv':
+                    drop_patch.populations['kv'] += 1
 
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
@@ -68,47 +118,24 @@ class SimpleCompetitionColonization(Rules):
                 self.reset_patch(patch)
 
     def census(self, world):
-        for patch in world:
-            print(str(patch.populations))
+
+        print("\n")
+        print("=" * 30)
+
+        sum_r = 0
+        sum_k = 0
+        for patch in world.patches:
+            sum_r += patch.populations['rv']
+            sum_k += patch.populations['kv']
+        print(f"\nGEN {world.age} TOTALS: rv: {sum_r}, kv: {sum_k}")
+
+        print("\nIndividual Patch Populations")
+        for patch in world.patches:
+            print(f"Patch {patch.id}: {str(patch.populations)}")
 
     def stop_condition(self, world):
         return world.age > self.stop_time
-# Todo: this function isn't finished.
-def mush_and_redistribute(world):
-    """
-    This does three things.
-
-    1. Take a sum of all yeast strains.
-    2. Flies come eat some.
-    3. Each fly visits a random patch and distributes those that survive the gut.
-
-    Currently the function assumes that all patches die during it.
-
-    """
-    # Make a list of all the individuals and merge them into one big dictionary.
-    dict_list = []
-    for patch in world:
-        dict_list.append(patch.individuals)
-    merged_dict = sum_dicts(dict_list)
-
-    # Reset all patches, make sure that the individuals are set correctly
-
-    # Now for each patch the fly will pick some yeast up, digest some, and drop the survivors in a random patch.
-    def num_flies():
-        """ Function to generate a number of flies. """
-        return 10
-
-    def pickup(dict):
-        pass
-
-    for i in range(0, num_flies()):
-        hitchhikers = pickup(merged_dict)
-        hitchhikers[0] *= .2  # 20% of competitors survive the gut
-        hitchhikers[1] *= .8  # 80% of colonizers survive
-
-        # Drop off hitchhikers to new patch
-        drop_patch = random.choice(world.patches)
-        drop_patch.individuals['Competitors'] = hitchhikers[0]
-        drop_patch.individuals['Colonizers'] = hitchhikers[1]
 
 
+if __name__ == "__main__":
+    run(SimpleCompetitionColonization())

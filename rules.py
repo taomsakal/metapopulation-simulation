@@ -11,6 +11,9 @@ class Rules:
         A function to set the initial conditions of the world, AFTER the default conditions have been set.
 
         Examples: After all patches have defaulted to empty, set one patch to be filled.
+
+        Warnings: This happens after the patches are initialized, and can override the initial_populations
+        parameter of a patch.
         """
 
         logging.warning(f"set_initial_conditions() for world {world.name} does nothing.")

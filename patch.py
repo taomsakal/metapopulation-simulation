@@ -11,6 +11,7 @@ Any other attributes should be defined during patch creation. This can be done w
 """
 
 import logging
+import random
 from collections import Callable
 from general import pass_
 
@@ -29,7 +30,6 @@ class Patch:
         self.id = id_
         self.patch_update = world.rules.patch_update
         self.world = world
-
 
         # Setup the patches
         self.reset_patch = world.rules.reset_patch
@@ -89,6 +89,26 @@ class Patch:
 
         neighbors = self.world.worldmap[self.id]  # This goes to the worldmap adjacency matrix to find all neighbors
         return list(neighbors)
+
+    def random_neighbor(self):
+        """ Returns a random neighboring patch """
+
+        ids = self.neighbor_ids()
+
+        # If no neighbors return None
+        if not ids:
+            return None
+
+        id = random.choice(ids)
+        return self.world.patches[id]
+
+    def random_neighbors(self, n):
+        """ Returns n random neighbor patches, without duplicates """
+
+        l = []
+        for i in range(0, n):
+            l.append(self.random_neighbor())
+        return l
 
     def change_update_function(self, func):
         """

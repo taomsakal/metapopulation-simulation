@@ -13,32 +13,35 @@ The Simulation itself is an object. This is so we can stop it, save it, and then
 import logging
 import networkx as nx
 from world import World
-from simrules.one_species import OneSpecies
+from simrules.NStrainsSimple import NStrainsSimple
 
 
 def simulate(world):
     """
     Run the simulation on the world.
+    Remember that each world has it's own set of rules.
     """
 
-    while not world.rules.stop_condition():
+    world.rules.set_initial_conditions(world)
+    while not world.rules.stop_condition(world):
+        world.rules.census(world)
+        world.rules.colonize(world)
         world.update_patches()
-        world.colonize()
-        world.kill_patches()
-        world.census()
+        world.rules.kill_patches(world)
         world.age += 1
 
+    world.rules.census(world)
     logging.info(f"Finished simulating world {world.name}")
     return world
 
 
-if __name__ == "__main__":
+def run(rules, log_name='simulation.log'):
     """ Run the program. """
 
     logging.basicConfig(filename='simulation.log', level=logging.INFO)
     logging.info('Started')
 
-    world1 = World(OneSpecies(3, nx.complete_graph(10), 0.1, [1.1], 1000))
-    simulate(world1)
+    world = World(rules)
+    simulate(world)
 
     logging.info('Finished')
