@@ -4,6 +4,30 @@ Functions to help construct the simrules.
 import random
 
 
+def typeIIresponse(resource_density, attack_rate, holding_time, max_=float('inf'), min_=0):
+    """
+    Returns the number of prey eaten, according to a type II functional response.
+
+    Args:
+        min: The minimum number that can be returned
+        max: The maximum number that can be returned
+        resource_density: Resource density
+        attack_rate: The attack rate of predator
+        holding_time: The holding time of the predator
+
+    Returns:
+        A float
+
+    """
+
+
+    num = (attack_rate * resource_density) / (1 + attack_rate * holding_time * resource_density)
+
+    num = min(num, max_)
+    num = max(min_, num)
+
+    return num
+
 def sum_dicts(l):
     """
     Takes a list of dicts and merges them, summing any overlaps. Assumes that the dicts have values that are numbers.

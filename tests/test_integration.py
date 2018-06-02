@@ -27,7 +27,7 @@ class TestNStrainsSimple:
 
         for i in range(0, 10):
 
-            world = World(NStrainsSimple(2, nx.complete_graph(10), 0.5, 1.1, 1000))
+            world = World(NStrainsSimple(2, nx.complete_graph(10), 0.5, 1.1, 500))
             main.simulate(world)
 
             for patch in world.patches:
@@ -38,12 +38,12 @@ class TestNStrainsSimple:
         """ See if crashes during a long run or a heavy one"""
 
         # Long run
-        world = World(NStrainsSimple(20, nx.complete_graph(10), 0.05, 1.0001, 10000))
+        world = World(NStrainsSimple(20, nx.complete_graph(5), 0.05, 1.0001, 100))
         main.simulate(world)
         assert True
 
         # High node run
-        world = World(NStrainsSimple(80, nx.path_graph(1000), 0.05, 1.0001, 100))
+        world = World(NStrainsSimple(81, nx.path_graph(99), 0.05, 1.0001, 10))
         main.simulate(world)
         assert True
 
