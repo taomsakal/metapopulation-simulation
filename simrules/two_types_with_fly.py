@@ -79,7 +79,7 @@ class SimpleCompetitionColonization(Rules):
         dict_list = []
         for patch in world.patches:
             dict_list.append(patch.populations)
-        pool = helpers.sum_dicts(dict_list)
+        pool = helpers.merge_dicts(dict_list)
 
         if self.reset_all_on_colonize:
             for patch in world.patches:

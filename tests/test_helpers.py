@@ -44,10 +44,16 @@ def test_choose_k():
     assert 'c' in c
 
 
+def test_merge_dicts():
+    assert merge_dicts([{'a': 10, 'b': 10}, {'b': 2, 'c': 10}]) == {'a': 10, 'b': 12, 'c': 10}
 
 
-def test_sum_dicts():
-    assert sum_dicts([{'a': 10, 'b': 10}, {'b': 2, 'c': 10}]) == {'a': 10, 'b': 12, 'c': 10}
+def test_sum_dict():
+    assert sum_dict({}) == 0
+    assert sum_dict({'a': 0}) == 0
+    assert sum_dict({'a': 0, 'b': 1}) == 1
+    assert sum_dict({'a': 0, 'b': 1, 'c': 2}) == 3
+    assert sum_dict({'a': 0, 'b': 1, 'c': 2, 'd': .3}) == 3.3
 
 
 def test_has_positive():

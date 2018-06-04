@@ -29,25 +29,26 @@ class TwoStrain(Rules):
 
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
-        self.c = 0.2  # Consumption rate for resources.
-        self.alpha = 0.6  # Conversion factor for resources into cells
-        self.mu_v = 0.1  # Background death rate for vegetative cells
-        self.mu_s = 0.1  # Background death rate for sporulated cells
-        self.mu_R = 0.1  # "death" rate for resources.
-        self.gamma = 0.6  # Rate of resource renewal
+        self.c = 0.01  # Consumption rate for resources.
+        self.alpha = 0.2  # Conversion factor for resources into cells
+        self.mu_v = 0.2  # Background death rate for vegetative cells
+        self.mu_s = 0.5  # Background death rate for sporulated cells
+        self.mu_R = 0.01  # "death" rate for resources.
+        self.gamma = 1  # Rate of resource renewal
         self.kv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 1
+        self.resources = 200
         self.sk = 0.2  # Strategy of competitor. (Chance of sporulating)
         self.sr = 0.8
 
         # Global Parameters
-        self.worldmap = nx.complete_graph(3)  # The worldmap
-        self.prob_death = 0.05  # Probability of a patch dying.
+        self.dt = 1  # Timestep size
+        self.worldmap = nx.complete_graph(1)  # The worldmap
+        self.prob_death = 0.00  # Probability of a patch dying.
         self.stop_time = 1000  # Iterations to run
-        self.num_flies = 10  # Number of flies each colonization event
+        self.num_flies = 0  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -59,10 +60,10 @@ class TwoStrain(Rules):
     def set_initial_conditions(self, world):
         """ Give every patch 100 vegetative cells of both strains. """
         for patch in world.patches:
-            patch.populations['rv'] = 100
-            patch.populations['rs'] = 100
-            patch.populations['kv'] = 100
-            patch.populations['ks'] = 100
+            patch.populations['rv'] = 1
+            patch.populations['rs'] = 1
+            patch.populations['kv'] = 1
+            patch.populations['ks'] = 1
 
     def reset_patch(self, patch):
         """
@@ -96,7 +97,7 @@ class TwoStrain(Rules):
         # Calculate the changes in the populations and resources
         change_rv = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (1 - patch.sr) - patch.mu_v * \
                     patch.populations['rv']
-        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rs'] * (1 - patch.sr) - patch.mu_s * \
+        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rs'] * (patch.sr) - patch.mu_s * \
                     patch.populations['rs']
         change_kv = patch.alpha * patch.c * patch.resources * patch.populations['kv'] * (1 - patch.sk) - patch.mu_v * \
                     patch.populations['kv']
@@ -106,16 +107,19 @@ class TwoStrain(Rules):
                            patch.populations['rv'] + patch.gamma - patch.mu_R * patch.resources
 
         # Change the current population values.
-        patch.populations['rv'] += change_rv
-        patch.populations['rs'] += change_rs
-        patch.populations['kv'] += change_kv
-        patch.populations['ks'] += change_ks
+        patch.populations['rv'] += change_rv * self.dt
+        patch.populations['rs'] += change_rs * self.dt
+        patch.populations['kv'] += change_kv * self.dt
+        patch.populations['ks'] += change_ks * self.dt
         patch.resources += change_resources
 
         # make sure none become negative
         for key, value in patch.populations.items():
             if value < 0:
                 patch.populations[key] = 0
+
+        if patch.resources < 0:
+            patch.resources = 0
 
     def colonize(self, world):
         """
@@ -131,9 +135,9 @@ class TwoStrain(Rules):
         for i in range(0, self.num_flies):
 
             patch = random.choice(world.patches)  # Pick the random patch that the fly lands on
-            num_eaten = int(helpers.typeIIresponse(patch.resources, self.fly_attack_rate, self.fly_handling_time))
+            num_eaten = int(helpers.typeIIresponse(helpers.sum_dict(patch.populations), self.fly_attack_rate, self.fly_handling_time))
 
-            print(f"num_eaten for patch {patch.id}: {num_eaten}")
+            #print(f"num_eaten for patch {patch.id}: {num_eaten}")
 
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
@@ -143,8 +147,8 @@ class TwoStrain(Rules):
                 hitchhikers = random.choices(list(patch.populations.keys()), list(patch.populations.values()),
                                              k=num_eaten)
 
-                print(patch.populations)
-                print(hitchhikers)
+                #print(patch.populations)
+                #print(hitchhikers)
                 survivors = {'rv': 0, 'rs': 0, 'kv': 0, 'ks': 0}
                 for key in hitchhikers:
                     if key == 'rv':
@@ -164,7 +168,7 @@ class TwoStrain(Rules):
                 # If no neighbors then the fly vanishes
                 drop_patch = patch.random_neighbor()
                 if drop_patch is not None:
-                    drop_patch.populations = helpers.sum_dicts([drop_patch.populations, survivors])
+                    drop_patch.populations = helpers.merge_dicts([drop_patch.populations, survivors])
 
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
@@ -178,12 +182,14 @@ class TwoStrain(Rules):
         print("\n")
         print("=" * 30)
 
-        sum_dicts = helpers.sum_dicts([patch.populations for patch in world.patches])
+        sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
-        print("\nIndividual Patch Populations")
+        print("\nIndividual Patch Info")
         for patch in world.patches:
-            print(f"Patch {patch.id}: {str(patch.populations)}")
+            print(f"Patch {patch.id}")
+            # print(f"    Population: {str(patch.populations)}")
+            print(f"    Resources: {patch.resources}")
 
     def stop_condition(self, world):
         return world.age > self.stop_time

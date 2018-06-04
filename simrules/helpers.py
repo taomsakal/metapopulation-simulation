@@ -20,7 +20,6 @@ def typeIIresponse(resource_density, attack_rate, holding_time, max_=float('inf'
 
     """
 
-
     num = (attack_rate * resource_density) / (1 + attack_rate * holding_time * resource_density)
 
     num = min(num, max_)
@@ -28,7 +27,8 @@ def typeIIresponse(resource_density, attack_rate, holding_time, max_=float('inf'
 
     return num
 
-def sum_dicts(l):
+
+def merge_dicts(l):
     """
     Takes a list of dicts and merges them, summing any overlaps. Assumes that the dicts have values that are numbers.
 
@@ -91,4 +91,11 @@ def choose_k(k, dict_):
     return random.choices(keys, values, k=k)
 
 
+def sum_dict(dict_):
+    """ Sums all the values of a numeric-valued dictionary together. """
 
+    sum_ = 0
+    for value in dict_.values():
+        sum_ += value
+
+    return sum_
