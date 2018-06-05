@@ -2,6 +2,7 @@ from collections import defaultdict
 import random
 from main import run
 import networkx as nx
+from world import World
 import logging
 from simrules import helpers
 from rules import Rules
@@ -29,26 +30,26 @@ class TwoStrain(Rules):
 
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
-        self.c = 0.01  # Consumption rate for resources.
-        self.alpha = 0.2  # Conversion factor for resources into cells
-        self.mu_v = 0.2  # Background death rate for vegetative cells
-        self.mu_s = 0.5  # Background death rate for sporulated cells
+        self.c = 0.2  # Consumption rate for resources.
+        self.alpha = 0.2  # Conversion factor for resources into cells5
+        self.mu_v = 0.1  # Background death rate for vegetative cells
+        self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
-        self.gamma = 1  # Rate of resource renewal
+        self.gamma = 10  # Rate of resource renewal
         self.kv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
         self.resources = 200
         self.sk = 0.2  # Strategy of competitor. (Chance of sporulating)
-        self.sr = 0.8
+        self.sr = 0.4
 
         # Global Parameters
         self.dt = 1  # Timestep size
-        self.worldmap = nx.complete_graph(1)  # The worldmap
-        self.prob_death = 0.00  # Probability of a patch dying.
+        self.worldmap = nx.complete_graph(100)  # The worldmap
+        self.prob_death = 0.05  # Probability of a patch dying.
         self.stop_time = 1000  # Iterations to run
-        self.num_flies = 0  # Number of flies each colonization event
+        self.num_flies = 50  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -58,12 +59,15 @@ class TwoStrain(Rules):
         # Ie mush all current patches into a pool and redistribute to new patches.
 
     def set_initial_conditions(self, world):
-        """ Give every patch 100 vegetative cells of both strains. """
+        """ Give half the patches each strain. """
         for patch in world.patches:
-            patch.populations['rv'] = 1
-            patch.populations['rs'] = 1
-            patch.populations['kv'] = 1
-            patch.populations['ks'] = 1
+
+            if random.random() < .5:
+                patch.populations['rv'] = 30
+                patch.populations['rs'] = 30
+            else:
+                patch.populations['kv'] = 30
+                patch.populations['ks'] = 30
 
     def reset_patch(self, patch):
         """
@@ -97,11 +101,11 @@ class TwoStrain(Rules):
         # Calculate the changes in the populations and resources
         change_rv = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (1 - patch.sr) - patch.mu_v * \
                     patch.populations['rv']
-        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rs'] * (patch.sr) - patch.mu_s * \
+        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (patch.sr) - patch.mu_s * \
                     patch.populations['rs']
         change_kv = patch.alpha * patch.c * patch.resources * patch.populations['kv'] * (1 - patch.sk) - patch.mu_v * \
                     patch.populations['kv']
-        change_ks = patch.alpha * patch.c * patch.resources * patch.populations['ks'] * patch.sk - patch.mu_s * \
+        change_ks = patch.alpha * patch.c * patch.resources * patch.populations['kv'] * patch.sk - patch.mu_s * \
                     patch.populations['ks']
         change_resources = - patch.c * patch.resources * patch.populations['kv'] - patch.c * patch.resources * \
                            patch.populations['rv'] + patch.gamma - patch.mu_R * patch.resources
@@ -183,13 +187,14 @@ class TwoStrain(Rules):
         print("=" * 30)
 
         sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])
-        print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
         print("\nIndividual Patch Info")
         for patch in world.patches:
             print(f"Patch {patch.id}")
-            # print(f"    Population: {str(patch.populations)}")
+            print(f"    Population: {str(patch.populations)}")
             print(f"    Resources: {patch.resources}")
+
+        print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
     def stop_condition(self, world):
         return world.age > self.stop_time
@@ -197,4 +202,4 @@ class TwoStrain(Rules):
 
 if __name__ == "__main__":
 
-    run(TwoStrain())
+    run(World(TwoStrain()))

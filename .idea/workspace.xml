@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoTestManager">
+    <enabled-run-configurations>
+      <run-configuration type="tests" name="py.test in tests" />
+    </enabled-run-configurations>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d514c393-557d-4ec4-8641-13e6c7aaab0d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/historian.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general.py" beforeDir="false" afterPath="$PROJECT_DIR$/general.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/simrules/TwoStrain.py" beforeDir="false" afterPath="$PROJECT_DIR$/simrules/TwoStrain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simrules/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/simrules/helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simrules/two_types_with_fly.py" beforeDir="false" afterPath="$PROJECT_DIR$/simrules/two_types_with_fly.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_general.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_general.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_integration.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_integration.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,39 +27,42 @@
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_patch_TestSetup_test_init_list.coverage" NAME="py.test for test_patch.TestSetup.test_init_list Coverage Results" MODIFIED="1527119436311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_world_TestPatchUpdates_test_add_one.coverage" NAME="py.test for test_world.TestPatchUpdates.test_add_one Coverage Results" MODIFIED="1527206104848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_helpers_test_random_index_order.coverage" NAME="py.test for test_helpers.test_random_index_order Coverage Results" MODIFIED="1527625191694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_helpers_test_sum_dict.coverage" NAME="py.test for test_helpers.test_sum_dict Coverage Results" MODIFIED="1528147637116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CompetitionColonization$two_types_with_fly.coverage" NAME="two_types_with_fly Coverage Results" MODIFIED="1527880339442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simrules" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$two_types_with_fly.coverage" NAME="two_types_with_fly Coverage Results" MODIFIED="1527640184826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simrules" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_test_patch_py.coverage" NAME="py.test in test_patch.py Coverage Results" MODIFIED="1526337518175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_integration_TestNStrainsSimple_test_no_death.coverage" NAME="py.test for test_integration.TestNStrainsSimple.test_no_death Coverage Results" MODIFIED="1527626385798" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/.pytest_cache" />
-    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1528146816157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_tests.coverage" NAME="py.test in tests Coverage Results" MODIFIED="1528233476625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$world.coverage" NAME="world Coverage Results" MODIFIED="1527210341812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$main.coverage" NAME="main Coverage Results" MODIFIED="1527626034220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_integration_TestTwoStrain_test_equlibrium_small_dt.coverage" NAME="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt Coverage Results" MODIFIED="1528233806135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_general_test_within_percent.coverage" NAME="py.test for test_general.test_within_percent Coverage Results" MODIFIED="1528233414521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_integration_TestTwoStrain_test_equlibrium_patches.coverage" NAME="py.test for test_integration.TestTwoStrain.test_equlibrium_patches Coverage Results" MODIFIED="1528234436863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_test_world_py.coverage" NAME="py.test in test_world.py Coverage Results" MODIFIED="1526341637211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_integration_TestTwoStrain_test_equlibrium.coverage" NAME="py.test for test_integration.TestTwoStrain.test_equlibrium Coverage Results" MODIFIED="1528233469049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_test_helpers_py.coverage" NAME="py.test in test_helpers.py Coverage Results" MODIFIED="1527625374943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CompetitionColonization$TwoStrain.coverage" NAME="TwoStrain Coverage Results" MODIFIED="1528149807851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simrules" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$TwoStrain.coverage" NAME="TwoStrain Coverage Results" MODIFIED="1528235637692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simrules" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_patch_TestMap_test_neighbors.coverage" NAME="py.test for test_patch.TestMap.test_neighbors Coverage Results" MODIFIED="1526001802685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_for_test_world_test_make_world.coverage" NAME="py.test for test_world.test_make_world Coverage Results" MODIFIED="1526002361568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_test_integration_py.coverage" NAME="py.test in test_integration.py Coverage Results" MODIFIED="1527627492544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/.pytest_cache" />
+    <SUITE FILE_PATH="coverage/CompetitionColonization$py_test_in_test_integration_py.coverage" NAME="py.test in test_integration.py Coverage Results" MODIFIED="1528233122248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TwoStrain.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/simrules/TwoStrain.py">
+      <file leaf-file-name="rules.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="305">
+              <caret line="49" column="72" selection-start-line="49" selection-start-column="72" selection-end-line="49" selection-end-column="72" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="random.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/random.py">
+      <file leaf-file-name="test_general.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_general.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="359" selection-start-line="359" selection-end-line="359" />
+            <state relative-caret-position="260">
+              <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,8 +70,44 @@
       <file leaf-file-name="test_integration.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_integration.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="56" column="28" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+            <state relative-caret-position="2297">
+              <caret line="184" column="68" selection-start-line="184" selection-start-column="68" selection-end-line="184" selection-end-column="68" />
+              <folding>
+                <element signature="e#98#109#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="historian.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/historian.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="7" column="12" lean-forward="true" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="two_types_with_fly.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simrules/two_types_with_fly.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="12" column="33" selection-end-line="141" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TwoStrain.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/simrules/TwoStrain.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="200" lean-forward="true" selection-start-line="200" selection-end-line="200" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -69,22 +115,10 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="425">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#372#386#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="world.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/world.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
-              <folding>
-                <element signature="e#717#731#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,8 +127,8 @@
       <file leaf-file-name="general.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/general.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="345">
+              <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -102,8 +136,8 @@
       <file leaf-file-name="test_helpers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+            <state relative-caret-position="472">
+              <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -114,20 +148,11 @@
       <file leaf-file-name="patch.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/patch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="2360">
+              <caret line="121" selection-start-line="121" selection-end-line="121" />
               <folding>
                 <element signature="e#497#511#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helpers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simrules/helpers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -187,14 +212,14 @@
         <option value="$PROJECT_DIR$/simrules/NStrainsSimple.py" />
         <option value="$PROJECT_DIR$/patch.py" />
         <option value="$PROJECT_DIR$/tests/.pytest_cache/test_integration.py" />
+        <option value="$PROJECT_DIR$/tests/test_helpers.py" />
+        <option value="$PROJECT_DIR$/simrules/helpers.py" />
+        <option value="$PROJECT_DIR$/simrules/two_types_with_fly.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/general.py" />
         <option value="$PROJECT_DIR$/tests/test_general.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/simrules/two_types_with_fly.py" />
         <option value="$PROJECT_DIR$/tests/test_integration.py" />
-        <option value="$PROJECT_DIR$/simulation.log" />
-        <option value="$PROJECT_DIR$/simrules/helpers.py" />
-        <option value="$PROJECT_DIR$/tests/test_helpers.py" />
+        <option value="$PROJECT_DIR$/historian.py" />
         <option value="$PROJECT_DIR$/simrules/TwoStrain.py" />
       </list>
     </option>
@@ -209,7 +234,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="752" />
+    <option name="x" value="359" />
     <option name="y" value="-8" />
     <option name="width" value="1094" />
     <option name="height" value="1047" />
@@ -220,6 +245,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -252,15 +278,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/main.py&#10;test ge&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_general.py&#10;gener&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/general.py&#10;rul&#9;null&#9;null&#10;rules&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/testrules.py&#10;helper&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/helpers.py&#10;ru&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/rules.py&#10;wor&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/world.py&#10;two_t&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/two_types_with_fly.py&#10;one&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/one_species.py&#10;testru&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/testrules.py&#10;patch&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;gen&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/general.py&#10;sim&#9;null&#9;null&#10;test&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_world.py&#10;testp&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_patch.py&#10;pa&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;pat&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;worl&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/world.py" />
+    <property name="SearchEverywhereHistoryKey" value="gen&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/general.py&#10;test_ge&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_general.py&#10;main&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/main.py&#10;test ge&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_general.py&#10;gener&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/general.py&#10;rul&#9;null&#9;null&#10;rules&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/testrules.py&#10;helper&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/helpers.py&#10;ru&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/rules.py&#10;wor&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/world.py&#10;two_t&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/two_types_with_fly.py&#10;one&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/one_species.py&#10;testru&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/simrules/testrules.py&#10;patch&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;sim&#9;null&#9;null&#10;test&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_world.py&#10;testp&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/tests/test_patch.py&#10;pa&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;pat&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/patch.py&#10;worl&#9;FILE&#9;file://C:/Users/taois/Google Drive/Bio/CompetitionColonization/world.py" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -300,26 +324,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="two_types_with_fly" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="CompetitionColonization" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/simrules" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/simrules/two_types_with_fly.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="py.test for test_helpers.test_sum_dict" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="CompetitionColonization" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -331,23 +336,38 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_helpers.test_sum_dict&quot;" />
+      <option name="_new_target" value="&quot;test_integration.TestTwoStrain.test_equlibrium&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
-    <configuration name="py.test in test_integration.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_patches" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="CompetitionColonization" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/.pytest_cache" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_integration.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_integration.TestTwoStrain.test_equlibrium_patches&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="CompetitionColonization" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_integration.TestTwoStrain.test_equlibrium_small_dt&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
     <configuration name="py.test in tests" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="CompetitionColonization" />
@@ -365,19 +385,19 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <list>
+      <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium" />
       <item itemvalue="Python tests.py.test in tests" />
-      <item itemvalue="Python tests.py.test in test_integration.py" />
-      <item itemvalue="Python.two_types_with_fly" />
+      <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" />
+      <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium_patches" />
       <item itemvalue="Python.TwoStrain" />
-      <item itemvalue="Python tests.py.test for test_helpers.test_sum_dict" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.TwoStrain" />
-        <item itemvalue="Python tests.py.test for test_helpers.test_sum_dict" />
+        <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium_patches" />
+        <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" />
         <item itemvalue="Python tests.py.test in tests" />
-        <item itemvalue="Python.two_types_with_fly" />
-        <item itemvalue="Python tests.py.test in test_integration.py" />
+        <item itemvalue="Python tests.py.test for test_integration.TestTwoStrain.test_equlibrium" />
       </list>
     </recent_temporary>
   </component>
@@ -395,35 +415,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 01m 55s.xml">
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium - 2018.06.05 at 14h 17m 39s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium - 2018.06.05 at 14h 17m 50s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_tests - 2018.06.05 at 14h 18m 25s.xml">
       <configuration name="py.test in tests" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 03m 44s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_small_dt - 2018.06.05 at 14h 20m 26s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 04m 06s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_small_dt - 2018.06.05 at 14h 20m 57s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 04m 29s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_small_dt - 2018.06.05 at 14h 22m 38s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 04m 43s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_small_dt - 2018.06.05 at 14h 23m 29s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_small_dt" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 07m 53s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_patches - 2018.06.05 at 14h 23m 34s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_patches" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.01 at 12h 08m 11s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_patches - 2018.06.05 at 14h 24m 04s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_patches" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_tests - 2018.06.04 at 14h 13m 51s.xml">
-      <configuration name="py.test in tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_for_test_helpers_test_sum_dict - 2018.06.04 at 14h 27m 03s.xml">
-      <configuration name="py.test for test_helpers.test_sum_dict" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_for_test_helpers_test_sum_dict - 2018.06.04 at 14h 27m 18s.xml">
-      <configuration name="py.test for test_helpers.test_sum_dict" configurationId="tests" />
+    <history-entry file="py_test_for_test_integration_TestTwoStrain_test_equlibrium_patches - 2018.06.05 at 14h 34m 03s.xml">
+      <configuration name="py.test for test_integration.TestTwoStrain.test_equlibrium_patches" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -431,16 +451,15 @@
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32897604" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32897604" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
-      <window_info anchor="bottom" x="0" y="23" width="1920" height="1017" id="Run" order="2" type="WINDOWED" weight="0.28104576" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.28867102" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15938166" />
+      <window_info anchor="bottom" x="1920" y="-284" width="1050" height="1617" id="Run" order="2" type="WINDOWED" weight="0.39106753" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.28867102" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15458423" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -451,29 +470,30 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15138593" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32897604" />
       <window_info active="true" anchor="bottom" x="1920" y="-139" width="1050" height="1617" id="Run" order="2" type="WINDOWED" visible="true" weight="0.39106753" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32897604" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.28867102" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32897604" />
       <window_info anchor="right" id="SciView" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3409586" />
-      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32897604" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,13 +510,8 @@
           <line>79</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/simrules/TwoStrain.py</url>
-          <line>134</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -514,30 +529,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/simrules/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simrules/TwoStrain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1717">
-          <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/world.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="38" column="54" selection-start-line="38" selection-start-column="54" selection-end-line="38" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/patchupdate_functions.py" />
     <entry file="file://$PROJECT_DIR$/worldmap.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -545,6 +536,9 @@
           <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/patch.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -583,7 +577,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/1062215683/builtins.py" />
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/1062215683/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-74618">
+          <caret line="809" column="8" selection-start-line="809" selection-start-column="8" selection-end-line="809" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/worldmap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -631,6 +631,7 @@
     <entry file="file://$PROJECT_DIR$/patchupdate_functions.py" />
     <entry file="file://$PROJECT_DIR$/population.py" />
     <entry file="file://$PROJECT_DIR$/worldmap_setup_functions.py" />
+    <entry file="file://$PROJECT_DIR$/simulation.log" />
     <entry file="file://$PROJECT_DIR$/simrules/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -701,6 +702,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/world.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#717#731#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_patch.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1500">
@@ -722,113 +733,122 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="254" selection-start-line="254" selection-end-line="254" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/simrules/testrules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_general.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simrules/NStrainsSimple.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simrules/two_types_with_fly.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="139" column="26" lean-forward="true" selection-start-line="139" selection-start-column="26" selection-end-line="139" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_integration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="56" column="28" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
           <folding>
-            <element signature="e#372#386#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/patch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
-          <folding>
-            <element signature="e#497#511#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/random.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="359" selection-start-line="359" selection-end-line="359" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/general.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/world.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#717#731#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simrules/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+        <state relative-caret-position="120">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simrules/NStrainsSimple.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/patch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2360">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+          <folding>
+            <element signature="e#497#511#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+        <state relative-caret-position="472">
+          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/simrules/two_types_with_fly.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="12" column="33" selection-end-line="141" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="49" column="72" selection-start-line="49" selection-start-column="72" selection-end-line="49" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_general.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/general.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_integration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2297">
+          <caret line="184" column="68" selection-start-line="184" selection-start-column="68" selection-end-line="184" selection-end-column="68" />
+          <folding>
+            <element signature="e#98#109#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/historian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="12" lean-forward="true" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#372#386#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/simrules/TwoStrain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+        <state relative-caret-position="385">
+          <caret line="200" lean-forward="true" selection-start-line="200" selection-end-line="200" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

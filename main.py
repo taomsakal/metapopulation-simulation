@@ -35,13 +35,12 @@ def simulate(world):
     return world
 
 
-def run(rules, log_name='simulation.log'):
+def run(world, log_name='simulation.log'):
     """ Run the program. """
 
     logging.basicConfig(filename='simulation.log', level=logging.INFO)
     logging.info('Started')
 
-    world = World(rules)
     simulate(world)
 
     logging.info('Finished')
