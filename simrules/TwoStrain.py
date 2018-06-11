@@ -6,6 +6,7 @@ from world import World
 import logging
 from simrules import helpers
 from rules import Rules
+import general
 
 
 class TwoStrain(Rules):
@@ -55,6 +56,8 @@ class TwoStrain(Rules):
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
+        self.drop_single_yeast = True  # If true only pick one survivor to drop, instead of all
+        self.yeast_size = 0.01  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
 
@@ -143,13 +146,23 @@ class TwoStrain(Rules):
 
             #print(f"num_eaten for patch {patch.id}: {num_eaten}")
 
+            if self.drop_single_yeast:
+                num_eaten = 1
+                # todo: does having this before survival-probabilities effect the simulation?
+
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
 
 
-
-                hitchhikers = random.choices(list(patch.populations.keys()), list(patch.populations.values()),
+                try:
+                    hitchhikers = random.choices(list(patch.populations.keys()), list(patch.populations.values()),
                                              k=num_eaten)
+                except IndexError:
+                    if helpers.sum_dict(patch.populations) > 0:
+                        raise Exception(f"Cannot choose hitchikers in patch {patch.id} with population {patch.populations}")
+                    else:
+                        logging.info(f"Patch {patch.id} is empty, the fly dies a slow death of starvation...")
+                        hitchhikers = {}
 
                 #print(patch.populations)
                 #print(hitchhikers)
@@ -157,16 +170,16 @@ class TwoStrain(Rules):
                 for key in hitchhikers:
                     if key == 'rv':
                         if random.random() < self.rv_fly_survival:
-                            survivors['rv'] += 1
+                            survivors['rv'] += self.yeast_size
                     if key == 'rs':
                         if random.random() < self.rs_fly_survival:
-                            survivors['rs'] += 1
+                            survivors['rs'] += self.yeast_size
                     if key == 'kv':
                         if random.random() < self.kv_fly_survival:
-                            survivors['kv'] += 1
+                            survivors['kv'] += self.yeast_size
                     if key == 'ks':
                         if random.random() < self.ks_fly_survival:
-                            survivors['ks'] += 1
+                            survivors['ks'] += self.yeast_size
 
                 # Add the survivors to a random neighboring patch.
                 # If no neighbors then the fly vanishes
@@ -195,6 +208,8 @@ class TwoStrain(Rules):
             print(f"    Resources: {patch.resources}")
 
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
+
+
 
     def stop_condition(self, world):
         return world.age > self.stop_time

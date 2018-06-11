@@ -20,6 +20,7 @@ from general import pass_
 from patch import Patch
 from rules import Rules
 
+
 class World:
 
     def __init__(self, rules, name="World 1"):
@@ -35,11 +36,12 @@ class World:
         if not issubclass(type(rules), Rules):
             raise TypeError(f"The rules for {name} is of type {type(rules)}, which is not a subclass of Rules.")
 
-
         self.rules = rules
         self.name = name
         self.age = 0
         self.worldmap = rules.worldmap
+
+        self.history = {}  # A dictionary
 
         self.patches = self.init_patches(self.worldmap)
 

@@ -119,6 +119,9 @@ class SimpleCompetitionColonization(Rules):
 
     def census(self, world):
 
+        def record_history(world):
+            pass
+
         print("\n")
         print("=" * 30)
 
@@ -132,6 +135,11 @@ class SimpleCompetitionColonization(Rules):
         print("\nIndividual Patch Populations")
         for patch in world.patches:
             print(f"Patch {patch.id}: {str(patch.populations)}")
+
+    def record_history(self, world):
+        """ Records history to the world.history dictionary. """
+
+        pass
 
     def stop_condition(self, world):
         return world.age > self.stop_time
