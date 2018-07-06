@@ -142,9 +142,10 @@ class TwoStrain(Rules):
         for i in range(0, self.num_flies):
 
             patch = random.choice(world.patches)  # Pick the random patch that the fly lands on
-            num_eaten = int(helpers.typeIIresponse(helpers.sum_dict(patch.populations), self.fly_attack_rate, self.fly_handling_time))
+            num_eaten = int(helpers.typeIIresponse(helpers.sum_dict(patch.populations), self.fly_attack_rate,
+                                                   self.fly_handling_time))
 
-            #print(f"num_eaten for patch {patch.id}: {num_eaten}")
+            # print(f"num_eaten for patch {patch.id}: {num_eaten}")
 
             if self.drop_single_yeast:
                 num_eaten = 1
@@ -153,19 +154,19 @@ class TwoStrain(Rules):
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
 
-
                 try:
                     hitchhikers = random.choices(list(patch.populations.keys()), list(patch.populations.values()),
-                                             k=num_eaten)
+                                                 k=num_eaten)
                 except IndexError:
                     if helpers.sum_dict(patch.populations) > 0:
-                        raise Exception(f"Cannot choose hitchikers in patch {patch.id} with population {patch.populations}")
+                        raise Exception(
+                            f"Cannot choose hitchikers in patch {patch.id} with population {patch.populations}")
                     else:
                         logging.info(f"Patch {patch.id} is empty, the fly dies a slow death of starvation...")
                         hitchhikers = {}
 
-                #print(patch.populations)
-                #print(hitchhikers)
+                # print(patch.populations)
+                # print(hitchhikers)
                 survivors = {'rv': 0, 'rs': 0, 'kv': 0, 'ks': 0}
                 for key in hitchhikers:
                     if key == 'rv':
@@ -207,14 +208,16 @@ class TwoStrain(Rules):
             print(f"    Population: {str(patch.populations)}")
             print(f"    Resources: {patch.resources}")
 
+            f = open('save_data/patch_' + str(patch.id) + '.csv', 'a+')
+            f.write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
+                    str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
+                    str(patch.resources) + '\n')
+
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
-
-
 
     def stop_condition(self, world):
         return world.age > self.stop_time
 
 
 if __name__ == "__main__":
-
     run(World(TwoStrain()))

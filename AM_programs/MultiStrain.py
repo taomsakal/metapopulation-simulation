@@ -43,10 +43,9 @@ for i in range(1, numberStrains * 2 + 1):
 
 for i in range(1, n * 20 + 1):
     tspan = [time[i - 1], time[i]]
-    pop = scipy.integrate.odepack.odeint(multi_yeast_model, initialCondition, tspan, args=(growRS, eatChance,
-                                                                                           wiltChance, conversionRate,
-                                                                                           vDeathChance, sDeathChance,
-                                                                                           sporeChance))
+    pop = scipy.integrate.odepack.odeint(multi_yeast_model, initialCondition, tspan,
+                                         args=(growRS, eatChance, wiltChance, conversionRate, vDeathChance,
+                                               sDeathChance, sporeChance))
 
     for x in range(0, numberStrains * 2 + 1):
         results[x][i] = pop[1][x]
