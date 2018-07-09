@@ -1,0 +1,412 @@
+,Photo Date,Photo ID ,Photographed By,Date Plated,Plated By,"Date of Trial
+ (Monday)",Set ID,strain,Week Number,Replicate Number,# flies,Sex,"
+Plate Type (Treatment (T), Control (C), Grow out Treatment (GoT), Baseline (B))","Dilution         (10-2, 10-3, 10-4, 10-5)",Green Count,Red Count,Total CFU on Plate,count type (digital or analog),Counted By,Recorded By (Notebook),Recorded By (Computer),total consumption (24 hours mm),total consumption (48 hours mm),Total Consumption ,red means (spore or vegetative),green means  (spore or vegetative),green survival,red survival,Notes
+1,5/11/17,122 1702,FW,5/8/17,HB,5/8/17,,WE,6.0,1:1,,,B,10-3,68,40,108,analog,AZD,KMM,FW,,,,vegetative,spore,,,
+3,5/11/17,122 1703,FW,5/8/17,HB,5/8/17,,WE,6.0,1:1,,,B,10-4,20,5,25,analog,AZD,KMM,FW,,,,vegetative,spore,,,
+5,5/11/17,122 1704,FW,5/8/17,HB,5/8/17,,WE,6.0,1:1,,,B,10-5,0,0,0,analog,AZD,KMM,FW,,,,vegetative,spore,,,
+7,7/13/17,143 3270,FW,5/10/17,HMP,5/8/17,,WE,6.0,1,,,C,10-3,217,28,245,analog,BH,CK,FW,,,,vegetative,spore,,,
+9,7/13/17,143 3271,FW,5/10/17,HMP,5/8/17,,WE,6.0,1,,,C,10-4,11,5,16,analog,BH,CK,FW,,,,vegetative,spore,,,
+11,7/13/17,143 3272,FW,5/10/17,HMP,5/8/17,,WE,6.0,1,,,C,10-5,4,1,5,analog,BH,CK,,,,,vegetative,spore,,,
+13,7/13/17,143 3273,FW,5/10/17,HMP,5/8/17,,WE,6.0,2,,,C,10-3,137,10,147,analog,BH,CK,FW,,,,vegetative,spore,,,
+15,7/13/17,143 3274,FW,5/10/17,HMP,5/8/17,,WE,6.0,2,,,C,10-4,40,3,43,analog,BH,CK,FW,,,,vegetative,spore,,,
+17,7/13/17,143 3275,FW,5/10/17,HMP,5/8/17,,WE,6.0,2,,,C,10-5,3,0,3,analog,BH,CK,,,,,vegetative,spore,,,
+19,7/13/17,143 3276,FW,5/10/17,HMP,5/8/17,,WE,6.0,3,,,C,10-3,430,30,460,analog,BH,CK,FW,,,,vegetative,spore,,,
+21,7/13/17,143 3277,FW,5/10/17,HMP,5/8/17,,WE,6.0,3,,,C,10-4,55,3,58,analog,BH,CK,FW,,,,vegetative,spore,,,
+23,7/13/17,143 3278,FW,5/10/17,HMP,5/8/17,,WE,6.0,3,,,C,10-5,1,0,1,analog,BH,CK,,,,,vegetative,spore,,,
+25,7/13/17,143 3279,FW,5/10/17,HMP,5/8/17,,WE,6.0,4,,,C,10-3,604,36,640,analog,,SLD,FW,,,,vegetative,spore,,,
+27,7/13/17,143 3280,FW,5/10/17,HMP,5/8/17,,WE,6.0,4,,,C,10-4,52,2,54,analog,,SLD,FW,,,,vegetative,spore,,,
+29,7/13/17,143 3281,FW,5/10/17,HMP,5/8/17,,WE,6.0,4,,,C,10-5,12,2,14,analog,,SLD,FW,,,,vegetative,spore,,,
+31,7/13/17,143 3282,FW,5/10/17,HMP,5/8/17,,WE,6.0,5,,,C,10-3,259,17,276,analog,,SLD,FW,,,,vegetative,spore,,,
+33,7/13/17,143 3283,FW,5/10/17,HMP,5/8/17,,WE,6.0,5,,,C,10-4,60,5,65,analog,,SLD,FW,,,,vegetative,spore,,,
+35,7/13/17,143 3284,FW,5/10/17,HMP,5/8/17,,WE,6.0,5,,,C,10-5,4,0,4,analog,,SLD,FW,,,,vegetative,spore,,,
+37,7/13/17,143 3285,FW,5/10/17,HMP,5/8/17,,WE,6.0,6,,,C,10-3,260,25,285,analog,,SLD,FW,,,,vegetative,spore,,,
+39,7/13/17,143 3286,FW,5/10/17,HMP,5/8/17,,WE,6.0,6,,,C,10-4,61,4,65,analog,,SLD,FW,,,,vegetative,spore,,,
+41,7/13/17,143 3287,FW,5/10/17,HMP,5/8/17,,WE,6.0,6,,,C,10-5,12,0,12,analog,,SLD,FW,,,,vegetative,spore,,,
+43,6/14/17,137 2757,,5/10/17,HMP,5/8/17,,WE,6.0,7,,,C,10-3,208,10,218,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+45,6/14/17,137 2756,,5/10/17,HMP,5/8/17,,WE,6.0,7,,,C,10-4,36,3,39,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+47,6/14/17,137 2755,,5/10/17,HMP,5/8/17,,WE,6.0,7,,,C,10-5,3,0,3,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+49,6/14/17,137 2752,,5/10/17,HMP,5/8/17,,WE,6.0,8,,,C,10-3,299,24,323,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+51,6/14/17,137 2751,,5/10/17,HMP,5/8/17,,WE,6.0,8,,,C,10-4,28,2,30,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+53,6/14/17,138 2749,,5/10/17,HMP,5/8/17,,WE,6.0,8,,,C,10-5,10,3,13,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+55,6/14/17,137 2744,,5/10/17,HMP,5/8/17,,WE,6.0,9,,,C,10-3,259,28,287,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+57,6/14/17,137 2745,,5/10/17,HMP,5/8/17,,WE,6.0,9,,,C,10-4,79,9,88,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+59,6/14/17,137 2746,,5/10/17,HMP,5/8/17,,WE,6.0,9,,,C,10-5,12,1,13,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+61,6/9/17,136 2690,,5/10/17,HMP,5/8/17,,WE,6.0,10,,,C,10-3,129,3,132,analog,,SLD,FW,,,,vegetative,spore,,,
+63,6/9/17,136 2691,,5/10/17,HMP,5/8/17,,WE,6.0,10,,,C,10-4,27,6,33,analog,,SLD,FW,,,,vegetative,spore,,,
+65,6/9/17,136 2692,,5/10/17,HMP,5/8/17,,WE,6.0,10,,,C,10-5,2,0,2,analog,,SLD,FW,,,,vegetative,spore,,,
+67,6/9/17,136 2686,,5/10/17,HMP,5/8/17,,WE,6.0,11,,,C,10-3,850,40,890,analog,,SLD,FW,,,,vegetative,spore,,,
+69,6/9/17,136 2688,,5/10/17,HMP,5/8/17,,WE,6.0,11,,,C,10-4,68,9,77,analog,,SLD,FW,,,,vegetative,spore,,,
+71,6/9/17,136 2689,,5/10/17,HMP,5/8/17,,WE,6.0,11,,,C,10-5,11,0,11,analog,,SLD,FW,,,,vegetative,spore,,,
+73,6/9/17,136 2680,,5/10/17,HMP,5/8/17,,WE,6.0,12,,,C,10-3,1045,88,1133,analog,,SLD,FW,,,,vegetative,spore,,,
+75,6/9/17,136 2681,,5/10/17,HMP,5/8/17,,WE,6.0,12,,,C,10-4,107,5,112,analog,,SLD,FW,,,,vegetative,spore,,,
+77,6/9/17,136 2685,,5/10/17,HMP,5/8/17,,WE,6.0,12,,,C,10-5,8,0,8,analog,,SLD,FW,,,,vegetative,spore,,,
+79,5/12/17,123 1768,,5/10/17,HMP,5/8/17,,WE,6.0,13,,,C,10-3,181,4,185,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+81,5/12/17,123 1769,,5/10/17,HMP,5/8/17,,WE,6.0,13,,,C,10-4,45,9,54,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+83,5/12/17,123 1770 ,,5/10/17,HMP,5/8/17,,WE,6.0,13,,,C,10-5,5,0,5,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+85,5/12/17,123 1771 ,,5/10/17,HMP,5/8/17,,WE,6.0,14,,,C,10-3,814,56,870,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+87,5/12/17,123 1772,,5/10/17,HMP,5/8/17,,WE,6.0,14,,,C,10-4,114,13,127,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+89,5/12/17,123 1773,,5/10/17,HMP,5/8/17,,WE,6.0,14,,,C,10-5,230,0,230,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+91,5/12/17,123 1774,,5/10/17,HMP,5/8/17,,WE,6.0,15,,,C,10-3,404,19,423,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,contaminated
+93,5/12/17,123 1775,,5/10/17,HMP,5/8/17,,WE,6.0,15,,,C,10-4,65,3,68,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+95,5/12/17,123 1777,,5/10/17,HMP,5/8/17,,WE,6.0,15,,,C,10-5,16,0,16,analog,DC,"KL, KMM",FW,,,,vegetative,spore,,,
+97,5/15/17,124 1778,,5/10/17,UR,5/8/17,,WE,6.0,1,,F,T,10-2,33,214,247,analog,ST,HB,FW,17.0,25.0,21.0,vegetative,spore,,,
+99,5/15/17,124 1779 ,,5/10/17,UR,5/8/17,,WE,6.0,1,,F,T,10-3,357,70,427,analog,ST,HB,FW,17.0,25.0,21.0,vegetative,spore,,,contaminated
+101,5/15/17,124 1780,,5/10/17,UR,5/8/17,,WE,6.0,1,,F,T,10-4,841,56,897,analog,ST,HB,FW,17.0,25.0,21.0,vegetative,spore,,,
+103,5/15/17,124 1781,,5/10/17,UR,5/8/17,,WE,6.0,2,,F,T,10-2,67,43,110,analog,ST,HB,FW,24.0,33.0,28.5,vegetative,spore,,,contaminated
+105,5/15/17,124 1782,,5/10/17,UR,5/8/17,,WE,6.0,2,,F,T,10-3,nan,nan,0,analog,,,,24.0,33.0,28.5,vegetative,spore,,,
+107,5/15/17,124 1783,,5/10/17,UR,5/8/17,,WE,6.0,2,,F,T,10-4,585,98,683,analog,ST,HB,FW,24.0,33.0,28.5,vegetative,spore,,,contaminated
+109,5/15/17,124 1784,,5/10/17,UR,5/8/17,,WE,6.0,3,,F,T,10-2,76,512,588,analog,ST,HB,FW,36.0,63.0,49.5,vegetative,spore,,,contaminated
+111,5/15/17,124 1785,,5/10/17,UR,5/8/17,,WE,6.0,3,,F,T,10-3,580,94,674,analog,ST,HB,FW,36.0,63.0,49.5,vegetative,spore,,,
+113,5/15/17,124 1786,,5/10/17,UR,5/8/17,,WE,6.0,3,,F,T,10-4,687,77,764,analog,ST,HB,FW,36.0,63.0,49.5,vegetative,spore,,,contaminated
+115,5/15/17,124 1787,,5/10/17,UR,5/8/17,,WE,6.0,4,,F,T,10-2,453,11,464,analog,,SLD,FW,16.0,39.0,27.5,vegetative,spore,,,contaminated
+117,5/15/17,124 1788,,5/10/17,UR,5/8/17,,WE,6.0,4,,F,T,10-3,1270,553,1823,analog,,SLD,FW,16.0,39.0,27.5,vegetative,spore,,,contaminated
+119,5/15/17,124 1789,,5/10/17,UR,5/8/17,,WE,6.0,4,,F,T,10-4,914,206,1120,analog,,SLD,FW,16.0,39.0,27.5,vegetative,spore,,,contaminated
+121,5/15/17,124 1790 ,,5/10/17,UR,5/8/17,,WE,6.0,5,,F,T,10-2,685,334,1019,analog,,SLD,FW,23.0,33.0,28.0,vegetative,spore,,,contaminated
+123,5/15/17,124 1791 ,,5/10/17,UR,5/8/17,,WE,6.0,5,,F,T,10-3,684,59,743,analog,,SLD,FW,23.0,33.0,28.0,vegetative,spore,,,contaminated
+125,5/15/17,124 1792 ,,5/10/17,UR,5/8/17,,WE,6.0,5,,F,T,10-4,513,61,574,analog,,SLD,FW,23.0,33.0,28.0,vegetative,spore,,,contaminated
+127,5/15/17,124 1793 ,,5/10/17,UR,5/8/17,,WE,6.0,6,,F,T,10-2,55,161,216,analog,,SLD,FW,16.0,26.0,21.0,vegetative,spore,,,contaminated
+129,5/15/17,124 1794 ,,5/10/17,UR,5/8/17,,WE,6.0,6,,F,T,10-3,431,60,491,analog,,SLD,FW,16.0,26.0,21.0,vegetative,spore,,,
+131,5/15/17,124 1795 ,,5/10/17,UR,5/8/17,,WE,6.0,6,,F,T,10-4,381,64,445,analog,,SLD,FW,16.0,26.0,21.0,vegetative,spore,,,contaminated
+133,5/15/17,124 1796,,5/10/17,UR,5/8/17,,WE,6.0,7,,F,T,10-2,130,6,136,analog,DC,KMM,FW,50.0,71.0,60.5,vegetative,spore,,,contaminated
+135,5/15/17,124 1797 ,,5/10/17,UR,5/8/17,,WE,6.0,7,,F,T,10-3,430,40,470,analog,DC,KMM,FW,50.0,71.0,60.5,vegetative,spore,,,contaminated
+137,5/15/17,124 1798 ,,5/10/17,UR,5/8/17,,WE,6.0,7,,F,T,10-4,288,38,326,analog,DC,KMM,FW,50.0,71.0,60.5,vegetative,spore,,,contaminated
+139,5/15/17,124 1799 ,,5/10/17,UR,5/8/17,,WE,6.0,8,,F,T,10-2,77,0,77,analog,DC,KMM,FW,37.0,50.0,43.5,vegetative,spore,,,contaminated
+141,5/15/17,124 1800,,5/10/17,UR,5/8/17,,WE,6.0,8,,F,T,10-3,356,66,422,analog,DC,KMM,FW,37.0,50.0,43.5,vegetative,spore,,,contaminated
+143,5/15/17,124 1801 ,,5/10/17,UR,5/8/17,,WE,6.0,8,,F,T,10-4,55,3,58,analog,DC,KMM,FW,37.0,50.0,43.5,vegetative,spore,,,contaminated
+145,5/15/17,124 1802,,5/10/17,UR,5/8/17,,WE,6.0,9,,F,T,10-2,40,3,43,analog,DC,KMM,FW,11.0,20.0,15.5,vegetative,spore,,,contaminated
+147,5/15/17,124 1803 ,,5/10/17,UR,5/8/17,,WE,6.0,9,,F,T,10-3,340,59,399,analog,DC,KMM,FW,11.0,20.0,15.5,vegetative,spore,,,contaminated
+149,5/15/17,124 1804 ,,5/10/17,UR,5/8/17,,WE,6.0,9,,F,T,10-4,73,2,75,analog,DC,KMM,FW,11.0,20.0,15.5,vegetative,spore,,,contaminated
+151,5/15/17,124 1805,,5/10/17,UR,5/8/17,,WE,6.0,10,,F,T,10-2,34,4,38,analog,BC,KMM,FW,27.0,38.0,32.5,vegetative,spore,,,contaminated
+153,5/15/17,124 1806,,5/10/17,UR,5/8/17,,WE,6.0,10,,F,T,10-3,327,23,350,analog,BC,KMM,FW,27.0,38.0,32.5,vegetative,spore,,,contaminated
+155,5/15/17,124 1807 ,,5/10/17,UR,5/8/17,,WE,6.0,10,,F,T,10-4,59,6,65,analog,BC,KMM,FW,27.0,38.0,32.5,vegetative,spore,,,contaminated
+157,5/15/17,124 1808,,5/10/17,UR,5/8/17,,WE,6.0,11,,F,T,10-2,6,53,59,analog,BH,AZD,FW,16.0,33.0,24.5,vegetative,spore,,,contaminated
+159,5/15/17,124 1810 ,,5/10/17,UR,5/8/17,,WE,6.0,11,,F,T,10-3,57,10,67,analog,BH,AZD,FW,16.0,33.0,24.5,vegetative,spore,,,contaminated
+161,5/15/17,124 1811 ,,5/10/17,UR,5/8/17,,WE,6.0,11,,F,T,10-4,69,7,76,analog,BH,AZD,FW,16.0,33.0,24.5,vegetative,spore,,,contaminated
+163,5/15/17,124 1812 ,,5/10/17,UR,5/8/17,,WE,6.0,12,,F,T,10-2,372,46,418,analog,BH,AZD,FW,12.0,43.0,27.5,vegetative,spore,,,contaminated
+165,5/15/17,124 1813,,5/10/17,UR,5/8/17,,WE,6.0,12,,F,T,10-3,299,32,331,analog,BH,AZD,FW,12.0,43.0,27.5,vegetative,spore,,,contaminated
+167,5/15/17,124 1814 ,,5/10/17,UR,5/8/17,,WE,6.0,12,,F,T,10-4,89,14,103,analog,BC,KMM,FW,12.0,43.0,27.5,vegetative,spore,,,contaminated
+169,5/15/17,124 1815 ,,5/10/17,UR,5/8/17,,WE,6.0,13,,F,T,10-2,672,154,826,analog,ST,FW,FW,15.0,22.0,18.5,vegetative,spore,,,contaminated
+171,5/15/17,124 1816 ,,5/10/17,UR,5/8/17,,WE,6.0,13,,F,T,10-3,221,15,236,analog,ST,FW,FW,15.0,22.0,18.5,vegetative,spore,,,contaminated
+173,5/15/17,124 1817,,5/10/17,UR,5/8/17,,WE,6.0,13,,F,T,10-4,125,9,134,analog,ST,FW,FW,15.0,22.0,18.5,vegetative,spore,,,
+175,5/15/17,124 1818 ,,5/10/17,UR,5/8/17,,WE,6.0,14,,F,T,10-2,538,76,614,analog,ST,FW,FW,22.0,36.0,29.0,vegetative,spore,,,contaminated
+177,5/15/17,124 1819,,5/10/17,UR,5/8/17,,WE,6.0,14,,F,T,10-3,526,79,605,analog,ST,FW,FW,22.0,36.0,29.0,vegetative,spore,,,
+179,5/15/17,124 1820,,5/10/17,UR,5/8/17,,WE,6.0,14,,F,T,10-4,104,9,113,analog,ST,FW,FW,22.0,36.0,29.0,vegetative,spore,,,
+181,5/15/17,124 1821,,5/10/17,UR,5/8/17,,WE,6.0,15,,F,T,10-2,2115,724,2839,analog,ST,FW,FW,35.0,49.0,42.0,vegetative,spore,,,
+183,5/15/17,124 1822,,5/10/17,UR,5/8/17,,WE,6.0,15,,F,T,10-3,1016,180,1196,analog,ST,FW,FW,35.0,49.0,42.0,vegetative,spore,,,
+185,5/15/17,124 1823,,5/10/17,UR,5/8/17,,WE,6.0,15,,F,T,10-4,187,22,209,analog,ST,FW,FW,35.0,49.0,42.0,vegetative,spore,,,
+187,5/15/17,124 1824,,5/10/17,HMP,5/8/17,,WE,6.0,16,,F,T,10-2,2,0,2,analog,,HB,,24.0,39.0,31.5,vegetative,spore,,,
+189,5/15/17,124 1825,,5/10/17,HMP,5/8/17,,WE,6.0,16,,F,T,10-3,2,0,2,analog,,HB,,24.0,39.0,31.5,vegetative,spore,,,
+191,5/15/17,124 1874,,5/10/17,HMP,5/8/17,,WE,6.0,16,,F,T,10-4,0,0,0,analog,,HB,,24.0,39.0,31.5,vegetative,spore,,,contaminated
+193,5/15/17,124 1827,,5/10/17,HMP,5/8/17,,WE,6.0,17,,F,T,10-2,0,0,0,analog,,HB,,13.0,20.0,16.5,vegetative,spore,,,
+195,5/15/17,124 1828,,5/10/17,HMP,5/8/17,,WE,6.0,17,,F,T,10-3,0,0,0,analog,,HB,,13.0,20.0,16.5,vegetative,spore,,,
+197,5/15/17,124 1877,,5/10/17,HMP,5/8/17,,WE,6.0,17,,F,T,10-4,0,0,0,analog,,HB,,13.0,20.0,16.5,vegetative,spore,,,contaminated
+199,5/15/17,124 1831,,5/10/17,HMP,5/8/17,,WE,6.0,18,,F,T,10-2,18,0,18,analog,,HB,,18.0,32.0,25.0,vegetative,spore,,,contaminated
+201,5/15/17,124 1832,,5/10/17,HMP,5/8/17,,WE,6.0,18,,F,T,10-3,0,0,0,analog,,HB,,18.0,32.0,25.0,vegetative,spore,,,contaminated
+203,5/15/17,124 1882,,5/10/17,HMP,5/8/17,,WE,6.0,18,,F,T,10-4,0,0,0,analog,,HB,,18.0,32.0,25.0,vegetative,spore,,,contaminated
+205,5/15/17,124 1835,,5/10/17,HMP,5/8/17,,WE,6.0,19,,F,T,10-2,5,0,5,analog,,KMM,,25.0,30.0,27.5,vegetative,spore,,,tiny colonies
+207,5/15/17,124 1836,,5/10/17,HMP,5/8/17,,WE,6.0,19,,F,T,10-3,0,0,0,analog,,KMM,,25.0,30.0,27.5,vegetative,spore,,,
+209,5/15/17,124 1885,,5/10/17,HMP,5/8/17,,WE,6.0,19,,F,T,10-4,0,0,0,analog,,KMM,,25.0,30.0,27.5,vegetative,spore,,,
+211,5/15/17,124 1838,,5/10/17,HMP,5/8/17,,WE,6.0,20,,F,T,10-2,9,0,9,analog,,KMM,,21.0,38.0,29.5,vegetative,spore,,,
+213,5/15/17,124 1839,,5/10/17,HMP,5/8/17,,WE,6.0,20,,F,T,10-3,1,0,1,analog,,KMM,,21.0,38.0,29.5,vegetative,spore,,,
+215,5/15/17,124 1888,,5/10/17,HMP,5/8/17,,WE,6.0,20,,F,T,10-4,0,0,0,analog,,KMM,,21.0,38.0,29.5,vegetative,spore,,,contaminated
+217,5/15/17,124 1841,,5/10/17,HMP,5/8/17,,WE,6.0,21,,F,T,10-2,7,0,7,analog,,KMM,,15.0,35.0,25.0,vegetative,spore,,,
+219,5/15/17,124 1842,,5/10/17,HMP,5/8/17,,WE,6.0,21,,F,T,10-3,0,0,0,analog,,KMM,,15.0,35.0,25.0,vegetative,spore,,,
+221,5/15/17,124 1891,,5/10/17,HMP,5/8/17,,WE,6.0,21,,F,T,10-4,0,0,0,analog,,KMM,,15.0,35.0,25.0,vegetative,spore,,,
+223,5/15/17,124 1844,,5/10/17,HMP,5/8/17,,WE,6.0,22,,F,T,10-2,0,54,54,analog,ST,HB,,21.0,30.0,25.5,vegetative,spore,,,
+225,5/15/17,124 1845,,5/10/17,HMP,5/8/17,,WE,6.0,22,,F,T,10-3,6,0,6,analog,ST,HB,,21.0,30.0,25.5,vegetative,spore,,,
+227,5/15/17,124 1895,,5/10/17,HMP,5/8/17,,WE,6.0,22,,F,T,10-4,2,0,2,analog,ST,HB,,21.0,30.0,25.5,vegetative,spore,,,
+229,5/15/17,124 1847,,5/10/17,HMP,5/8/17,,WE,6.0,23,,F,T,10-2,6,0,6,analog,ST,HB,,16.0,24.0,20.0,vegetative,spore,,,
+231,5/15/17,124 1849,,5/10/17,HMP,5/8/17,,WE,6.0,23,,F,T,10-3,0,0,0,analog,ST,HB,,16.0,24.0,20.0,vegetative,spore,,,
+233,5/15/17,124 1898,,5/10/17,HMP,5/8/17,,WE,6.0,23,,F,T,10-4,0,0,0,analog,ST,HB,,16.0,24.0,20.0,vegetative,spore,,,
+235,5/15/17,124 1851,,5/10/17,HMP,5/8/17,,WE,6.0,24,,F,T,10-2,11,49,60,analog,HB,HB,,22.0,40.0,31.0,vegetative,spore,,,contaminated
+237,5/15/17,124 1852,,5/10/17,HMP,5/8/17,,WE,6.0,24,,F,T,10-3,0,9,9,analog,HB,HB,,22.0,40.0,31.0,vegetative,spore,,,contaminated
+239,5/15/17,124 1901,,5/10/17,HMP,5/8/17,,WE,6.0,24,,F,T,10-4,8,0,8,analog,ST,HB,,22.0,40.0,31.0,vegetative,spore,,,
+241,5/15/17,124 1854,,5/10/17,HMP,5/8/17,,WE,6.0,25,,F,T,10-2,5,19,24,analog,ST,SLD,,27.0,44.0,35.5,vegetative,spore,,,
+243,5/15/17,124 1855,,5/10/17,HMP,5/8/17,,WE,6.0,25,,F,T,10-3,1,0,1,analog,ST,SLD,,27.0,44.0,35.5,vegetative,spore,,,
+245,5/15/17,124 1904,,5/10/17,HMP,5/8/17,,WE,6.0,25,,F,T,10-4,34,0,34,analog,ST,SLD,,27.0,44.0,35.5,vegetative,spore,,,
+247,5/15/17,124 1857,,5/10/17,HMP,5/8/17,,WE,6.0,26,,F,T,10-2,11,8,19,analog,ST,SLD,,22.0,34.0,28.0,vegetative,spore,,,contaminated
+249,5/15/17,124 1858,,5/10/17,HMP,5/8/17,,WE,6.0,26,,F,T,10-3,2,0,2,analog,ST,SLD,,22.0,34.0,28.0,vegetative,spore,,,contaminated
+251,5/15/17,124 1907,,5/10/17,HMP,5/8/17,,WE,6.0,26,,F,T,10-4,0,0,0,analog,ST,SLD,,22.0,34.0,28.0,vegetative,spore,,,
+253,5/15/17,124 1860,,5/10/17,HMP,5/8/17,,WE,6.0,27,,F,T,10-2,4,0,4,analog,ST,SLD,,20.0,28.0,24.0,vegetative,spore,,,
+255,5/15/17,124 1861,,5/10/17,HMP,5/8/17,,WE,6.0,27,,F,T,10-3,0,0,0,analog,ST,SLD,,20.0,28.0,24.0,vegetative,spore,,,
+257,5/15/17,124 1910,,5/10/17,HMP,5/8/17,,WE,6.0,27,,F,T,10-4,0,0,0,analog,ST,SLD,,20.0,28.0,24.0,vegetative,spore,,,contaminated
+259,5/15/17,124 1863,,5/10/17,HMP,5/8/17,,WE,6.0,28,,F,T,10-2,38,0,38,analog,KN,HB,,16.0,25.0,20.5,vegetative,spore,,,contaminated
+261,5/15/17,124 1864,,5/10/17,HMP,5/8/17,,WE,6.0,28,,F,T,10-3,12,1,13,analog,KN,HB,,16.0,25.0,20.5,vegetative,spore,,,contaminated
+263,5/15/17,124 1913,,5/10/17,HMP,5/8/17,,WE,6.0,28,,F,T,10-4,0,0,0,analog,KN,HB,,16.0,25.0,20.5,vegetative,spore,,,contaminated
+265,5/15/17,124 1866,,5/10/17,HMP,5/8/17,,WE,6.0,29,,F,T,10-2,4,0,4,analog,KN,HB,,24.0,32.0,28.0,vegetative,spore,,,
+267,5/15/17,124 1867,,5/10/17,HMP,5/8/17,,WE,6.0,29,,F,T,10-3,0,0,0,analog,HB,HB,,24.0,32.0,28.0,vegetative,spore,,,
+269,5/15/17,124 1916,,5/10/17,HMP,5/8/17,,WE,6.0,29,,F,T,10-4,0,0,0,analog,HB,HB,,24.0,32.0,28.0,vegetative,spore,,,
+271,5/15/17,124 1868,,5/10/17,HMP,5/8/17,,WE,6.0,30,,F,T,10-2,6,2,8,analog,HB,HB,,30.0,66.0,48.0,vegetative,spore,,,
+273,5/15/17,124 1869,,5/10/17,HMP,5/8/17,,WE,6.0,30,,F,T,10-3,3,0,3,analog,HB,HB,,30.0,66.0,48.0,vegetative,spore,,,contaminated
+275,5/15/17,125 1919,,5/10/17,HMP,5/8/17,,WE,6.0,30,,F,T,10-4,0,0,0,analog,HB,HB,,30.0,66.0,48.0,vegetative,spore,,,
+277,6/9/17,136 2679,,5/10/17,KMM,5/8/17,,WE,6.0,1,,M,T,10-2,1,288,289,analog,PJW,SLD,FW,14.0,16.0,15.0,vegetative,spore,,,contaminated
+279,6/9/17,136 2678,,5/10/17,KMM,5/8/17,,WE,6.0,1,,M,T,10-3,0,41,41,analog,PJW,SLD,FW,14.0,16.0,15.0,vegetative,spore,,,contaminated
+281,6/9/17,136 2677,,5/10/17,KMM,5/8/17,,WE,6.0,1,,M,T,10-4,0,1,1,analog,PJW,SLD,FW,14.0,16.0,15.0,vegetative,spore,,,contaminated
+283,6/9/17,136 2674,,5/10/17,KMM,5/8/17,,WE,6.0,2,,M,T,10-2,4,268,272,analog,PJW,SLD,FW,13.0,23.0,18.0,vegetative,spore,,,contaminated
+285,6/9/17,136 2673,,5/10/17,KMM,5/8/17,,WE,6.0,2,,M,T,10-3,0,58,58,analog,PJW,SLD,FW,13.0,23.0,18.0,vegetative,spore,,,contaminated
+287,6/9/17,136 2672,,5/10/17,KMM,5/8/17,,WE,6.0,2,,M,T,10-4,0,7,7,analog,PJW,SLD,FW,13.0,23.0,18.0,vegetative,spore,,,
+289,6/9/17,136 2671,,5/10/17,KMM,5/8/17,,WE,6.0,3,,M,T,10-2,3,192,195,analog,PJW,SLD,FW,7.0,16.0,11.5,vegetative,spore,,,
+291,6/9/17,136 2670,,5/10/17,KMM,5/8/17,,WE,6.0,3,,M,T,10-3,0,36,36,analog,PJW,SLD,FW,7.0,16.0,11.5,vegetative,spore,,,contaminated
+293,6/9/17,136 2669,,5/10/17,KMM,5/8/17,,WE,6.0,3,,M,T,10-4,0,8,8,analog,PJW,SLD,FW,7.0,16.0,11.5,vegetative,spore,,,contaminated
+295,7/13/17,143 3288,FW,5/10/17,KMM,5/8/17,,WE,6.0,4,,M,T,10-2,40,476,516,analog,,SLD,FW,8.0,25.0,16.5,vegetative,spore,,,
+297,7/13/17,143 3289,FW,5/10/17,KMM,5/8/17,,WE,6.0,4,,M,T,10-3,6,35,41,analog,,SLD,FW,8.0,25.0,16.5,vegetative,spore,,,
+299,7/13/17,143 3290,FW,5/10/17,KMM,5/8/17,,WE,6.0,4,,M,T,10-4,0,3,3,analog,,SLD,FW,8.0,25.0,16.5,vegetative,spore,,,
+301,7/13/17,143 3291,FW,5/10/17,KMM,5/8/17,,WE,6.0,5,,M,T,10-2,1,700,701,analog,,SLD,FW,9.0,16.0,12.5,vegetative,spore,,,
+303,7/13/17,143 3292,FW,5/10/17,KMM,5/8/17,,WE,6.0,5,,M,T,10-3,0,69,69,analog,,SLD,FW,9.0,16.0,12.5,vegetative,spore,,,
+305,7/13/17,143 3293,FW,5/10/17,KMM,5/8/17,,WE,6.0,5,,M,T,10-4,0,13,13,analog,,SLD,FW,9.0,16.0,12.5,vegetative,spore,,,
+307,7/13/17,143 3294,FW,5/10/17,KMM,5/8/17,,WE,6.0,6,,M,T,10-2,10,229,239,analog,,SLD,FW,16.0,27.0,21.5,vegetative,spore,,,
+309,7/13/17,143 3295,FW,5/10/17,KMM,5/8/17,,WE,6.0,6,,M,T,10-3,1,27,28,analog,,SLD,FW,16.0,27.0,21.5,vegetative,spore,,,
+311,7/13/17,143 3296,FW,5/10/17,KMM,5/8/17,,WE,6.0,6,,M,T,10-4,0,4,4,analog,,SLD,FW,16.0,27.0,21.5,vegetative,spore,,,
+313,6/14/17,137 2786,,5/10/17,KMM,5/8/17,,WE,6.0,7,,M,T,10-2,19,523,542,analog,PJW,SLD,FW,9.0,15.0,12.0,vegetative,spore,,,
+315,6/14/17,137 2785,,5/10/17,KMM,5/8/17,,WE,6.0,7,,M,T,10-3,1,69,70,analog,PJW,SLD,FW,9.0,15.0,12.0,vegetative,spore,,,
+317,6/14/17,137 2784,,5/10/17,KMM,5/8/17,,WE,6.0,7,,M,T,10-4,2,10,12,analog,PJW,SLD,FW,9.0,15.0,12.0,vegetative,spore,,,
+319,6/14/17,137 2783,,5/10/17,KMM,5/8/17,,WE,6.0,8,,M,T,10-2,5,203,208,analog,PJW,SLD,FW,19.0,32.0,25.5,vegetative,spore,,,
+321,6/14/17,137 2782,,5/10/17,KMM,5/8/17,,WE,6.0,8,,M,T,10-3,2,27,29,analog,PJW,SLD,FW,19.0,32.0,25.5,vegetative,spore,,,
+323,6/14/17,137 2781,,5/10/17,KMM,5/8/17,,WE,6.0,8,,M,T,10-4,0,4,4,analog,PJW,SLD,FW,19.0,32.0,25.5,vegetative,spore,,,
+325,6/14/17,137 2779,,5/10/17,KMM,5/8/17,,WE,6.0,9,,M,T,10-2,0,148,148,analog,PJW,SLD,FW,6.0,19.0,12.5,vegetative,spore,,,
+327,6/14/17,137 2780,,5/10/17,KMM,5/8/17,,WE,6.0,9,,M,T,10-3,0,28,28,analog,PJW,SLD,FW,6.0,19.0,12.5,vegetative,spore,,,
+329,6/14/17,137 2778,,5/10/17,KMM,5/8/17,,WE,6.0,9,,M,T,10-4,0,3,3,analog,PJW,SLD,FW,6.0,19.0,12.5,vegetative,spore,,,
+331,7/13/17,143 3297,FW,5/10/17,KMM,5/8/17,,WE,6.0,10,,M,T,10-2,1,685,686,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+333,7/13/17,143 3298,FW,5/10/17,KMM,5/8/17,,WE,6.0,10,,M,T,10-3,0,62,62,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+335,7/13/17,143 3299,FW,5/10/17,KMM,5/8/17,,WE,6.0,10,,M,T,10-4,3,10,13,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+337,7/13/17,143 3300,FW,5/10/17,KMM,5/8/17,,WE,6.0,11,,M,T,10-2,10,432,442,analog,,SLD,FW,20.0,32.0,26.0,vegetative,spore,,,
+339,7/13/17,143 3301,FW,5/10/17,KMM,5/8/17,,WE,6.0,11,,M,T,10-3,1,59,60,analog,,SLD,FW,20.0,32.0,26.0,vegetative,spore,,,
+341,7/13/17,143 3302,FW,5/10/17,KMM,5/8/17,,WE,6.0,11,,M,T,10-4,0,9,9,analog,,SLD,FW,20.0,32.0,26.0,vegetative,spore,,,
+343,7/13/17,143 3303,FW,5/10/17,KMM,5/8/17,,WE,6.0,12,,M,T,10-2,5,137,142,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+345,7/13/17,143 3304,FW,5/10/17,KMM,5/8/17,,WE,6.0,12,,M,T,10-3,0,15,15,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+347,7/13/17,143 3305,FW,5/10/17,KMM,5/8/17,,WE,6.0,12,,M,T,10-4,0,1,1,analog,,SLD,FW,10.0,22.0,16.0,vegetative,spore,,,
+349,7/13/17,143 3306,FW,5/10/17,KMM,5/8/17,,WE,6.0,13,,M,T,10-2,1,906,907,analog,,SLD,FW,12.0,24.0,18.0,vegetative,spore,,,
+351,7/13/17,143 3307,FW,5/10/17,KMM,5/8/17,,WE,6.0,13,,M,T,10-3,0,102,102,analog,,SLD,FW,12.0,24.0,18.0,vegetative,spore,,,
+353,7/13/17,143 3308,FW,5/10/17,KMM,5/8/17,,WE,6.0,13,,M,T,10-4,0,16,16,analog,,SLD,FW,12.0,24.0,18.0,vegetative,spore,,,
+355,7/13/17,143 3309,FW,5/10/17,KMM,5/8/17,,WE,6.0,14,,M,T,10-2,0,390,390,analog,,SLD,FW,9.0,17.0,13.0,vegetative,spore,,,
+357,7/13/17,143 3310,FW,5/10/17,KMM,5/8/17,,WE,6.0,14,,M,T,10-3,0,39,39,analog,,SLD,FW,9.0,17.0,13.0,vegetative,spore,,,
+359,7/13/17,143 3311,FW,5/10/17,KMM,5/8/17,,WE,6.0,14,,M,T,10-4,0,5,5,analog,,SLD,FW,9.0,17.0,13.0,vegetative,spore,,,
+361,7/13/17,143 3312,FW,5/10/17,KMM,5/8/17,,WE,6.0,15,,M,T,10-2,49,484,533,analog,,SLD,FW,16.0,32.0,24.0,vegetative,spore,,,
+363,7/13/17,143 3313,FW,5/10/17,KMM,5/8/17,,WE,6.0,15,,M,T,10-3,6,58,64,analog,,SLD,FW,16.0,32.0,24.0,vegetative,spore,,,
+365,7/13/17,143 3314,FW,5/10/17,KMM,5/8/17,,WE,6.0,15,,M,T,10-4,0,6,6,analog,,SLD,FW,16.0,32.0,24.0,vegetative,spore,,,
+367,5/15/17,124 1872,,5/10/17,UR,5/8/17,,WE,6.0,16,,M,T,10-2,11,787,798,analog,MR,FW,,19.0,30.0,24.5,vegetative,spore,,,
+369,5/15/17,124 1873,,5/10/17,UR,5/8/17,,WE,6.0,16,,M,T,10-3,1,134,135,analog,MR,FW,,19.0,30.0,24.5,vegetative,spore,,,
+371,5/15/17,124 1826,,5/10/17,UR,5/8/17,,WE,6.0,16,,M,T,10-4,0,4,4,analog,MR,FW,,19.0,30.0,24.5,vegetative,spore,,,
+373,5/15/17,124 1875,,5/10/17,UR,5/8/17,,WE,6.0,17,,M,T,10-2,0,508,508,analog,MR,FW,,9.0,19.0,14.0,vegetative,spore,,,
+375,5/15/17,124 1876,,5/10/17,UR,5/8/17,,WE,6.0,17,,M,T,10-3,0,131,131,analog,MR,FW,,9.0,19.0,14.0,vegetative,spore,,,
+377,5/15/17,124 1830,,5/10/17,UR,5/8/17,,WE,6.0,17,,M,T,10-4,0,0,0,analog,MR,FW,,9.0,19.0,14.0,vegetative,spore,,,
+379,5/15/17,124 1878,,5/10/17,UR,5/8/17,,WE,6.0,18,,M,T,10-2,0,735,735,analog,MR,FW,,17.0,28.0,22.5,vegetative,spore,,,
+381,5/15/17,124 1879,,5/10/17,UR,5/8/17,,WE,6.0,18,,M,T,10-3,134,0,134,analog,MR,FW,,17.0,28.0,22.5,vegetative,spore,,,
+383,5/15/17,124 1834,,5/10/17,UR,5/8/17,,WE,6.0,18,,M,T,10-4,4,0,4,analog,MR,FW,,17.0,28.0,22.5,vegetative,spore,,,
+385,5/15/17,124 1883,,5/10/17,UR,5/8/17,,WE,6.0,19,,M,T,10-2,1,0,1,analog,BC,KMM,,12.0,21.0,16.5,vegetative,spore,,,tiny colonies NC
+387,5/15/17,124 1884,,5/10/17,UR,5/8/17,,WE,6.0,19,,M,T,10-3,1,0,1,analog,BC,KMM,,12.0,21.0,16.5,vegetative,spore,,,tiny colonies NC
+389,5/15/17,124 1837,,5/10/17,UR,5/8/17,,WE,6.0,19,,M,T,10-4,0,0,0,analog,BC,KMM,,12.0,21.0,16.5,vegetative,spore,,,
+391,5/15/17,124 1886,,5/10/17,UR,5/8/17,,WE,6.0,20,,M,T,10-2,2,0,2,analog,BC,KMM,,6.0,21.0,13.5,vegetative,spore,,,"tiny colonies, cont"
+393,5/15/17,124 1887,,5/10/17,UR,5/8/17,,WE,6.0,20,,M,T,10-3,0,0,0,analog,BC,KMM,,6.0,21.0,13.5,vegetative,spore,,,contaminated
+395,5/15/17,124 1840,,5/10/17,UR,5/8/17,,WE,6.0,20,,M,T,10-4,0,0,0,analog,BC,KMM,,6.0,21.0,13.5,vegetative,spore,,,
+397,5/15/17,124 1889,,5/10/17,UR,5/8/17,,WE,6.0,21,,M,T,10-2,2,0,2,analog,BC,KMM,,24.0,36.0,30.0,vegetative,spore,,,tiny colonies NC
+399,5/15/17,124 1890,,5/10/17,UR,5/8/17,,WE,6.0,21,,M,T,10-3,0,0,0,analog,BC,KMM,,24.0,36.0,30.0,vegetative,spore,,,tiny colonies NC
+401,5/15/17,124 1843,,5/10/17,UR,5/8/17,,WE,6.0,21,,M,T,10-4,0,0,0,analog,BC,KMM,,24.0,36.0,30.0,vegetative,spore,,,
+403,5/15/17,124 1892,,5/10/17,UR,5/8/17,,WE,6.0,22,,M,T,10-2,3,58,61,analog,EF,HB,,17.0,33.0,25.0,vegetative,spore,,,contaminated
+405,5/15/17,124 1894,,5/10/17,UR,5/8/17,,WE,6.0,22,,M,T,10-3,9,0,9,analog,EF,HB,,17.0,33.0,25.0,vegetative,spore,,,contaminated
+407,5/15/17,124 1846,,5/10/17,UR,5/8/17,,WE,6.0,22,,M,T,10-4,0,0,0,analog,EF,HB,,17.0,33.0,25.0,vegetative,spore,,,
+409,5/15/17,124 1896,,5/10/17,UR,5/8/17,,WE,6.0,23,,M,T,10-2,24,0,24,analog,EF,HB,,14.0,27.0,20.5,vegetative,spore,,,contaminated
+411,5/15/17,124 1897,,5/10/17,UR,5/8/17,,WE,6.0,23,,M,T,10-3,0,4,4,analog,EF,HB,,14.0,27.0,20.5,vegetative,spore,,,
+413,5/15/17,124 1850,,5/10/17,UR,5/8/17,,WE,6.0,23,,M,T,10-4,0,0,0,analog,EF,HB,,14.0,27.0,20.5,vegetative,spore,,,
+415,5/15/17,124 1899,,5/10/17,UR,5/8/17,,WE,6.0,24,,M,T,10-2,546,16,562,analog,EF,HB,,21.0,30.0,25.5,vegetative,spore,,,
+417,5/15/17,124 1900,,5/10/17,UR,5/8/17,,WE,6.0,24,,M,T,10-3,65,0,65,analog,EF,HB,,21.0,30.0,25.5,vegetative,spore,,,
+419,5/15/17,124 1853,,5/10/17,UR,5/8/17,,WE,6.0,24,,M,T,10-4,1,0,1,analog,EF,HB,,21.0,30.0,25.5,vegetative,spore,,,contaminated
+421,5/15/17,124 1902,,5/10/17,UR,5/8/17,,WE,6.0,25,,M,T,10-2,2,0,2,analog,,HB,,17.0,30.0,23.5,vegetative,spore,,,contaminated
+423,5/15/17,124 1903,,5/10/17,UR,5/8/17,,WE,6.0,25,,M,T,10-3,0,0,0,analog,,HB,,17.0,30.0,23.5,vegetative,spore,,,contaminated
+425,5/15/17,124 1856,,5/10/17,UR,5/8/17,,WE,6.0,25,,M,T,10-4,0,0,0,analog,,HB,,17.0,30.0,23.5,vegetative,spore,,,
+427,5/15/17,124 1905,,5/10/17,UR,5/8/17,,WE,6.0,26,,M,T,10-2,2,0,2,analog,,HB,,12.0,22.0,17.0,vegetative,spore,,,contaminated
+429,5/15/17,124 1906,,5/10/17,UR,5/8/17,,WE,6.0,26,,M,T,10-3,0,0,0,analog,,HB,,12.0,22.0,17.0,vegetative,spore,,,contaminated
+431,5/15/17,124 1859,,5/10/17,UR,5/8/17,,WE,6.0,26,,M,T,10-4,0,0,0,analog,,HB,,12.0,22.0,17.0,vegetative,spore,,,contaminated
+433,5/15/17,124 1908,,5/10/17,UR,5/8/17,,WE,6.0,27,,M,T,10-2,9,0,9,analog,,HB,,17.0,34.0,25.5,vegetative,spore,,,
+435,5/15/17,124 1909,,5/10/17,UR,5/8/17,,WE,6.0,27,,M,T,10-3,1,0,1,analog,,HB,,17.0,34.0,25.5,vegetative,spore,,,contaminated
+437,5/15/17,124 1862,,5/10/17,UR,5/8/17,,WE,6.0,27,,M,T,10-4,0,0,0,analog,,HB,,17.0,34.0,25.5,vegetative,spore,,,
+439,5/15/17,124 1911,,5/10/17,UR,5/8/17,,WE,6.0,28,,M,T,10-2,1,0,1,analog,,HB,,10.0,18.0,14.0,vegetative,spore,,,contaminated
+441,5/15/17,124 1912,,5/10/17,UR,5/8/17,,WE,6.0,28,,M,T,10-3,0,0,0,analog,,HB,,10.0,18.0,14.0,vegetative,spore,,,contaminated
+443,5/15/17,124 1865,,5/10/17,UR,5/8/17,,WE,6.0,28,,M,T,10-4,1,0,1,analog,,HB,,10.0,18.0,14.0,vegetative,spore,,,
+445,5/15/17,124 1914,,5/10/17,UR,5/8/17,,WE,6.0,29,,M,T,10-2,1,0,1,analog,,HB,,10.0,19.0,14.5,vegetative,spore,,,contaminated
+447,5/15/17,124 1915,,5/10/17,UR,5/8/17,,WE,6.0,29,,M,T,10-3,0,0,0,analog,,HB,,10.0,19.0,14.5,vegetative,spore,,,contaminated
+449,5/15/17,124 1868,,5/10/17,UR,5/8/17,,WE,6.0,29,,M,T,10-4,0,0,0,analog,,HB,,10.0,19.0,14.5,vegetative,spore,,,
+451,5/15/17,124 1917,,5/10/17,UR,5/8/17,,WE,6.0,30,,M,T,10-2,4,0,4,analog,,HB,,11.0,21.0,16.0,vegetative,spore,,,
+453,5/15/17,124 1918,,5/10/17,UR,5/8/17,,WE,6.0,30,,M,T,10-3,1,0,1,analog,,HB,,11.0,21.0,16.0,vegetative,spore,,,
+455,5/15/17,124 1871,,5/10/17,UR,5/8/17,,WE,6.0,30,,M,T,10-4,0,0,0,analog,,HB,,11.0,21.0,16.0,vegetative,spore,,,contaminated
+457,5/22/17,128 2041,,5/11/17,SW,5/8/17,,WE,6.0,1,,F ,GOT,10-3,466,7,473,analog,,SLD,,,,,vegetative,spore,,,contaminated
+459,5/22/17,128 2042,,5/11/17,SW,5/8/17,,WE,6.0,1,,F,GOT,10-4,51,0,51,analog,NL,SLD,,,,,vegetative,spore,,,contaminated
+461,5/22/17,128 2043,,5/11/17,SW,5/8/17,,WE,6.0,1,,F,GOT,10-5,2,0,2,analog,NL,SLD,,,,,vegetative,spore,,,no counting dots?
+463,5/22/17,128 2045,,5/11/17,SW,5/8/17,,WE,6.0,2,,F,GOT,10-3,404,12,416,analog,,SLD,,,,,vegetative,spore,,,contaminated
+465,5/22/17,128 2046,,5/11/17,SW,5/8/17,,WE,6.0,2,,F,GOT,10-4,30,5,35,analog,,SLD,,,,,vegetative,spore,,,contaminated
+467,5/22/17,128 2047,,5/11/17,SW,5/8/17,,WE,6.0,2,,F,GOT,10-5,14,1,15,analog,,SLD,,,,,vegetative,spore,,,contaminated
+469,5/22/17,128 2048,,5/11/17,SW,5/8/17,,WE,6.0,3,,F,GOT,10-3,227,11,238,analog,NC,SLD,,,,,vegetative,spore,,,contaminated
+471,5/22/17,128 2049 ,,5/11/17,SW,5/8/17,,WE,6.0,3,,F,GOT,10-4,13,0,13,analog,NC,SLD,,,,,vegetative,spore,,,contaminated
+473,5/22/17,128 2050 ,,5/11/17,SW,5/8/17,,WE,6.0,3,,F,GOT,10-5,2,0,2,analog,NC,SLD,,,,,vegetative,spore,,,contaminated
+475,5/22/17,128 2051 ,,5/11/17,SW,5/8/17,,WE,6.0,4,,F,GOT,10-3,12,0,12,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+477,5/22/17,128 2053 ,,5/11/17,SW,5/8/17,,WE,6.0,4,,F,GOT,10-4,1,0,1,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+479,5/22/17,128 2054,,5/11/17,SW,5/8/17,,WE,6.0,4,,F,GOT,10-5,0,0,0,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+481,5/22/17,128 2055,,5/11/17,SW,5/8/17,,WE,6.0,5,,F,GOT,10-3,84,2,86,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+483,5/22/17,128 2057,,5/11/17,SW,5/8/17,,WE,6.0,5,,F,GOT,10-4,8,0,8,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+485,5/22/17,128 2058 ,,5/11/17,SW,5/8/17,,WE,6.0,5,,F,GOT,10-5,3,0,3,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+487,5/22/17,128 2059,,5/11/17,SW,5/8/17,,WE,6.0,6,,F,GOT,10-3,6,0,6,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+489,5/22/17,128 2060 ,,5/11/17,SW,5/8/17,,WE,6.0,6,,F,GOT,10-4,0,0,0,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+491,5/22/17,128 2061 ,,5/11/17,SW,5/8/17,,WE,6.0,6,,F,GOT,10-5,0,0,0,analog,ST?,SLD,,,,,vegetative,spore,,,contaminated
+493,5/22/17,128 2062 ,,5/11/17,SW,5/8/17,,WE,6.0,7,,F,GOT,10-3,179,4,183,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+495,5/22/17,128 2063 ,,5/11/17,SW,5/8/17,,WE,6.0,7,,F,GOT,10-4,19,1,20,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+497,5/22/17,128 2064,,5/11/17,SW,5/8/17,,WE,6.0,7,,F,GOT,10-5,3,0,3,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+499,5/22/17,128 2065 ,,5/11/17,SW,5/8/17,,WE,6.0,8,,F,GOT,10-3,40,49,89,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+501,5/22/17,128 2066 ,,5/11/17,SW,5/8/17,,WE,6.0,8,,F,GOT,10-4,5,0,5,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+503,5/22/17,128 2067,,5/11/17,SW,5/8/17,,WE,6.0,8,,F,GOT,10-5,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+505,5/22/17,128 2068,,5/11/17,SW,5/8/17,,WE,6.0,9,,F,GOT,10-3,7,7,14,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+507,5/22/17,128 2070 ,,5/11/17,SW,5/8/17,,WE,6.0,9,,F,GOT,10-4,1,0,1,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+509,5/22/17,128 2071,,5/11/17,SW,5/8/17,,WE,6.0,9,,F,GOT,10-5,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+511,5/22/17,128 2072 ,,5/11/17,SW,5/8/17,,WE,6.0,10,,F,GOT,10-3,22,0,22,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+513,5/22/17,128 2074,,5/11/17,SW,5/8/17,,WE,6.0,10,,F,GOT,10-4,12,0,12,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+515,5/22/17,128 2075,,5/11/17,SW,5/8/17,,WE,6.0,10,,F,GOT,10-5,0,0,0,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+517,5/22/17,128 2076 ,,5/11/17,SW,5/8/17,,WE,6.0,11,,F,GOT,10-3,87,0,87,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+519,5/22/17,128 2077,,5/11/17,SW,5/8/17,,WE,6.0,11,,F,GOT,10-4,21,1,22,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+521,5/22/17,128 2078 ,,5/11/17,SW,5/8/17,,WE,6.0,11,,F,GOT,10-5,0,0,0,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+523,5/22/17,128 2079 ,,5/11/17,SW,5/8/17,,WE,6.0,12,,F,GOT,10-3,362,0,362,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+525,5/22/17,128 2080 ,,5/11/17,SW,5/8/17,,WE,6.0,12,,F,GOT,10-4,217,0,217,analog,EF,KMM,FW,,,,vegetative,spore,,,contaminated
+527,5/22/17,128 2082,,5/11/17,SW,5/8/17,,WE,6.0,12,,F,GOT,10-5,13,0,13,analog,EF,KMM,FW,,,,vegetative,spore,,,
+529,5/22/17,128 2083,,5/11/17,SW,5/8/17,,WE,6.0,13,,F,GOT,10-3,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+531,5/22/17,128 2084,,5/11/17,SW,5/8/17,,WE,6.0,13,,F,GOT,10-4,3,0,3,analog,,KMM,,,,,vegetative,spore,,,contaminated
+533,5/22/17,128 2085,,5/11/17,SW,5/8/17,,WE,6.0,13,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+535,5/22/17,128 2086,,5/11/17,SW,5/8/17,,WE,6.0,14,,F,GOT,10-3,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+537,5/22/17,128 2087,,5/11/17,SW,5/8/17,,WE,6.0,14,,F,GOT,10-4,4,0,4,analog,,KMM,,,,,vegetative,spore,,,contaminated
+539,5/22/17,128 2088,,5/11/17,SW,5/8/17,,WE,6.0,14,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+541,5/22/17,128 2089,,5/11/17,SW,5/8/17,,WE,6.0,15,,F,GOT,10-3,NC,NC,#VALUE!,analog,,KMM,,,,,vegetative,spore,,,contaminated
+543,5/22/17,128 2090,,5/11/17,SW,5/8/17,,WE,6.0,15,,F,GOT,10-4,4,0,4,analog,,KMM,,,,,vegetative,spore,,,contaminated
+545,5/22/17,128 2091,,5/11/17,SW,5/8/17,,WE,6.0,15,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+547,5/22/17,128 2096,,5/11/17,SW,5/8/17,,WE,6.0,16,,F,GOT,10-3,255,0,255,analog,,KMM,,,,,vegetative,spore,,,
+549,5/22/17,128 2097,,5/11/17,SW,5/8/17,,WE,6.0,16,,F,GOT,10-4,62,0,62,analog,,KMM,,,,,vegetative,spore,,,
+551,5/22/17,128 2099,,5/11/17,SW,5/8/17,,WE,6.0,16,,F,GOT,10-5,2,0,2,analog,,KMM,,,,,vegetative,spore,,,
+553,5/22/17,128 2100,,5/11/17,SW,5/8/17,,WE,6.0,17,,F,GOT,10-3,0,0,0,analog,,KMM,,,,,vegetative,spore,,,
+555,5/22/17,128 2101 ,,5/11/17,SW,5/8/17,,WE,6.0,17,,F,GOT,10-4,0,0,0,analog,,KMM,,,,,vegetative,spore,,,
+557,5/22/17,128 2103 ,,5/11/17,SW,5/8/17,,WE,6.0,17,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,
+559,5/22/17,128 2104,,5/11/17,SW,5/8/17,,WE,6.0,18,,F,GOT,10-3,20,0,20,analog,,KMM,,,,,vegetative,spore,,,contaminated
+561,5/22/17,128 2105,,5/11/17,SW,5/8/17,,WE,6.0,18,,F,GOT,10-4,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+563,5/22/17,128 2106,,5/11/17,SW,5/8/17,,WE,6.0,18,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+565,5/22/17,128 2107,,5/11/17,SW,5/8/17,,WE,6.0,19,,F,GOT,10-3,57,0,57,analog,AT,AT,FW,,,,vegetative,spore,,,
+567,5/22/17,128 2108,,5/11/17,SW,5/8/17,,WE,6.0,19,,F,GOT,10-4,38,0,38,analog,AT,AT,FW,,,,vegetative,spore,,,
+569,5/22/17,128 2109 ,,5/11/17,SW,5/8/17,,WE,6.0,19,,F,GOT,10-5,6,0,6,analog,AT,AT,FW,,,,vegetative,spore,,,
+571,5/22/17,128 2110,,5/11/17,SW,5/8/17,,WE,6.0,20,,F,GOT,10-3,109,10,119,analog,AT,AT,FW,,,,vegetative,spore,,,
+573,5/22/17,128 2111,,5/11/17,SW,5/8/17,,WE,6.0,20,,F,GOT,10-4,20,2,22,analog,AT,AT,FW,,,,vegetative,spore,,,
+575,5/22/17,128 2112 ,,5/11/17,SW,5/8/17,,WE,6.0,20,,F,GOT,10-5,8,0,8,analog,AT,AT,FW,,,,vegetative,spore,,,
+577,5/22/17,128 2113,,5/11/17,SW,5/8/17,,WE,6.0,21,,F,GOT,10-3,19,9,28,analog,AT,AT,FW,,,,vegetative,spore,,,
+579,5/22/17,128 2114,,5/11/17,SW,5/8/17,,WE,6.0,21,,F,GOT,10-4,10,6,16,analog,AT,AT,FW,,,,vegetative,spore,,,
+581,5/22/17,128 2115 ,,5/11/17,SW,5/8/17,,WE,6.0,21,,F,GOT,10-5,2,0,2,analog,AT,AT,FW,,,,vegetative,spore,,,
+583,5/22/17,128 2116,,5/11/17,SW,5/8/17,,WE,6.0,22,,F,GOT,10-3,54,0,54,analog,,KMM,,,,,vegetative,spore,,,contaminated
+585,5/22/17,128 2117,,5/11/17,SW,5/8/17,,WE,6.0,22,,F,GOT,10-4,29,0,29,analog,,KMM,,,,,vegetative,spore,,,contaminated
+587,5/22/17,128 2119,,5/11/17,SW,5/8/17,,WE,6.0,22,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+589,5/22/17,128 2120,,5/11/17,SW,5/8/17,,WE,6.0,23,,F,GOT,10-3,120,0,120,analog,,KMM,,,,,vegetative,spore,,,
+591,5/22/17,128 2121,,5/11/17,SW,5/8/17,,WE,6.0,23,,F,GOT,10-4,5,0,5,analog,,KMM,,,,,vegetative,spore,,,
+593,5/22/17,128 2122,,5/11/17,SW,5/8/17,,WE,6.0,23,,F,GOT,10-5,4,0,4,analog,,KMM,,,,,vegetative,spore,,,
+595,5/22/17,128 2123,,5/11/17,SW,5/8/17,,WE,6.0,24,,F,GOT,10-3,20,0,20,analog,,KMM,,,,,vegetative,spore,,,contaminated
+597,5/22/17,128 2124,,5/11/17,SW,5/8/17,,WE,6.0,24,,F,GOT,10-4,5,0,5,analog,,KMM,,,,,vegetative,spore,,,contaminated
+599,5/22/17,128 2125,,5/11/17,SW,5/8/17,,WE,6.0,24,,F,GOT,10-5,0,0,0,analog,,KMM,,,,,vegetative,spore,,,contaminated
+601,5/22/17,128 2126,,5/11/17,SW,5/8/17,,WE,6.0,25,,F,GOT,10-3,330,24,354,analog,,SLD,FW,,,,vegetative,spore,,,
+603,5/22/17,128 2127,,5/11/17,SW,5/8/17,,WE,6.0,25,,F,GOT,10-4,61,2,63,analog,SLD,SLD,FW,,,,vegetative,spore,,,
+605,5/22/17,128 2128,,5/11/17,SW,5/8/17,,WE,6.0,25,,F,GOT,10-5,2,0,2,analog,,SLD,FW,,,,vegetative,spore,,,
+607,5/22/17,128 2129,,5/11/17,SW,5/8/17,,WE,6.0,26,,F,GOT,10-3,38,6,44,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+609,5/22/17,129 2130,,5/11/17,SW,5/8/17,,WE,6.0,26,,F,GOT,10-4,18,0,18,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+611,5/22/17,128 2131,,5/11/17,SW,5/8/17,,WE,6.0,26,,F,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+613,5/22/17,128 2132,,5/11/17,SW,5/8/17,,WE,6.0,27,,F,GOT,10-3,213,0,213,analog,,SLD,FW,,,,vegetative,spore,,,
+615,5/22/17,128 2133,,5/11/17,SW,5/8/17,,WE,6.0,27,,F,GOT,10-4,1,0,1,analog,,SLD,FW,,,,vegetative,spore,,,
+617,5/22/17,128 2134,,5/11/17,SW,5/8/17,,WE,6.0,27,,F,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,
+619,5/22/17,128 2135,,5/11/17,SW,5/8/17,,WE,6.0,28,,F,GOT,10-3,187,12,199,analog,NC,SLD,FW,,,,vegetative,spore,,,
+621,5/22/17,128 2136,,5/11/17,SW,5/8/17,,WE,6.0,28,,F,GOT,10-4,21,0,21,analog,NC,SLD,FW,,,,vegetative,spore,,,
+623,5/22/17,128 2137,,5/11/17,SW,5/8/17,,WE,6.0,28,,F,GOT,10-5,2,0,2,analog,NC,SLD,FW,,,,vegetative,spore,,,
+625,5/22/17,128 2138,,5/11/17,SW,5/8/17,,WE,6.0,29,,F,GOT,10-3,191,0,191,analog,,SLD,FW,,,,vegetative,spore,,,
+627,5/22/17,128 2139,,5/11/17,SW,5/8/17,,WE,6.0,29,,F,GOT,10-4,5,0,5,analog,,SLD,FW,,,,vegetative,spore,,,
+629,5/22/17,128 2140,,5/11/17,SW,5/8/17,,WE,6.0,29,,F,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,
+631,5/22/17,128 2141,,5/11/17,SW,5/8/17,,WE,6.0,30,,F,GOT,10-3,277,7,284,analog,NC,SLD,FW,,,,vegetative,spore,,,
+633,5/22/17,128 2142,,5/11/17,SW,5/8/17,,WE,6.0,30,,F,GOT,10-4,12,1,13,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+635,5/22/17,128 2143,,5/11/17,SW,5/8/17,,WE,6.0,30,,F,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+637,5/22/17,128 2144,,5/11/17,JC,5/8/17,,WE,6.0,1,,M,GOT,10-3,24,0,24,analog,,SLD,FW,,,,vegetative,spore,,,
+639,5/22/17,128 2145,,5/11/17,JC,5/8/17,,WE,6.0,1,,M,GOT,10-4,47,0,47,analog,,SLD,FW,,,,vegetative,spore,,,
+641,5/22/17,128 2146,,5/11/17,JC,5/8/17,,WE,6.0,1,,M,GOT,10-5,49,0,49,analog,,SLD,FW,,,,vegetative,spore,,,
+643,5/22/17,128 2147,,5/11/17,JC,5/8/17,,WE,6.0,2,,M,GOT,10-3,8,0,8,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+645,5/22/17,128 2148,,5/11/17,JC,5/8/17,,WE,6.0,2,,M,GOT,10-4,0,0,0,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+647,5/22/17,128 2149,,5/11/17,JC,5/8/17,,WE,6.0,2,,M,GOT,10-5,0,0,0,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+649,5/22/17,128 2150,,5/11/17,JC,5/8/17,,WE,6.0,3,,M,GOT,10-3,8,0,8,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+651,5/22/17,128 2152,,5/11/17,JC,5/8/17,,WE,6.0,3,,M,GOT,10-4,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+653,5/22/17,128 2153,,5/11/17,JC,5/8/17,,WE,6.0,3,,M,GOT,10-5,1,0,1,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+655,5/22/17,128 2154,,5/11/17,JC,5/8/17,,WE,6.0,4,,M,GOT,10-3,255,2,257,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+657,5/22/17,128 2155,,5/11/17,JC,5/8/17,,WE,6.0,4,,M,GOT,10-4,42,19,61,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+659,5/22/17,128 2156,,5/11/17,JC,5/8/17,,WE,6.0,4,,M,GOT,10-5,8,0,8,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+661,5/22/17,128 2157,,5/11/17,JC,5/8/17,,WE,6.0,5,,M,GOT,10-3,47,0,47,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+663,5/22/17,128 2158,,5/11/17,JC,5/8/17,,WE,6.0,5,,M,GOT,10-4,35,0,35,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+665,5/22/17,128 2159,,5/11/17,JC,5/8/17,,WE,6.0,5,,M,GOT,10-5,4,3,7,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+667,5/22/17,128 2160,,5/11/17,JC,5/8/17,,WE,6.0,6,,M,GOT,10-3,24,0,24,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+669,5/22/17,128 2161,,5/11/17,JC,5/8/17,,WE,6.0,6,,M,GOT,10-4,4,0,4,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+671,5/22/17,128 2162,,5/11/17,JC,5/8/17,,WE,6.0,6,,M,GOT,10-5,0,1,1,analog,BH,FW,FW,,,,vegetative,spore,,,contaminated
+673,5/22/17,128 2165,,5/11/17,JC,5/8/17,,WE,6.0,7,,M,GOT,10-3,14,1,15,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+675,5/22/17,128 2166,,5/11/17,JC,5/8/17,,WE,6.0,7,,M,GOT,10-4,3,1,4,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+677,5/22/17,128 2167,,5/11/17,JC,5/8/17,,WE,6.0,7,,M,GOT,10-5,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+679,5/22/17,128 2168,,5/11/17,JC,5/8/17,,WE,6.0,8,,M,GOT,10-3,17,3,20,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+681,5/22/17,128 2169,,5/11/17,JC,5/8/17,,WE,6.0,8,,M,GOT,10-4,1,0,1,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+683,5/22/17,128 2170,,5/11/17,JC,5/8/17,,WE,6.0,8,,M,GOT,10-5,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+685,5/22/17,128 2171,,5/11/17,JC,5/8/17,,WE,6.0,9,,M,GOT,10-3,1,10,11,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+687,5/22/17,128 2172,,5/11/17,JC,5/8/17,,WE,6.0,9,,M,GOT,10-4,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+689,5/22/17,128 2174,,5/11/17,JC,5/8/17,,WE,6.0,9,,M,GOT,10-5,0,0,0,analog,ST,SLD,FW,,,,vegetative,spore,,,contaminated
+691,5/22/17,128 2175,,5/11/17,JC,5/8/17,,WE,6.0,10,,M,GOT,10-3,10,0,10,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+693,5/22/17,128 2176,,5/11/17,JC,5/8/17,,WE,6.0,10,,M,GOT,10-4,1,0,1,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+695,5/22/17,128 2177,,5/11/17,JC,5/8/17,,WE,6.0,10,,M,GOT,10-5,0,0,0,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+697,5/22/17,128 2178,,5/11/17,JC,5/8/17,,WE,6.0,11,,M,GOT,10-3,37,1,38,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+699,5/22/17,128 2179,,5/11/17,JC,5/8/17,,WE,6.0,11,,M,GOT,10-4,8,0,8,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+701,5/22/17,128 2810,,5/11/17,JC,5/8/17,,WE,6.0,11,,M,GOT,10-5,9,0,9,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+703,5/22/17,128 2181,,5/11/17,JC,5/8/17,,WE,6.0,12,,M,GOT,10-3,105,0,105,analog,,SLD,FW,,,,vegetative,spore,,,
+705,5/22/17,128 2182,,5/11/17,JC,5/8/17,,WE,6.0,12,,M,GOT,10-4,42,0,42,analog,,SLD,FW,,,,vegetative,spore,,,
+707,5/22/17,128 2183,,5/11/17,JC,5/8/17,,WE,6.0,12,,M,GOT,10-5,10,0,10,analog,,SLD,FW,,,,vegetative,spore,,,
+709,5/22/17,128 2184,,5/11/17,JC,5/8/17,,WE,6.0,13,,M,GOT,10-3,11,0,11,analog,PJW,SLD,FW,,,,vegetative,spore,,,contaminated
+711,5/22/17,128 2185,,5/11/17,JC,5/8/17,,WE,6.0,13,,M,GOT,10-4,2,0,2,analog,PJW,SLD,FW,,,,vegetative,spore,,,contaminated
+713,5/22/17,128 2186,,5/11/17,JC,5/8/17,,WE,6.0,13,,M,GOT,10-5,NC,NC,#VALUE!,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+715,5/22/17,128 2187,,5/11/17,JC,5/8/17,,WE,6.0,14,,M,GOT,10-3,NC,NC,#VALUE!,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+717,5/22/17,128 2188,,5/11/17,JC,5/8/17,,WE,6.0,14,,M,GOT,10-4,NC,NC,#VALUE!,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+719,5/22/17,128 2189,,5/11/17,JC,5/8/17,,WE,6.0,14,,M,GOT,10-5,NC,NC,#VALUE!,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+721,5/22/17,128 2190,,5/11/17,JC,5/8/17,,WE,6.0,15,,M,GOT,10-3,135,1,136,analog,PJW,SLD,FW,,,,vegetative,spore,,,contaminated
+723,5/22/17,128 2191,,5/11/17,JC,5/8/17,,WE,6.0,15,,M,GOT,10-4,68,0,68,analog,PJW,SLD,FW,,,,vegetative,spore,,,contaminated
+725,5/22/17,128 2192,,5/11/17,JC,5/8/17,,WE,6.0,15,,M,GOT,10-5,13,95,108,analog,PJW,SLD,FW,,,,vegetative,spore,,,
+727,5/22/17,128 2193,,5/11/17,JC,5/8/17,,WE,6.0,16,,M,GOT,10-3,38,0,38,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+729,5/22/17,128 2194,,5/11/17,JC,5/8/17,,WE,6.0,16,,M,GOT,10-4,16,0,16,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+731,5/22/17,128 2195,,5/11/17,JC,5/8/17,,WE,6.0,16,,M,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+733,5/22/17,128 2198,,5/11/17,JC,5/8/17,,WE,6.0,17,,M,GOT,10-3,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+735,5/22/17,128 2199,,5/11/17,JC,5/8/17,,WE,6.0,17,,M,GOT,10-4,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+737,5/22/17,128 2200,,5/11/17,JC,5/8/17,,WE,6.0,17,,M,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+739,5/22/17,128 2201,,5/11/17,JC,5/8/17,,WE,6.0,18,,M,GOT,10-3,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+741,5/22/17,128 2202,,5/11/17,JC,5/8/17,,WE,6.0,18,,M,GOT,10-4,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+743,5/22/17,128 2203,,5/11/17,JC,5/8/17,,WE,6.0,18,,M,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,contaminated
+745,5/22/17,128 2204,,5/11/17,JC,5/8/17,,WE,6.0,19,,M,GOT,10-3,252,11,263,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+747,5/22/17,128 2205,,5/11/17,JC,5/8/17,,WE,6.0,19,,M,GOT,10-4,96,10,106,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+749,5/22/17,128 2206,,5/11/17,JC,5/8/17,,WE,6.0,19,,M,GOT,10-5,29,0,29,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+751,5/22/17,128 2207,,5/11/17,JC,5/8/17,,WE,6.0,20,,M,GOT,10-3,16,5,21,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+753,5/22/17,128 2208,,5/11/17,JC,5/8/17,,WE,6.0,20,,M,GOT,10-4,7,0,7,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+755,5/22/17,128 2209,,5/11/17,JC,5/8/17,,WE,6.0,20,,M,GOT,10-5,2,0,2,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+757,5/22/17,128 2210,,5/11/17,JC,5/8/17,,WE,6.0,21,,M,GOT,10-3,4,0,4,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+759,5/22/17,128 2212,,5/11/17,JC,5/8/17,,WE,6.0,21,,M,GOT,10-4,13,0,13,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+761,5/22/17,128 2213,,5/11/17,JC,5/8/17,,WE,6.0,21,,M,GOT,10-5,0,0,0,analog,BH,SLD,FW,,,,vegetative,spore,,,contaminated
+763,5/22/17,128 2214,,5/11/17,JC,5/8/17,,WE,6.0,22,,M,GOT,10-3,29,0,29,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+765,5/22/17,128 2215,,5/11/17,JC,5/8/17,,WE,6.0,22,,M,GOT,10-4,1,0,1,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+767,5/22/17,128 2216,,5/11/17,JC,5/8/17,,WE,6.0,22,,M,GOT,10-5,0,0,0,analog,,SLD,FW,,,,vegetative,spore,,,
+769,5/22/17,128 2217,,5/11/17,JC,5/8/17,,WE,6.0,23,,M,GOT,10-3,413,3,416,analog,,SLD,FW,,,,vegetative,spore,,,
+771,5/22/17,128 2218,,5/11/17,JC,5/8/17,,WE,6.0,23,,M,GOT,10-4,289,0,289,analog,,SLD,FW,,,,vegetative,spore,,,
+773,5/22/17,128 2219,,5/11/17,JC,5/8/17,,WE,6.0,23,,M,GOT,10-5,163,1,164,analog,,SLD,FW,,,,vegetative,spore,,,
+775,5/22/17,128 2220,,5/11/17,JC,5/8/17,,WE,6.0,24,,M,GOT,10-3,58,0,58,analog,,SLD,FW,,,,vegetative,spore,,,
+777,5/22/17,128 2221,,5/11/17,JC,5/8/17,,WE,6.0,24,,M,GOT,10-4,27,0,27,analog,SLD,SLD,FW,,,,vegetative,spore,,,
+779,5/22/17,128 2223,,5/11/17,JC,5/8/17,,WE,6.0,24,,M,GOT,10-5,6,0,6,analog,,SLD,FW,,,,vegetative,spore,,,
+781,5/22/17,128 2224,,5/11/17,JC,5/8/17,,WE,6.0,25,,M,GOT,10-3,63,0,63,analog,,SLD,FW,,,,vegetative,spore,,,
+783,5/22/17,128 2225,,5/11/17,JC,5/8/17,,WE,6.0,25,,M,GOT,10-4,27,0,27,analog,,SLD,FW,,,,vegetative,spore,,,
+785,5/22/17,128 2226,,5/11/17,JC,5/8/17,,WE,6.0,25,,M,GOT,10-5,22,0,22,analog,,SLD,FW,,,,vegetative,spore,,,
+787,5/22/17,128 2227,,5/11/17,JC,5/8/17,,WE,6.0,26,,M,GOT,10-3,43,0,43,analog,,SLD,FW,,,,vegetative,spore,,,
+789,5/22/17,128 2228,,5/11/17,JC,5/8/17,,WE,6.0,26,,M,GOT,10-4,26,0,26,analog,,SLD,FW,,,,vegetative,spore,,,
+791,5/22/17,128 2229,,5/11/17,JC,5/8/17,,WE,6.0,26,,M,GOT,10-5,10,0,10,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+793,5/22/17,128 2230,,5/11/17,JC,5/8/17,,WE,6.0,27,,M,GOT,10-3,26,0,26,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+795,5/22/17,128 2231,,5/11/17,JC,5/8/17,,WE,6.0,27,,M,GOT,10-4,17,0,17,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+797,5/22/17,128 2232,,5/11/17,JC,5/8/17,,WE,6.0,27,,M,GOT,10-5,0,0,0,analog,NC,SLD,FW,,,,vegetative,spore,,,contaminated
+799,5/22/17,128 2233,,5/11/17,JC,5/8/17,,WE,6.0,28,,M,GOT,10-3,3,0,3,analog,KL,,FW,,,,vegetative,spore,,,
+801,5/22/17,128 2234,,5/11/17,JC,5/8/17,,WE,6.0,28,,M,GOT,10-4,1,0,1,analog,KL,,FW,,,,vegetative,spore,,,
+803,5/22/17,128 2235,,5/11/17,JC,5/8/17,,WE,6.0,28,,M,GOT,10-5,0,0,0,analog,KL,,FW,,,,vegetative,spore,,,all contamination
+805,5/22/17,128 2236,,5/11/17,JC,5/8/17,,WE,6.0,29,,M,GOT,10-3,1,0,1,analog,KL,,FW,,,,vegetative,spore,,,
+807,5/22/17,128 2237,,5/11/17,JC,5/8/17,,WE,6.0,29,,M,GOT,10-4,0,0,0,analog,KL,,FW,,,,vegetative,spore,,,all contamination
+809,5/22/17,128 2238,,5/11/17,JC,5/8/17,,WE,6.0,29,,M,GOT,10-5,0,0,0,analog,KL,,FW,,,,vegetative,spore,,,all contamination
+811,5/22/17,128 2239,,5/11/17,JC,5/8/17,,WE,6.0,30,,M,GOT,10-3,127,0,127,analog,KL,,FW,,,,vegetative,spore,,,
+813,5/22/17,128 2240,,5/11/17,JC,5/8/17,,WE,6.0,30,,M,GOT,10-4,44,0,44,analog,KL,,FW,,,,vegetative,spore,,,
+815,5/22/17,128 2241,,5/11/17,JC,5/8/17,,WE,6.0,30,,M,GOT,10-5,3,0,3,analog,KL,,FW,,,,vegetative,spore,,,red marks on plates were contaminated and not counted
+816,,,,,,,,,,,,,,,,,,,,,,,,,,,,,red marks on plates were contaminated and not counted

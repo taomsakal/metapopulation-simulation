@@ -1,0 +1,498 @@
+,Photo Date,Photo ID ,Photographed By,Date Plated,Plated By,"Date of Trial
+ (Monday)",Set ID,strain,Week Number,Replicate Number,# flies,Sex,"
+Plate Type (Treatment (T), Control (C), Grow out Treatment (GoT), Baseline (B))","Dilution         (10-2, 10-3, 10-4, 10-5)",Green Count,Red Count,Total CFU on Plate,count type (digital or analog),Counted By,Recorded By (Notebook),Recorded By (Computer),total consumption (24 hours mm),total consumption (48 hours mm),Total Consumption ,red means (spore or vegetative),green means  (spore or vegetative),green survival,red survival,Notes
+1,2/20/18,175 5439,,10/6/17,,,,WE,11,132,,,B,10-3,6,3,9,,FW,KL,FW,,,,spore,vegetative,,,
+3,2/20/18,175 5440,,10/6/17,,,,WE,11,132,,,B,10-4,0,1,1,,FW,KL,FW,,,,spore,vegetative,,,
+5,2/20/18,175 5441,,10/6/17,,,,WE,11,132,,,B,10-5,0,0,0,,FW,KL,FW,,,,spore,vegetative,,,
+7,2/20/18,175 5442,,10/6/17,,,,WA,11,143,,,B,10-3,0,4,4,,FW,KL,FW,,,,spore,vegetative,,,
+9,2/20/18,175 5443,,10/6/17,,,,WA,11,143,,,B,10-4,2,0,2,,FW,KL,FW,,,,spore,vegetative,,,
+11,2/20/18,175 5444,,10/6/17,,,,WA,11,143,,,B,10-5,0,0,0,,FW,KL,FW,,,,spore,vegetative,,,
+13,2/20/18,175 5445,,10/6/17,,,,JS,11,152,,,B,10-3,104,0,104,,FW,KL,FW,,,,spore,vegetative,,,
+15,2/20/18,175 5446,,10/6/17,,,,JS,11,152,,,B,10-4,5,0,5,,FW,KL,FW,,,,spore,vegetative,,,
+17,2/20/18,175 5447,,10/6/17,,,,JS,11,152,,,B,10-5,4,0,4,,FW,KL,FW,,,,spore,vegetative,,,
+19,2/20/18,175 5448,,10/6/17,,,,MY,11,171,,,B,10-3,69,1,70,,FW,KL,FW,,,,spore,vegetative,,,
+21,2/20/18,175 5449,,10/6/17,,,,MY,11,171,,,B,10-4,0,14,14,,FW,KL,FW,,,,spore,vegetative,,,
+23,2/20/18,175 5450,,10/6/17,,,,MY,11,171,,,B,10-5,0,0,0,,FW,KL,FW,,,,spore,vegetative,,,
+25,2/20/18,175 5451,,10/6/17,,,,,11,176,,,B,10-3,0,30,30,,FW,KL,FW,,,,spore,vegetative,,,
+27,2/20/18,175 5452,,10/6/17,,,,,11,176,,,B,10-4,0,7,7,,FW,KL,FW,,,,spore,vegetative,,,
+29,2/20/18,175 5453,,10/6/17,,,,,11,176,,,B,10-5,0,0,0,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+31,11/28/17,171 5047,KL,10/23/17,,,,WE,11,1,,F,T,10-2,6,3,9,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+33,11/28/17,171 5048,KL,10/23/17,,,,WE,11,1,,F,T,10-3,13,108,121,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+35,11/28/17,171 5049,KL,10/23/17,,,,WE,11,1,,F,T,10-4,1,0,1,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+37,11/28/17,171 5050,KL,10/23/17,,,,WE,11,2,,F,T,10-2,6,5,11,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+39,11/28/17,171 5051,KL,10/23/17,,,,WE,11,2,,F,T,10-3,3,0,3,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+41,11/28/17,171 5052,KL,10/23/17,,,,WE,11,2,,F,T,10-4,0,0,0,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+43,11/28/17,171 5055,KL,10/23/17,,,,WE,11,3,,F,T,10-2,0,61,61,,JC,FW,FW,,,0.0,spore,vegetative,,,
+45,11/28/17,171 5057,KL,10/23/17,,,,WE,11,3,,F,T,10-3,0,4,4,,JC,FW,FW,,,0.0,spore,vegetative,,,
+47,11/28/17,171 5058,KL,10/23/17,,,,WE,11,3,,F,T,10-4,0,1,1,,JC,FW,FW,,,0.0,spore,vegetative,,,
+49,2/15/18,174 5207,,10/23/17,,,,WE,11,4,,F,T,10-2,2,22,24,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+51,2/15/18,174 5208,,10/23/17,,,,WE,11,4,,F,T,10-3,1,0,1,,UR,CK,FW,,,0.0,spore,vegetative,,,
+53,2/15/18,174 5209,,10/23/17,,,,WE,11,4,,F,T,10-4,0,1,1,,UR,CK,FW,,,0.0,spore,vegetative,,,
+55,2/15/18,174 5210,,10/23/17,,,,WE,11,5,,F,T,10-2,1,233,234,,UR,CK,FW,,,0.0,spore,vegetative,,,
+57,2/15/18,174 5211,,10/23/17,,,,WE,11,5,,F,T,10-3,25,3,28,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+59,2/15/18,174 5212,,10/23/17,,,,WE,11,5,,F,T,10-4,1,53,54,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+61,2/15/18,174 5213,,10/23/17,,,,WE,11,6,,F,T,10-2,0,21,21,,UR,CK,FW,,,0.0,spore,vegetative,,,
+63,2/15/18,174 5214,,10/23/17,,,,WE,11,6,,F,T,10-3,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+65,2/15/18,174 5215,,10/23/17,,,,WE,11,6,,F,T,10-4,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,
+67,2/15/18,174 5231,,10/23/17,,,,WE,11,1,,M,T,10-2,3,7,10,,UR,CK,FW,,,0.0,spore,vegetative,,,
+69,2/15/18,174 5232,,10/23/17,,,,WE,11,1,,M,T,10-3,2,0,2,,UR,CK,FW,,,0.0,spore,vegetative,,,
+71,2/15/18,174 5233,,10/23/17,,,,WE,11,1,,M,T,10-4,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,
+73,2/15/18,174 5228,,10/23/17,,,,WE,11,2,,M,T,10-2,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,
+75,2/15/18,174 5229,,10/23/17,,,,WE,11,2,,M,T,10-3,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,
+77,2/15/18,174 5230,,10/23/17,,,,WE,11,2,,M,T,10-4,0,0,0,,UR,CK,FW,,,0.0,spore,vegetative,,,
+79,2/15/18,174 5225,,10/23/17,,,,WE,11,3,,M,T,10-2,80,6,86,,UR,CK,FW,,,0.0,spore,vegetative,,,
+81,2/15/18,174 5226,,10/23/17,,,,WE,11,3,,M,T,10-3,10,22,32,,UR,CK,FW,,,0.0,spore,vegetative,,,
+83,2/15/18,174 5227,,10/23/17,,,,WE,11,3,,M,T,10-4,5,2,7,,UR,CK,FW,,,0.0,spore,vegetative,,,
+85,2/22/18,176 5492,,10/23/17,,,,WE,11,4,,M,T,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+87,2/22/18,176 5493,,10/23/17,,,,WE,11,4,,M,T,10-3,0,17,17,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+89,2/22/18,176 5494,,10/23/17,,,,WE,11,4,,M,T,10-4,0,3,3,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+91,2/22/18,176 5495,,10/23/17,,,,WE,11,5,,M,T,10-2,0,2,2,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+93,2/22/18,176 5496,,10/23/17,,,,WE,11,5,,M,T,10-3,0,0,0,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+95,2/22/18,176 5497,,10/23/17,,,,WE,11,5,,M,T,10-4,0,0,0,,KL,FW,FW,,,0.0,spore,vegetative,,,contaminated
+97,2/22/18,176 5498,,10/23/17,,,,WE,11,6,,M,T,10-2,0,0,0,,KL,FW,FW,,,0.0,spore,vegetative,,,
+99,2/22/18,176 5499,,10/23/17,,,,WE,11,6,,M,T,10-3,0,0,0,,KL,FW,FW,,,0.0,spore,vegetative,,,
+101,2/22/18,176 5500,,10/23/17,,,,WE,11,6,,M,T,10-4,0,0,0,,KL,FW,FW,,,0.0,spore,vegetative,,,
+103,11/28/17,171 5088,,10/23/17,,,,WA,11,1,,F,T,10-2,13,31,44,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+105,11/28/17,171 5089,,10/23/17,,,,WA,11,1,,F,T,10-3,6,22,28,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+107,11/28/17,171 5090,,10/23/17,,,,WA,11,1,,F,T,10-4,1,0,1,,JC,FW,FW,,,0.0,spore,vegetative,,,
+109,11/28/17,171 5091,,10/23/17,,,,WA,11,2,,F,T,10-2,0,16,16,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+111,11/28/17,171 5092,,10/23/17,,,,WA,11,2,,F,T,10-3,0,0,0,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+113,11/28/17,171 5093,,10/23/17,,,,WA,11,2,,F,T,10-4,0,0,0,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+115,11/28/17,171 5094,,10/23/17,,,,WA,11,3,,F,T,10-2,0,107,107,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+117,11/28/17,171 5095,,10/23/17,,,,WA,11,3,,F,T,10-3,1,11,12,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+119,11/28/17,171 5096,,10/23/17,,,,WA,11,3,,F,T,10-4,0,4,4,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminted
+121,11/28/17,174 5259,,10/23/17,,,,WA,11,4,,F,T,10-2,119,127,246,,KC,CK,FW,,,0.0,spore,vegetative,,,
+123,11/28/17,174 5260,,10/23/17,,,,WA,11,4,,F,T,10-3,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,
+125,11/28/17,174 5261,,10/23/17,,,,WA,11,4,,F,T,10-4,3,0,3,,KC,CK,FW,,,0.0,spore,vegetative,,,
+127,11/28/17,174 5256,,10/23/17,,,,WA,11,5,,F,T,10-2,0,9,9,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+129,11/28/17,174 5257,,10/23/17,,,,WA,11,5,,F,T,10-3,0,1,1,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+131,11/28/17,174 5258,,10/23/17,,,,WA,11,5,,F,T,10-4,0,6,6,,KC,CK,FW,,,0.0,spore,vegetative,,,
+133,11/28/17,174 5253,,10/23/17,,,,WA,11,6,,F,T,10-2,0,73,73,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+135,11/28/17,174 5254,,10/23/17,,,,WA,11,6,,F,T,10-3,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+137,11/28/17,174 5255,,10/23/17,,,,WA,11,6,,F,T,10-4,0,8,8,,KC,CK,FW,,,0.0,spore,vegetative,,,
+139,2/20/18,175 5350,,10/23/17,,,,WA,11,1,,M,T,10-2,0,NC,#VALUE!,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+141,2/20/18,175 5351,,10/23/17,,,,WA,11,1,,M,T,10-3,1,38,39,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+143,2/20/18,175 5352,,10/23/17,,,,WA,11,1,,M,T,10-4,0,0,0,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+145,2/20/18,175 5353,,10/23/17,,,,WA,11,2,,M,T,10-2,4,0,4,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+147,2/20/18,175 5354,,10/23/17,,,,WA,11,2,,M,T,10-3,0,28,28,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+149,2/20/18,175 5355,,10/23/17,,,,WA,11,2,,M,T,10-4,0,0,0,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+151,2/20/18,175 5356,,10/23/17,,,,WA,11,3,,M,T,10-2,1,31,32,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+153,2/20/18,175 5357,,10/23/17,,,,WA,11,3,,M,T,10-3,0,43,43,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+155,2/20/18,175 5358,,10/23/17,,,,WA,11,3,,M,T,10-4,0,0,0,,HP,FW,FW,,,0.0,spore,vegetative,,,contaminated
+157,11/28/17,171 5068,,10/23/17,,,,WA,11,4,,M,T,10-2,2,169,171,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+159,11/28/17,171 5069,,10/23/17,,,,WA,11,4,,M,T,10-3,0,111,111,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+161,11/28/17,171 5070,,10/23/17,,,,WA,11,4,,M,T,10-4,1,17,18,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+163,11/28/17,171 5071,,10/23/17,,,,WA,11,5,,M,T,10-2,1,285,286,,JC,FW,FW,,,0.0,spore,vegetative,,,
+165,11/28/17,171 5072,,10/23/17,,,,WA,11,5,,M,T,10-3,0,107,107,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+167,11/28/17,171 5073,,10/23/17,,,,WA,11,5,,M,T,10-4,0,22,22,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+169,11/28/17,171 5074,,10/23/17,,,,WA,11,6,,M,T,10-2,0,367,367,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+171,11/28/17,171 5077,,10/23/17,,,,WA,11,6,,M,T,10-3,1,25,26,,JC,FW,FW,,,0.0,spore,vegetative,,,contaminated
+173,11/28/17,171 5078,,10/23/17,,,,WA,11,6,,M,T,10-4,0,3,3,,JC,FW,FW,,,0.0,spore,vegetative,,,
+175,2/20/18,175 5315,KL,10/23/17,,,,,11,1,,F,T,10-2,0,24,24,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+177,2/20/18,175 5313,KL,10/23/17,,,,,11,1,,F,T,10-3,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+179,2/20/18,175 5312,KL,10/23/17,,,,,11,1,,F,T,10-4,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+181,2/20/18,175 5318,KL,10/23/17,,,,,11,2,,F,T,10-2,40,0,40,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+183,2/20/18,175 5317,KL,10/23/17,,,,,11,2,,F,T,10-3,0,57,57,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+185,2/20/18,175 5316,KL,10/23/17,,,,,11,2,,F,T,10-4,0,7,7,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+187,2/20/18,175 5321,KL,10/23/17,,,,,11,3,,F,T,10-2,173,0,173,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+189,2/20/18,175 5320,KL,10/23/17,,,,,11,3,,F,T,10-3,0,4,4,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+191,2/20/18,175 5319,KL,10/23/17,,,,,11,3,,F,T,10-4,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+193,11/28/17,171 5079,KL,10/23/17,,,,,11,4,,F,T,10-2,3,65,68,,JC,FW,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+195,11/28/17,171 5080,KL,10/23/17,,,,,11,4,,F,T,10-3,7,12,19,,JC,FW,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+197,11/28/17,171 5081,KL,10/23/17,,,,,11,4,,F,T,10-4,0,0,0,,JC,FW,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+199,11/28/17,171 5082,KL,10/23/17,,,,,11,5,,F,T,10-2,0,2,2,,JC,FW,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+201,11/28/17,171 5083,KL,10/23/17,,,,,11,5,,F,T,10-3,0,2,2,,JC,FW,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+203,11/28/17,171 5084,KL,10/23/17,,,,,11,5,,F,T,10-4,0,0,0,,JC,FW,KL,,,0.0,spore,vegetative,,,
+205,11/28/17,171 5085,KL,10/23/17,,,,,11,6,,F,T,10-2,0,1,1,,JC,FW,KL,,,0.0,spore,vegetative,,,
+207,11/28/17,171 5086,KL,10/23/17,,,,,11,6,,F,T,10-3,0,8,8,,JC,FW,KL,,,0.0,spore,vegetative,,,
+209,11/28/17,171 5087,KL,10/23/17,,,,,11,6,,F,T,10-4,0,0,0,,JC,FW,KL,,,0.0,spore,vegetative,,,
+211,2/20/18,175 5273,KL,10/23/17,,,,,11,1,,M,T,10-2,7,0,7,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+213,2/20/18,175 5274,KL,10/23/17,,,,,11,1,,M,T,10-3,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+215,2/20/18,175 5276,KL,10/23/17,,,,,11,1,,M,T,10-4,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,
+217,2/20/18,175 5277,KL,10/23/17,,,,,11,2,,M,T,10-2,0,114,114,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+219,2/20/18,175 5278,KL,10/23/17,,,,,11,2,,M,T,10-3,0,3,3,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+221,2/20/18,175 5279,KL,10/23/17,,,,,11,2,,M,T,10-4,26,0,26,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+223,2/20/18,175 5280,KL,10/23/17,,,,,11,3,,M,T,10-2,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+225,2/20/18,175 5281,KL,10/23/17,,,,,11,3,,M,T,10-3,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+227,2/20/18,175 5282,KL,10/23/17,,,,,11,3,,M,T,10-4,28,0,28,,KC,CK,KL,,,0.0,spore,vegetative,,,
+229,2/20/18,175 5284,KL,10/23/17,,,,,11,4,,M,T,10-2,1,0,1,,KC,CK,KL,,,0.0,spore,vegetative,,,
+231,2/20/18,175 5285,KL,10/23/17,,,,,11,4,,M,T,10-3,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+233,2/20/18,175 5286,KL,10/23/17,,,,,11,4,,M,T,10-4,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+235,2/20/18,175 5287,KL,10/23/17,,,,,11,5,,M,T,10-2,199,0,199,,KC,CK,KL,,,0.0,spore,vegetative,,,
+237,2/20/18,175 5288,KL,10/23/17,,,,,11,5,,M,T,10-3,0,28,28,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+239,2/20/18,175 5289,KL,10/23/17,,,,,11,5,,M,T,10-4,3,42,45,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+241,2/20/18,175 5290,KL,10/23/17,,,,,11,6,,M,T,10-2,0,0,0,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+243,2/20/18,175 5291,KL,10/23/17,,,,,11,6,,M,T,10-3,2,8,10,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+245,2/20/18,175 5292,KL,10/23/17,,,,,11,6,,M,T,10-4,1,0,1,,KC,CK,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+247,2/15/18,174 5196,,10/23/17,,,,JS,11,1,,F,T,10-2,2,99,101,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+249,2/15/18,174 5197,,10/23/17,,,,JS,11,1,,F,T,10-3,0,5,5,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+251,2/15/18,174 5198,,10/23/17,,,,JS,11,1,,F,T,10-4,0,0,0,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+253,2/15/18,174 5199,,10/23/17,,,,JS,11,2,,F,T,10-2,0,9,9,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+255,2/15/18,174 5200,,10/23/17,,,,JS,11,2,,F,T,10-3,0,5,5,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+257,2/15/18,174 5203,,10/23/17,,,,JS,11,2,,F,T,10-4,0,0,0,,FW,KL,KL,,,0.0,spore,vegetative,,,CONTAMINATED
+259,2/15/18,174 5204,,10/23/17,,,,JS,11,3,,F,T,10-2,2,108,110,,FW,KL,KL,,,0.0,spore,vegetative,,,
+261,2/15/18,174 5205,,10/23/17,,,,JS,11,3,,F,T,10-3,1,22,23,,FW,KL,FW,,,0.0,spore,vegetative,,,
+263,2/15/18,174 5206,,10/23/17,,,,JS,11,3,,F,T,10-4,0,0,0,,FW,KL,FW,,,0.0,spore,vegetative,,,
+265,2/20/18,175 5293,,10/23/17,,,,JS,11,4,,F,T,10-2,2,0,2,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+267,2/20/18,175 5294,,10/23/17,,,,JS,11,4,,F,T,10-3,0,0,0,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+269,2/20/18,175 5295,,10/23/17,,,,JS,11,4,,F,T,10-4,0,1,1,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+271,2/20/18,175 5296,,10/23/17,,,,JS,11,5,,F,T,10-2,1,69,70,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+273,2/20/18,175 5297,,10/23/17,,,,JS,11,5,,F,T,10-3,0,2,2,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+275,2/20/18,175 5298,,10/23/17,,,,JS,11,5,,F,T,10-4,0,0,0,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+277,2/20/18,175 5299,,10/23/17,,,,JS,11,6,,F,T,10-2,5,0,5,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+279,2/20/18,175 5300,,10/23/17,,,,JS,11,6,,F,T,10-3,0,0,0,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+281,2/20/18,175 5301,,10/23/17,,,,JS,11,6,,F,T,10-4,0,0,0,,CK,FW,FW,,,0.0,spore,vegetative,,,contaminated
+283,2/20/18,175 5322,,10/23/17,,,,JS,11,1,,M,T,10-2,0,99,99,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+285,2/20/18,175 5323,,10/23/17,,,,JS,11,1,,M,T,10-3,1,0,1,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+287,2/20/18,175 5324,,10/23/17,,,,JS,11,1,,M,T,10-4,1,5,6,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+289,2/20/18,175 5325,,10/23/17,,,,JS,11,2,,M,T,10-2,5,0,5,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+291,2/20/18,175 5326,,10/23/17,,,,JS,11,2,,M,T,10-3,1,0,1,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+293,2/20/18,175 5327,,10/23/17,,,,JS,11,2,,M,T,10-4,2,0,2,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+295,2/20/18,175 5328,,10/23/17,,,,JS,11,3,,M,T,10-2,0,218,218,,UR,CK,FW,,,0.0,spore,vegetative,,,
+297,2/20/18,175 5329,,10/23/17,,,,JS,11,3,,M,T,10-3,0,16,16,,UR,CK,FW,,,0.0,spore,vegetative,,,
+299,,175 5330,,10/23/17,,,,JS,11,3,,M,T,10-4,1,13,14,,UR,CK,FW,,,0.0,spore,vegetative,,,contaminated
+301,2/20/18,175 5303,,10/23/17,,,,JS,11,4,,M,T,10-2,NC,NC,#VALUE!,,TY,FW,FW,,,0.0,spore,vegetative,,,
+303,2/20/18,175 5304,,10/23/17,,,,JS,11,4,,M,T,10-3,6,14,20,,TY,FW,FW,,,0.0,spore,vegetative,,,
+305,2/20/18,175 5305,,10/23/17,,,,JS,11,4,,M,T,10-4,0,25,25,,TY,FW,FW,,,0.0,spore,vegetative,,,
+307,2/20/18,175 5306,,10/23/17,,,,JS,11,5,,M,T,10-2,0,472,472,,TY,FW,FW,,,0.0,spore,vegetative,,,
+309,2/20/18,175 5307,,10/23/17,,,,JS,11,5,,M,T,10-3,0,21,21,,TY,FW,FW,,,0.0,spore,vegetative,,,contaminated
+311,2/20/18,175 5308,,10/23/17,,,,JS,11,5,,M,T,10-4,6,48,54,,TY,FW,FW,,,0.0,spore,vegetative,,,contaminated
+313,2/20/18,175 5309,,10/23/17,,,,JS,11,6,,M,T,10-2,588,0,588,,TY,FW,FW,,,0.0,spore,vegetative,,,contaminated
+315,2/20/18,175 5310,,10/23/17,,,,JS,11,6,,M,T,10-3,0,11,11,,TY,FW,FW,,,0.0,spore,vegetative,,,contaminated
+317,2/20/18,175 5311,,10/23/17,,,,JS,11,6,,M,T,10-4,0,5,5,,TY,FW,FW,,,0.0,spore,vegetative,,,contaminated
+319,2/20/18,175 5379,,,,,,MY,11,1,,F,T,10-2,0,7,7,,BH,,FW,,,0.0,spore,vegetative,,,
+321,2/20/18,175 5380,,,,,,MY,11,1,,F,T,10-3,0,20,20,,BH,,FW,,,0.0,spore,vegetative,,,contaminated
+323,2/20/18,175 5381,,,,,,MY,11,1,,F,T,10-4,0,0,0,,BH,,FW,,,0.0,spore,vegetative,,,
+325,2/20/18,175 5382,,,,,,MY,11,2,,F,T,10-2,NC,NC,#VALUE!,,,,FW,,,0.0,spore,vegetative,,,
+327,2/20/18,175 5383,,,,,,MY,11,2,,F,T,10-3,0,0,0,,BH,,FW,,,0.0,spore,vegetative,,,
+329,2/20/18,175 5384,,,,,,MY,11,2,,F,T,10-4,0,0,0,,BH,,FW,,,0.0,spore,vegetative,,,
+331,2/20/18,175 5385,,,,,,MY,11,3,,F,T,10-2,0,15,15,,BH,,FW,,,0.0,spore,vegetative,,,contaminated
+333,2/20/18,175 5386,,,,,,MY,11,3,,F,T,10-3,0,4,4,,BH,,FW,,,0.0,spore,vegetative,,,contaminated
+335,2/20/18,175 5387,,,,,,MY,11,3,,F,T,10-4,0,0,0,,BH,,FW,,,0.0,spore,vegetative,,,contaminated
+337,2/20/18,175 5406,,,,,,MY,11,4,,F,T,10-2,1,0,1,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+339,2/20/18,175 5407,,,,,,MY,11,4,,F,T,10-3,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+341,2/20/18,175 5408,,,,,,MY,11,4,,F,T,10-4,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,
+343,2/20/18,175 5409,,,,,,MY,11,5,,F,T,10-2,0,2,2,,KC,CK,FW,,,0.0,spore,vegetative,,,
+345,2/20/18,175 5410,,,,,,MY,11,5,,F,T,10-3,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+347,2/20/18,175 5411,,,,,,MY,11,5,,F,T,10-4,0,0,0,,KC,CK,FW,,,0.0,spore,vegetative,,,
+349,2/20/18,175 5412,,,,,,MY,11,6,,F,T,10-2,1,32,33,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+351,2/20/18,175 5413,,,,,,MY,11,6,,F,T,10-3,0,2,2,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+353,2/20/18,175 5414,,,,,,MY,11,6,,F,T,10-4,0,2,2,,KC,CK,FW,,,0.0,spore,vegetative,,,contaminated
+355,,,,,,,,MY,11,1,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+357,,,,,,,,MY,11,1,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+359,,,,,,,,MY,11,1,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+361,,,,,,,,MY,11,2,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+363,,,,,,,,MY,11,2,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+365,,,,,,,,MY,11,2,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+367,,,,,,,,MY,11,3,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+369,,,,,,,,MY,11,3,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+371,,,,,,,,MY,11,3,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+373,2/15/18,174 5268,,10/23/17,,,,MY,11,4,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+375,2/15/18,174 5269,,10/23/17,,,,MY,11,4,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+377,2/15/18,174 5272,,10/23/17,,,,MY,11,4,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+379,2/15/18,174 5265,,10/23/17,,,,MY,11,5,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+381,2/15/18,174 5266,,10/23/17,,,,MY,11,5,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+383,2/15/18,174 5267,,10/23/17,,,,MY,11,5,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+385,2/15/18,174 5262,,10/23/17,,,,MY,11,6,,M,T,10-2,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+387,2/15/18,174 5263,,10/23/17,,,,MY,11,6,,M,T,10-3,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+389,2/15/18,174 5264,,10/23/17,,,,MY,11,6,,M,T,10-4,nan,nan,0,,,,,,,0.0,spore,vegetative,,,
+391,3/20/18,178 5556,,10/4/17,,,,WE,11,1,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,contaminated
+393,3/20/18,178 5555,,10/4/17,,,,WE,11,1,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,contaminated
+395,3/20/18,178 5546,,10/4/17,,,,WE,11,1,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+397,3/20/18,178 5547,,10/4/17,,,,WE,11,2,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+399,3/20/18,178 5548,,10/4/17,,,,WE,11,2,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+401,3/20/18,178 5549,,10/4/17,,,,WE,11,2,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+403,3/20/18,178 5550,,10/4/17,,,,WE,11,3,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+405,3/20/18,178 5551,,10/4/17,,,,WE,11,3,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+407,3/20/18,178 5557,,10/4/17,,,,WE,11,3,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+409,3/20/18,178 5558,,10/4/17,,,,WE,11,4,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+411,3/20/18,178 5559,,10/4/17,,,,WE,11,4,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+413,3/20/18,178 5560,,10/4/17,,,,WE,11,4,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+415,3/20/18,178 5561,,10/4/17,,,,WE,11,5,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+417,3/20/18,178 5552,,10/4/17,,,,WE,11,5,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+419,3/20/18,178 5553,,10/4/17,,,,WE,11,5,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+421,3/20/18,178 5554,,10/4/17,,,,WE,11,6,,F,GOT,10-3,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+423,3/20/18,178 5562,,10/4/17,,,,WE,11,6,,F,GOT,10-4,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+425,3/20/18,178 5563,,10/4/17,,,,WE,11,6,,F,GOT,10-5,0,0,0,,MR,,FW,,,,spore,vegetative,,,
+427,2/20/18,175 5397,,10/4/17,,,,WE,11,1,,M,GOT,10-3,NC,NC,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,contaminated
+429,2/20/18,175 5398,,10/4/17,,,,WE,11,1,,M,GOT,10-4,NC,NC,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,contaminated
+431,2/20/18,175 5399,,10/4/17,,,,WE,11,1,,M,GOT,10-5,133,29,162,,HP,FW,FW,,,,spore,vegetative,,,contaminated
+433,2/20/18,175 5400,,10/4/17,,,,WE,11,2,,M,GOT,10-3,NC,17,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,
+435,2/20/18,175 5401,,10/4/17,,,,WE,11,2,,M,GOT,10-4,NC,28,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,
+437,2/20/18,175 5402,,10/4/17,,,,WE,11,2,,M,GOT,10-5,385,52,437,,HP,FW,FW,,,,spore,vegetative,,,
+439,2/20/18,175 5403,,10/4/17,,,,WE,11,3,,M,GOT,10-3,NC,25,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,
+441,2/20/18,175 5404,,10/4/17,,,,WE,11,3,,M,GOT,10-4,NC,0,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,contaminated
+443,2/20/18,175 5405,,10/4/17,,,,WE,11,3,,M,GOT,10-5,NC,NC,#VALUE!,,HP,FW,FW,,,,spore,vegetative,,,contaminated
+445,2/15/18,174 5250,,10/26/17,KL,,,WE,11,4,,M,GOT,10-3,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+447,2/15/18,174 5251,,10/26/17,KL,,,WE,11,4,,M,GOT,10-4,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+449,2/15/18,174 5252,,10/26/17,KL,,,WE,11,4,,M,GOT,10-5,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+451,2/15/18,174 5247,,10/26/17,KL,,,WE,11,5,,M,GOT,10-3,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+453,2/15/18,174 5248,,10/26/17,KL,,,WE,11,5,,M,GOT,10-4,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+455,2/15/18,174 5249,,10/26/17,KL,,,WE,11,5,,M,GOT,10-5,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+457,2/15/18,174 5244,,10/26/17,KL,,,WE,11,6,,M,GOT,10-3,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+459,2/15/18,174 5245,,10/26/17,KL,,,WE,11,6,,M,GOT,10-4,1532,170,1702,,CK,FW,FW,,,,spore,vegetative,,,
+461,2/15/18,174 5246,,10/26/17,,,,WE,11,6,,M,GOT,10-5,434,106,540,,CK,FW,FW,,,,spore,vegetative,,,
+463,3/5/18,177 5536,,10/4/17,,,,WA,11,1,,F,GOT,10-3,359,290,649,,FP,FW,FW,,,,spore,vegetative,,,
+465,3/5/18,177 5537,,10/4/17,,,,WA,11,1,,F,GOT,10-4,83,61,144,,FP,FW,FW,,,,spore,vegetative,,,
+467,3/5/18,177 5538,,10/4/17,,,,WA,11,1,,F,GOT,10-5,11,9,20,,FP,FW,FW,,,,spore,vegetative,,,
+469,3/5/18,177 5539,,10/4/17,,,,WA,11,2,,F,GOT,10-3,NC,NC,#VALUE!,,FP,FW,FW,,,,spore,vegetative,,,contaminated
+471,3/5/18,177 5540,,10/4/17,,,,WA,11,2,,F,GOT,10-4,NC,NC,#VALUE!,,FP,FW,FW,,,,spore,vegetative,,,contaminated
+473,3/5/18,177 5541,,10/4/17,,,,WA,11,2,,F,GOT,10-5,18,0,18,,FP,FW,FW,,,,spore,vegetative,,,contaminated
+475,3/5/18,177 5542,,10/4/17,,,,WA,11,3,,F,GOT,10-3,345,739,1084,,FP,FW,FW,,,,spore,vegetative,,,contaminated
+477,3/5/18,177 5543,,10/4/17,,,,WA,11,3,,F,GOT,10-4,53,138,191,,FP,FW,FW,,,,spore,vegetative,,,
+479,3/5/18,177 5544,,10/4/17,,,,WA,11,3,,F,GOT,10-5,6,23,29,,FP,FW,FW,,,,spore,vegetative,,,
+481,2/22/18,176 5501,,10/4/17,,,,WA,11,4,,F,GOT,10-3,713,59,772,,FP,FW,FW,,,,spore,vegetative,,,
+483,2/22/18,176 5502,,10/4/17,,,,WA,11,4,,F,GOT,10-4,92,2,94,,FP,FW,FW,,,,spore,vegetative,,,
+485,2/22/18,176 5503,,10/4/17,,,,WA,11,4,,F,GOT,10-5,13,1,14,,FP,FW,FW,,,,spore,vegetative,,,
+487,2/22/18,176 5504,,10/4/17,,,,WA,11,5,,F,GOT,10-3,0,0,0,,FP,FW,FW,,,,spore,vegetative,,,
+489,2/22/18,176 5505,,10/4/17,,,,WA,11,5,,F,GOT,10-4,0,0,0,,FP,FW,FW,,,,spore,vegetative,,,
+491,2/22/18,176 5506,,10/4/17,,,,WA,11,5,,F,GOT,10-5,0,0,0,,FP,FW,FW,,,,spore,vegetative,,,
+493,2/22/18,176 5507,,10/4/17,,,,WA,11,6,,F,GOT,10-3,NC,NC,#VALUE!,,FP,FW,FW,,,,spore,vegetative,,,
+495,2/22/18,176 5508,,10/4/17,,,,WA,11,6,,F,GOT,10-4,175,43,218,,FP,FW,FW,,,,spore,vegetative,,,
+497,2/22/18,176 5509,,10/4/17,,,,WA,11,6,,F,GOT,10-5,20,8,28,,FP,FW,FW,,,,spore,vegetative,,,
+499,12/5/17,172 5117,,10/4/17,,,,WA,11,1,,M,GOT,10-3,1055,128,1183,,JC,FW,FW,,,,spore,vegetative,,,
+501,12/5/17,172 5118,,10/4/17,,,,WA,11,1,,M,GOT,10-4,108,17,125,,JC,FW,FW,,,,spore,vegetative,,,
+503,12/5/17,172 5119,,10/4/17,,,,WA,11,1,,M,GOT,10-5,56,3,59,,JC,FW,FW,,,,spore,vegetative,,,
+505,12/5/17,172 5120,,10/4/17,,,,WA,11,2,,M,GOT,10-3,NC,NC,#VALUE!,,JC,FW,FW,,,,spore,vegetative,,,
+507,12/5/17,172 5121,,10/4/17,,,,WA,11,2,,M,GOT,10-4,22,186,208,,JC,FW,FW,,,,spore,vegetative,,,
+509,12/5/17,172 5122,,10/4/17,,,,WA,11,2,,M,GOT,10-5,39,47,86,,JC,FW,FW,,,,spore,vegetative,,,
+511,12/5/17,172 5123,,10/4/17,,,,WA,11,3,,M,GOT,10-3,NC,NC,#VALUE!,,JC,FW,FW,,,,spore,vegetative,,,
+513,12/5/17,172 5124,,10/4/17,,,,WA,11,3,,M,GOT,10-4,13,97,110,,JC,FW,FW,,,,spore,vegetative,,,
+515,12/5/17,172 5125,,10/4/17,,,,WA,11,3,,M,GOT,10-5,170,68,238,,JC,FW,FW,,,,spore,vegetative,,,
+517,12/5/17,175 5388,,10/4/17,,,,WA,11,4,,M,GOT,10-3,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+519,12/5/17,175 5389,,10/4/17,,,,WA,11,4,,M,GOT,10-4,59,561,620,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+521,12/5/17,175 5390,,10/4/17,,,,WA,11,4,,M,GOT,10-5,122,98,220,,TY,FW,FW,,,,spore,vegetative,,,
+523,12/5/17,175 5391,,10/4/17,,,,WA,11,5,,M,GOT,10-3,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,
+525,12/5/17,175 5392,,10/4/17,,,,WA,11,5,,M,GOT,10-4,200,188,388,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+527,12/5/17,175 5393,,10/4/17,,,,WA,11,5,,M,GOT,10-5,88,101,189,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+529,12/5/17,175 5394,,10/4/17,,,,WA,11,6,,M,GOT,10-3,764,123,887,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+531,12/5/17,175 5395,,10/4/17,,,,WA,11,6,,M,GOT,10-4,687,87,774,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+533,12/5/17,175 5396,,10/4/17,,,,WA,11,6,,M,GOT,10-5,126,15,141,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+535,2/20/18,175 5331,,10/4/17,,,,,11,1,,F,GOT,10-3,84,237,321,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+537,2/20/18,175 5332,,10/4/17,,,,,11,1,,F,GOT,10-4,2,88,90,,TY,FW,FW,,,,spore,vegetative,,,
+539,2/20/18,175 5334,,10/4/17,,,,,11,1,,F,GOT,10-5,0,3,3,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+541,2/20/18,175 5335,,10/4/17,,,,,11,2,,F,GOT,10-3,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+543,2/20/18,175 5336,,10/4/17,,,,,11,2,,F,GOT,10-4,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+545,2/20/18,175 5337,,10/4/17,,,,,11,2,,F,GOT,10-5,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+547,2/20/18,175 5338,,10/4/17,,,,,11,3,,F,GOT,10-3,0,9,9,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+549,2/20/18,175 5339,,10/4/17,,,,,11,3,,F,GOT,10-4,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+551,2/20/18,175 5340,,10/4/17,,,,,11,3,,F,GOT,10-5,NC,NC,#VALUE!,,TY,FW,FW,,,,spore,vegetative,,,contaminated
+553,2/22/18,176 5456,,10/4/17,,,,,11,4,,F,GOT,10-3,13,372,385,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+555,2/22/18,176 5457,,10/4/17,,,,,11,4,,F,GOT,10-4,NC,NC,#VALUE!,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+557,2/22/18,176 5458,,10/4/17,,,,,11,4,,F,GOT,10-5,NC,NC,#VALUE!,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+559,2/22/18,176 5459,,10/4/17,,,,,11,5,,F,GOT,10-3,NC,NC,#VALUE!,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+561,2/22/18,176 5460,,10/4/17,,,,,11,5,,F,GOT,10-4,743,623,1366,,FW,KL,FW,,,,spore,vegetative,,,
+563,2/22/18,176 5461,,10/4/17,,,,,11,5,,F,GOT,10-5,90,61,151,,FW,KL,FW,,,,spore,vegetative,,,contaminated
+565,2/22/18,176 5462,,10/4/17,,,,,11,6,,F,GOT,10-3,29,733,762,,FW,KL,FW,,,,spore,vegetative,,,
+567,2/22/18,176 5463,,10/4/17,,,,,11,6,,F,GOT,10-4,6,100,106,,FW,KL,FW,,,,spore,vegetative,,,
+569,2/22/18,176 5464,,10/4/17,,,,,11,6,,F,GOT,10-5,0,0,0,,FW,KL,FW,,,,spore,vegetative,,,
+571,2/20/18,175 5341,,10/4/17,,,,,11,1,,M,GOT,10-3,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+573,2/20/18,175 5342,,10/4/17,,,,,11,1,,M,GOT,10-4,15,0,15,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+575,2/20/18,175 5343,,10/4/17,,,,,11,1,,M,GOT,10-5,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+577,2/20/18,175 5344,,10/4/17,,,,,11,2,,M,GOT,10-3,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+579,2/20/18,175 5345,,10/4/17,,,,,11,2,,M,GOT,10-4,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+581,2/20/18,175 5346,,10/4/17,,,,,11,2,,M,GOT,10-5,0,6,6,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+583,2/20/18,175 5347,,10/4/17,,,,,11,3,,M,GOT,10-3,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+585,2/20/18,175 5348,,10/4/17,,,,,11,3,,M,GOT,10-4,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,contaminated
+587,2/20/18,175 5349,,10/4/17,,,,,11,3,,M,GOT,10-5,0,0,0,,KC,CK,FW,,,,spore,vegetative,,,
+589,12/5/17,172 5126,,10/4/17,,,,,11,4,,M,GOT,10-3,2,0,2,,CK,CK,FW,,,,spore,vegetative,,,contaminated
+591,12/5/17,172 5127,,10/4/17,,,,,11,4,,M,GOT,10-4,4,0,4,,JC,CK,FW,,,,spore,vegetative,,,
+593,12/5/17,172 5128,,10/4/17,,,,,11,4,,M,GOT,10-5,16,0,16,,JC,CK,FW,,,,spore,vegetative,,,
+595,12/5/17,172 5129,,10/4/17,,,,,11,5,,M,GOT,10-3,0,0,0,,CK,CK,FW,,,,spore,vegetative,,,contaminated
+597,12/5/17,172 5132,,10/4/17,,,,,11,5,,M,GOT,10-4,30,9,39,,JC,CK,FW,,,,spore,vegetative,,,contaminated
+599,12/5/17,172 5133,,10/4/17,,,,,11,5,,M,GOT,10-5,1,0,1,,JC,CK,FW,,,,spore,vegetative,,,
+601,12/5/17,172 5134,,10/4/17,,,,,11,6,,M,GOT,10-3,13,653,666,,JC,CK,FW,,,,spore,vegetative,,,contaminated
+603,12/5/17,172 5136,,10/4/17,,,,,11,6,,M,GOT,10-4,14,0,14,,CK,CK,FW,,,,spore,vegetative,,,contaminated
+605,12/5/17,172 5138,,10/4/17,,,,,11,6,,M,GOT,10-5,0,0,0,,CK,CK,FW,,,,spore,vegetative,,,
+607,2/20/18,175 5369,,10/4/17,,,,JS ,11,1,,F,GOT,10-2,111,0,111,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+609,2/20/18,175 5370,,10/4/17,,,,JS ,11,1,,F,GOT,10-3,4,8,12,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+611,2/20/18,175 5371,,10/4/17,,,,JS ,11,1,,F,GOT,10-4,0,19,19,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+613,2/20/18,175 5372,,10/4/17,,,,JS ,11,2,,F,GOT,10-2,N/C,N/C,#VALUE!,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+615,2/20/18,175 5374,,10/4/17,,,,JS ,11,2,,F,GOT,10-3,N/C,N/C,#VALUE!,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+617,2/20/18,175 5375,,10/4/17,,,,JS ,11,2,,F,GOT,10-4,412,0,412,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+619,2/20/18,175 5376,,10/4/17,,,,JS ,11,3,,F,GOT,10-2,N/C,N/C,#VALUE!,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+621,2/20/18,175 5377,,10/4/17,,,,JS ,11,3,,F,GOT,10-3,N/C,N/C,#VALUE!,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+623,2/20/18,175 5378,,10/4/17,,,,JS ,11,3,,F,GOT,10-4,N/C,N/C,#VALUE!,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+625,12/5/17,172 5097,,10/4/17,,,,JS ,11,4,,F,GOT,10-2,58,1034,1092,,,FW,KL,,,,spore,vegetative,,,
+627,12/5/17,172 5098,,10/4/17,,,,JS ,11,4,,F,GOT,10-3,2,0,2,,,FW,KL,,,,spore,vegetative,,,
+629,12/5/17,172 5099,,10/4/17,,,,JS ,11,4,,F,GOT,10-4,0,0,0,,,FW,KL,,,,spore,vegetative,,,
+631,12/5/17,172 5100,,10/4/17,,,,JS ,11,5,,F,GOT,10-2,9,539,548,,,FW,KL,,,,spore,vegetative,,,
+633,12/5/17,172 5101,,10/4/17,,,,JS ,11,5,,F,GOT,10-3,0,0,0,,,FW,KL,,,,spore,vegetative,,,
+635,12/5/17,172 5102,,10/4/17,,,,JS ,11,5,,F,GOT,10-4,0,0,0,,,FW,KL,,,,spore,vegetative,,,
+637,12/5/17,172 5103,,10/4/17,,,,JS ,11,6,,F,GOT,10-2,153,0,153,,,FW,KL,,,,spore,vegetative,,,
+639,12/5/17,172 5104,,10/4/17,,,,JS ,11,6,,F,GOT,10-3,0,2,2,,,FW,KL,,,,spore,vegetative,,,
+641,12/5/17,172 5105,,10/4/17,,,,JS ,11,6,,F,GOT,10-4,0,0,0,,,FW,KL,,,,spore,vegetative,,,
+643,2/15/18,174 5238,,10/4/17,,,,JS ,11,1,,M,GOT,10-2,0,0,0,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+645,2/15/18,174 5239,,10/4/17,,,,JS ,11,1,,M,GOT,10-3,0,0,0,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+647,2/15/18,174 5240,,10/4/17,,,,JS ,11,1,,M,GOT,10-4,0,0,0,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+649,2/15/18,174 5241,,10/4/17,,,,JS ,11,2,,M,GOT,10-2,982,0,982,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+651,2/15/18,174 5242,,10/4/17,,,,JS ,11,2,,M,GOT,10-3,5,0,5,,TY,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+653,2/15/18,174 5243,,10/4/17,,,,JS ,11,2,,M,GOT,10-4,0,0,0,,TY,FW,KL,,,,spore,vegetative,,,
+655,2/15/18,174 5234,,10/4/17,,,,JS ,11,3,,M,GOT,10-2,781,12,793,,TY,FW,KL,,,,spore,vegetative,,,
+657,2/15/18,174 5235,,10/4/17,,,,JS ,11,3,,M,GOT,10-3,84,8,92,,TY,FW,KL,,,,spore,vegetative,,,
+659,2/15/18,174 5236,,10/4/17,,,,JS ,11,3,,M,GOT,10-4,0,0,0,,TY,FW,KL,,,,spore,vegetative,,,
+661,2/15/18,174 5216,,10/4/17,,,,JS ,11,4,,M,GOT,10-2,n/c,n/c,#VALUE!,,CK,FW,KL,,,,spore,vegetative,,,
+663,2/15/18,174 5217,,10/4/17,,,,JS ,11,4,,M,GOT,10-3,13,717,730,,CK,FW,KL,,,,spore,vegetative,,,
+665,2/15/18,174 5218,,10/4/17,,,,JS ,11,4,,M,GOT,10-4,0,86,86,,CK,FW,KL,,,,spore,vegetative,,,
+667,2/15/18,174 5219,,10/4/17,,,,JS ,11,5,,M,GOT,10-2,144,0,144,,CK,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+669,2/15/18,174 5220,,10/4/17,,,,JS ,11,5,,M,GOT,10-3,0,0,0,,CK,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+671,2/15/18,174 5221,,10/4/17,,,,JS ,11,5,,M,GOT,10-4,0,0,0,,CK,FW,KL,,,,spore,vegetative,,,
+673,2/15/18,174 5222,,10/4/17,,,,JS ,11,6,,M,GOT,10-2,0,0,0,,CK,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+675,2/15/18,174 5223,,10/4/17,,,,JS ,11,6,,M,GOT,10-3,0,0,0,,CK,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+677,2/15/18,174 5224,,10/4/17,,,,JS ,11,6,,M,GOT,10-4,0,0,0,,CK,FW,KL,,,,spore,vegetative,,,CONTAMINATED
+679,12/5/17,172 5106,,10/26/17,KL,,,MY,11,1,,F,GOT,10-2,294,N/C,#VALUE!,,HP,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+681,12/5/17,172 5108,,10/26/17,KL,,,MY,11,1,,F,GOT,10-3,147,126,273,,HP,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+683,12/5/17,172 5109,,10/26/17,KL,,,MY,11,1,,F,GOT,10-4,20,9,29,,HP,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+685,12/5/17,172 5112,,10/26/17,KL,,,MY,11,2,,F,GOT,10-2,47,N/C,#VALUE!,,HP,CK,KL,,,,spore,vegetative,,,
+687,12/5/17,172 5111,,10/26/17,KL,,,MY,11,2,,F,GOT,10-3,66,N/C,#VALUE!,,HP,CK,KL,,,,spore,vegetative,,,
+689,12/5/17,172 5110,,10/26/17,KL,,,MY,11,2,,F,GOT,10-4,7,181,188,,HP,CK,KL,,,,spore,vegetative,,,
+691,12/5/17,172 5113,,10/26/17,KL,,,MY,11,3,,F,GOT,10-2,233,546,779,,CK,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+693,12/5/17,172 5115,,10/26/17,KL,,,MY,11,3,,F,GOT,10-3,0,6,6,,CK,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+695,12/5/17,172 5116,,10/26/17,KL,,,MY,11,3,,F,GOT,10-4,0,0,0,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED
+697,12/5/17,172 5139,,10/4/17,KL,,,MY,11,4,,F,GOT,10-2,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+699,12/5/17,172 5140,,10/4/17,KL,,,MY,11,4,,F,GOT,10-3,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+701,12/5/17,172 5141,,10/4/17,KL,,,MY,11,4,,F,GOT,10-4,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+703,12/5/17,172 5142,,10/4/17,KL,,,MY,11,5,,F,GOT,10-2,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+705,12/5/17,172 5153,,10/4/17,KL,,,MY,11,5,,F,GOT,10-3,495,0,495,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+707,12/5/17,172 5144,,10/4/17,KL,,,MY,11,5,,F,GOT,10-4,60,0,60,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+709,12/5/17,172 5147,,10/4/17,KL,,,MY,11,6,,F,GOT,10-2,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+711,12/5/17,172 5148,,10/4/17,KL,,,MY,11,6,,F,GOT,10-3,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+713,12/5/17,172 5150,,10/4/17,KL,,,MY,11,6,,F,GOT,10-4,N/C,N/C,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,CONTAMINATED/LAWN
+715,1/30/18,173 5187,,10/4/17,,,,MY,11,1,,M,GOT,10-2,NC,NC,#VALUE!,,BH,CK,KL,,,,spore,vegetative,,,
+717,1/30/18,173 5188,,10/4/17,,,,MY,11,1,,M,GOT,10-3,37,570,607,,MR,CK,FW,,,,spore,vegetative,,,"contaminated, lawn"
+719,1/30/18,173 5189,,10/4/17,,,,MY,11,1,,M,GOT,10-4,43,116,159,,MR,CK,FW,,,,spore,vegetative,,,
+721,1/30/18,173 5180,,10/4/17,,,,MY,11,2,,M,GOT,10-2,5,0,5,,MR,CK,FW,,,,spore,vegetative,,,
+723,1/30/18,173 5191,,10/4/17,,,,MY,11,2,,M,GOT,10-3,19,42,61,,MR,CK,FW,,,,spore,vegetative,,,
+725,1/30/18,173 5192,,10/4/17,,,,MY,11,2,,M,GOT,10-4,183,83,266,,MR,CK,FW,,,,spore,vegetative,,,
+727,1/30/18,173 5193,,10/4/17,,,,MY,11,3,,M,GOT,10-2,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,lawn
+729,1/30/18,173 5194,,10/4/17,,,,MY,11,3,,M,GOT,10-3,38,128,166,,MR,CK,FW,,,,spore,vegetative,,,
+731,1/30/18,173 5195,,10/4/17,,,,MY,11,3,,M,GOT,10-4,73,209,282,,MR,CK,FW,,,,spore,vegetative,,,
+733,2/20/18,175 5360,,10/4/17,,,,MY,11,4,,M,GOT,10-2,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+735,2/20/18,175 5361,,10/4/17,,,,MY,11,4,,M,GOT,10-3,635,629,1264,,CK,FW,FW,,,,spore,vegetative,,,
+737,2/20/18,175 5362,,10/4/17,,,,MY,11,4,,M,GOT,10-4,91,74,165,,CK,FW,FW,,,,spore,vegetative,,,
+739,2/20/18,175 5363,,10/4/17,,,,MY,11,5,,M,GOT,10-2,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+741,2/20/18,175 5364,,10/4/17,,,,MY,11,5,,M,GOT,10-3,6,83,89,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+743,2/20/18,175 5365,,10/4/17,,,,MY,11,5,,M,GOT,10-4,3,27,30,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+745,2/20/18,175 5366,,10/4/17,,,,MY,11,6,,M,GOT,10-2,NC,NC,#VALUE!,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+747,2/20/18,175 5367,,10/4/17,,,,MY,11,6,,M,GOT,10-3,63,238,301,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+749,2/20/18,175 5368,,11/6/17,BH,,,MY,11,6,,M,GOT,10-4,81,145,226,,CK,FW,FW,,,,spore,vegetative,,,contaminated
+751,2/20/18,175 5415,,11/6/17,BH,,,WE,11,1,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,lawn
+753,2/20/18,175 5416,,11/6/17,BH,,,WE,11,1,,,C,10-3,1030,570,1600,,KL,FW,FW,,,,spore,vegetative,,,
+755,2/20/18,175 5417,,11/6/17,BH,,,WE,11,1,,,C,10-4,246,188,434,,KL,FW,FW,,,,spore,vegetative,,,
+757,2/20/18,175 5418,,11/6/17,BH,,,WE,11,2,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,lawn
+759,2/20/18,175 5419,,11/6/17,BH,,,WE,11,2,,,C,10-3,1131,625,1756,,KL,FW,FW,,,,spore,vegetative,,,
+761,2/20/18,175 5420,,11/6/17,BH,,,WE,11,2,,,C,10-4,0,0,0,,KL,FW,FW,,,,spore,vegetative,,,
+763,2/20/18,175 5421,,11/6/17,BH,,,WE,11,3,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,lawn
+765,2/20/18,175 5422,,11/6/17,BH,,,WE,11,3,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+767,2/20/18,175 5423,,11/6/17,BH,,,WE,11,3,,,C,10-4,234,143,377,,KL,FW,FW,,,,spore,vegetative,,,
+769,2/20/18,175 5424,,11/6/17,BH,,,WE,11,4,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,lawn
+771,2/20/18,175 5425,,11/6/17,BH,,,WE,11,4,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+773,2/20/18,175 5426,,11/6/17,BH,,,WE,11,4,,,C,10-4,183,109,292,,KL,FW,FW,,,,spore,vegetative,,,
+775,,,,,,,,WE,11,5,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+777,,,,,,,,WE,11,5,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+779,,,,,,,,WE,11,5,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+781,,,,,,,,WE,11,6,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+783,,,,,,,,WE,11,6,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+785,,,,,,,,WE,11,6,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+787,,,,,,,,WE,11,7,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+789,,,,,,,,WE,11,7,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+791,,,,,,,,WE,11,7,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+793,,,,,,,,WE,11,8,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+795,,,,,,,,WE,11,8,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+797,,,,,,,,WE,11,8,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+799,1/20/18,173 5151,,11/6/17,SC,,,WA,11,1,,,C,10-2,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,"lawn, contaminated"
+801,1/20/18,173 5152,,11/6/17,SC,,,WA,11,1,,,C,10-3,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,"lawn, contaminated"
+803,1/20/18,173 5153,,11/6/17,SC,,,WA,11,1,,,C,10-4,134,565,699,,MR,CK,FW,,,,spore,vegetative,,,
+805,1/20/18,173 5154,,11/6/17,SC,,,WA,11,2,,,C,10-2,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,"lawn, contamined"
+807,1/20/18,173 5155,,11/6/17,SC,,,WA,11,2,,,C,10-3,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,red/green lawn
+809,1/20/18,173 5156,,11/6/17,SC,,,WA,11,2,,,C,10-4,133,479,612,,MR,CK,FW,,,,spore,vegetative,,,
+811,1/20/18,173 5157,,11/6/17,SC,,,WA,11,3,,,C,10-2,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,red/green lawn
+813,1/20/18,173 5158,,11/6/17,SC,,,WA,11,3,,,C,10-3,203,937,1140,,MR,CK,FW,,,,spore,vegetative,,,
+815,1/20/18,173 5159,,11/6/17,SC,,,WA,11,3,,,C,10-4,109,174,283,,MR,CK,FW,,,,spore,vegetative,,,
+817,1/20/18,173 5160,,11/6/17,SC,,,WA,11,4,,,C,10-2,NC,NC,#VALUE!,,MR,CK,FW,,,,spore,vegetative,,,red/green lawn
+819,1/20/18,173 5161,,11/6/17,SC,,,WA,11,4,,,C,10-3,170,477,647,,MR,CK,FW,,,,spore,vegetative,,,
+821,1/20/18,173 5162,,11/6/17,SC,,,WA,11,4,,,C,10-4,186,151,337,,MR,CK,FW,,,,spore,vegetative,,,
+823,,,,,,,,WA,11,5,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+825,,,,,,,,WA,11,5,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+827,,,,,,,,WA,11,5,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+829,,,,,,,,WA,11,6,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+831,,,,,,,,WA,11,6,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+833,,,,,,,,WA,11,6,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+835,,,,,,,,WA,11,7,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+837,,,,,,,,WA,11,7,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+839,,,,,,,,WA,11,7,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+841,,,,,,,,WA,11,8,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+843,,,,,,,,WA,11,8,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+845,,,,,,,,WA,11,8,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+847,1/30/18,173 5175,,11/6/17,SC,,,,11,1,,,C,10-2,NC,NC,#VALUE!,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+849,1/30/18,173 5176,,11/6/17,SC,,,,11,1,,,C,10-3,106,0,106,,MR,FW,FW,,,,spore,vegetative,,,
+851,1/30/18,173 5177,,11/6/17,SC,,,,11,1,,,C,10-4,36,561,597,,MR,FW,FW,,,,spore,vegetative,,,
+853,1/30/18,173 5178,,11/6/17,SC,,,,11,2,,,C,10-2,NC,NC,#VALUE!,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+855,1/30/18,173 5179,,11/6/17,SC,,,,11,2,,,C,10-3,107,1228,1335,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+857,1/30/18,173 5180,,11/6/17,SC,,,,11,2,,,C,10-4,79,517,596,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+859,1/30/18,173 5181,,11/6/17,SC,,,,11,3,,,C,10-2,NC,NC,#VALUE!,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+861,1/30/18,173 5182,,11/6/17,SC,,,,11,3,,,C,10-3,148,841,989,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+863,1/30/18,173 5183,,11/6/17,SC,,,,11,3,,,C,10-4,71,620,691,,MR,FW,FW,,,,spore,vegetative,,,
+865,1/30/18,173 5184,,11/6/17,SC,,,,11,4,,,C,10-2,NC,NC,#VALUE!,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+867,1/30/18,173 5185,,11/6/17,SC,,,,11,4,,,C,10-3,98,848,946,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+869,1/30/18,173 5186,,11/6/17,SC,,,,11,4,,,C,10-4,78,667,745,,MR,FW,FW,,,,spore,vegetative,,,contaminated
+871,,,,,,,,,11,5,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+873,,,,,,,,,11,5,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+875,,,,,,,,,11,5,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+877,,,,,,,,,11,6,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+879,,,,,,,,,11,6,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+881,,,,,,,,,11,6,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+883,,,,,,,,,11,7,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+885,,,,,,,,,11,7,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+887,,,,,,,,,11,7,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+889,,,,,,,,,11,8,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+891,,,,,,,,,11,8,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+893,,,,,,,,,11,8,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+895,1/30/18,173 5163,,11/6/17,JSC,,,JS,11,1,,,C,10-2,NC,NC,#VALUE!,,,FW,FW,,,,spore,vegetative,,,
+897,1/30/18,173 5164,,11/6/17,JSC,,,JS,11,1,,,C,10-3,798,394,1192,,BH,FW,FW,,,,spore,vegetative,,,
+899,1/30/18,173 5165,,11/6/17,JSC,,,JS,11,1,,,C,10-4,278,56,334,,BH,FW,FW,,,,spore,vegetative,,,
+901,1/30/18,173 5166,,11/6/17,JSC,,,JS,11,2,,,C,10-2,NC,NC,#VALUE!,,,FW,FW,,,,spore,vegetative,,,green lawn
+903,1/30/18,173 5167,,11/6/17,JSC,,,JS,11,2,,,C,10-3,936,438,1374,,BH,FW,FW,,,,spore,vegetative,,,
+905,1/30/18,173 5168,,11/6/17,JSC,,,JS,11,2,,,C,10-4,322,78,400,,BH,FW,FW,,,,spore,vegetative,,,
+907,1/30/18,173 5169,,11/6/17,JSC,,,JS,11,3,,,C,10-2,NC,NC,#VALUE!,,,FW,FW,,,,spore,vegetative,,,red/green lawn
+909,1/30/18,173 5170,,11/6/17,JSC,,,JS,11,3,,,C,10-3,845,296,1141,,BH,FW,FW,,,,spore,vegetative,,,
+911,1/30/18,173 5171,,11/6/17,JSC,,,JS,11,3,,,C,10-4,285,58,343,,BH,FW,FW,,,,spore,vegetative,,,
+913,1/30/18,173 5172,,11/6/17,JSC,,,JS,11,4,,,C,10-2,NC,NC,#VALUE!,,,FW,FW,,,,spore,vegetative,,,red/green lawn
+915,1/30/18,173 5173,,11/6/17,JSC,,,JS,11,4,,,C,10-3,1004,364,1368,,BH,FW,FW,,,,spore,vegetative,,,
+917,1/30/18,173 5174,,11/6/17,JSC,,,JS,11,4,,,C,10-4,196,47,243,,BH,FW,FW,,,,spore,vegetative,,,
+919,,,,,,,,JS,11,5,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+921,,,,,,,,JS,11,5,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+923,,,,,,,,JS,11,5,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+925,,,,,,,,JS,11,6,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+927,,,,,,,,JS,11,6,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+929,,,,,,,,JS,11,6,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+931,,,,,,,,JS,11,7,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+933,,,,,,,,JS,11,7,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+935,,,,,,,,JS,11,7,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+937,,,,,,,,JS,11,8,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+939,,,,,,,,JS,11,8,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+941,,,,,,,,JS,11,8,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+943,2/20/18,175 5427,,11/6/17,BH,,,MY,11,1,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,lawn
+945,2/20/18,175 5428,,11/6/17,BH,,,MY,11,1,,,C,10-3,1957,459,2416,,KL,FW,FW,,,,spore,vegetative,,,
+947,2/20/18,175 5429,,11/6/17,BH,,,MY,11,1,,,C,10-4,197,17,214,,KL,FW,FW,,,,spore,vegetative,,,
+949,2/20/18,175 5430,,11/6/17,BH,,,MY,11,2,,,C,10-2,NC,NC,#VALUE!,,KL,FW,FW,,,,spore,vegetative,,,
+951,2/20/18,175 5431,,11/6/17,BH,,,MY,11,2,,,C,10-3,1670,305,1975,,KL,FW,FW,,,,spore,vegetative,,,
+953,2/20/18,175 5432,,11/6/17,BH,,,MY,11,2,,,C,10-4,NC,NC,#VALUE!,,,KL,FW,,,,spore,vegetative,,,red lawn
+955,2/20/18,175 5433,,11/6/17,BH,,,MY,11,3,,,C,10-2,934,254,1188,,,KL,FW,,,,spore,vegetative,,,
+957,2/20/18,175 5434,,11/6/17,BH,,,MY,11,3,,,C,10-3,253,8,261,,,KL,FW,,,,spore,vegetative,,,
+959,2/20/18,175 5435,,11/6/17,BH,,,MY,11,3,,,C,10-4,0,1146,1146,,,KL,FW,,,,spore,vegetative,,,
+961,2/20/18,175 5436,,11/6/17,BH,,,MY,11,4,,,C,10-2,1794,349,2143,,,KL,FW,,,,spore,vegetative,,,
+963,2/20/18,175 5437,,11/6/17,BH,,,MY,11,4,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+965,2/20/18,175 5438,,11/6/17,BH,,,MY,11,4,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+967,,,,,,,,MY,11,5,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+969,,,,,,,,MY,11,5,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+971,,,,,,,,MY,11,5,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+973,,,,,,,,MY,11,6,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+975,,,,,,,,MY,11,6,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+977,,,,,,,,MY,11,6,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+979,,,,,,,,MY,11,7,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+981,,,,,,,,MY,11,7,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+983,,,,,,,,MY,11,7,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
+985,,,,,,,,MY,11,8,,,C,10-2,nan,nan,0,,,,,,,,spore,vegetative,,,
+987,,,,,,,,MY,11,8,,,C,10-3,nan,nan,0,,,,,,,,spore,vegetative,,,
+989,,,,,,,,MY,11,8,,,C,10-4,nan,nan,0,,,,,,,,spore,vegetative,,,
