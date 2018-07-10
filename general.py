@@ -23,15 +23,19 @@ def geometric_growth(num, r):
     return num + num * r
 
 
-def within_percent(num, reference_num, p, epsilon=0):
+def within_percent(num, reference_num, p, epsilon=0, ignore_sign=False):
     """
     Returns true if num is within a certain percent of the refence num.
 
     epsilon is added to the error thershold (useful for if the reference number is 0
 
+    Args:
+        ignore_sign: If true then test for -num too. If positive or negative work then return true.
+
     Examples:
         Is 9 within 20% of 10?
         >>> within_percent(9, 10, 0.2) == True
+
 
     """
 
@@ -41,5 +45,9 @@ def within_percent(num, reference_num, p, epsilon=0):
 
     if reference_num - margin <= num <= reference_num + margin:
         return True
+
+    if ignore_sign:
+        if reference_num - margin <= -num <= reference_num + margin:
+            return True
 
     return False

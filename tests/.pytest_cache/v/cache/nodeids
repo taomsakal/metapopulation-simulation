@@ -1,24 +1,3 @@
 [
-  "test_helpers.py::test_random_index_order",
-  "test_helpers.py::test_choose_k",
-  "test_helpers.py::test_sum_dicts",
-  "test_helpers.py::test_has_positive",
-  "test_integration.py::TestNStrainsSimple::()::test_no_death",
-  "test_integration.py::TestNStrainsSimple::()::test_high_death",
-  "test_integration.py::TestNStrainsSimple::()::test_stress",
-  "test_integration.py::TestNStrainsSimple::()::test_trivial",
-  "test_integration.py::TestNStrainsSimple::()::test_line",
-  "test_patch.py::TestSetup::()::test_init_defaults",
-  "test_patch.py::TestSetup::()::test_init_list",
-  "test_patch.py::TestSetup::()::test_basic_update",
-  "test_patch.py::TestSetup::()::test_custom_attribute_update",
-  "test_patch.py::TestSetup::()::test_add_one_ind_num",
-  "test_patch.py::TestMap::()::test_neighbors_complete_world",
-  "test_patch.py::TestMap::()::test_neighbors_trivial_world",
-  "test_patch.py::TestMap::()::test_neighbors_path_world",
-  "test_world.py::TestInit::()::test_patch_generation",
-  "test_world.py::TestInit::()::test_make_world",
-  "test_world.py::TestInit::()::test_worldmap",
-  "test_world.py::TestPatchUpdates::()::test_add_one",
-  "test_world.py::TestPatchUpdates::()::test_add_one_complex"
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_and_at_equilibrium"
 ]

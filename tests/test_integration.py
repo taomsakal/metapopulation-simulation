@@ -3,6 +3,7 @@ This runs a few test simulations to make sure they work and spit out reasonable 
 """
 
 import main
+import random
 from world import World
 from simrules.NStrainsSimple import NStrainsSimple
 from simrules.TwoStrain import TwoStrain
@@ -69,7 +70,60 @@ class TestNStrainsSimple:
 
 class TestTwoStrain:
 
-    def test_equlibrium(self):
+    def test_equlibrium_normal(self):
+        """ Test that the system goes to the expected equilibrium. (Within 5%)
+
+        #Todo Turns out in general they can go to different things because negatives are not allowed...
+
+        """
+
+        rules = TwoStrain()
+
+        # Now setup specific parameters
+        rules.c = 0.4  # Consumption rate for resources.
+        rules.alpha = 0.22  # Conversion factor for resources into cells
+        rules.mu_v = 0.14  # Background death rate for vegetative cells
+        rules.mu_s = 0.25  # Background death rate for sporulated cells
+        rules.mu_R = 0.11  # "death" rate for resources.
+        rules.gamma = 2.4  # Rate of resource renewal
+        rules.kv_fly_survival = 0.3  # Probability of surviving the fly gut
+        rules.ks_fly_survival = 0.7  # Probability of surviving the fly gut
+        rules.rv_fly_survival = 0.2  # Probability of surviving the fly gut
+        rules.rs_fly_survival = 0.8  # Probability of surviving the fly gut
+        rules.resources = 20
+        rules.sk = 0.4  # Strategy of competitor. (Chance of sporulating)
+        rules.sr = 0.6
+        rules.dt = 1  # Timestep size
+        rules.worldmap = nx.complete_graph(1)  # The worldmap
+        rules.prob_death = 0.00  # Probability of a patch dying.
+        rules.stop_time = 10000  # Iterations to run
+        rules.num_flies = 0  # Number of flies each colonization event
+        rules.fly_attack_rate = 0.3
+        rules.fly_handling_time = 0.3
+        rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
+
+
+
+        world = World(rules)
+
+        """ Give half the patches each strain. """
+        for patch in world.patches:
+
+            if random.random() < .5:
+                patch.populations['rv'] = 300
+                patch.populations['rs'] = 300
+            else:
+                patch.populations['kv'] = 300
+                patch.populations['ks'] = 300
+
+        main.run(world)
+        patch = world.patches[0]
+
+        test = rules.at_equilibrium(patch, 0.05, epsilon=0.0005)
+
+        assert test == "Competitor" or test == "Colonizer" or test == "Equilibrium"
+
+    def test_equlibrium_and_at_equilibrium(self):
         """ Test that the system goes to the expected equilibrium. (Within 5%) """
 
         rules = TwoStrain()
@@ -97,7 +151,19 @@ class TestTwoStrain:
         rules.fly_handling_time = 0.3
         rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
 
+
+
         world = World(rules)
+
+        """ Give half the patches each strain. """
+        for patch in world.patches:
+
+            if random.random() < .5:
+                patch.populations['rv'] = 300
+                patch.populations['rs'] = 300
+            else:
+                patch.populations['kv'] = 300
+                patch.populations['ks'] = 300
 
         main.run(world)
         patch = world.patches[0]
@@ -109,6 +175,7 @@ class TestTwoStrain:
             assert within_percent(patch.populations['ks'], 0.75, 0.05)
             assert within_percent(patch.populations['rv'], 0, 0, epsilon=0.00005)
             assert within_percent(patch.populations['rs'], 0, 0, epsilon=0.00005)
+            assert rules.at_equilibrium(patch, 0.05, epsilon=0.0005) == "Competitor"
         # Otherwise could be second possible equilibrium
         except AssertionError:
             try:
@@ -117,6 +184,7 @@ class TestTwoStrain:
                 assert within_percent(patch.populations['ks'], 0, 0, epsilon=0.05)
                 assert within_percent(patch.populations['rv'], 0.3, 0.05)
                 assert within_percent(patch.populations['rs'], 2.4, 0.05)
+                assert rules.at_equilibrium(patch, 0.05, epsilon=0.0005) == "Colonizer"
             # Finally could be the last possible equilibrium
             except AssertionError:
                 assert within_percent(patch.resources, 100, 0.05)
@@ -124,6 +192,8 @@ class TestTwoStrain:
                 assert within_percent(patch.populations['ks'], 0, 0, epsilon=0.05)
                 assert within_percent(patch.populations['rv'], 0, 0, epsilon=0.05)
                 assert within_percent(patch.populations['rs'], 0, 0, epsilon=0.05)
+                assert rules.at_equilibrium(patch, 0.05, epsilon=0.0005) == "Extinction"
+
 
     def test_equlibrium_small_dt(self):
         """ Test that the system goes to the expected equilibrium. (Within 5%) """

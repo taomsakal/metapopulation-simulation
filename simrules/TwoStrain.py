@@ -6,6 +6,7 @@ from world import World
 import logging
 from simrules import helpers
 from rules import Rules
+from general import within_percent
 import general
 
 
@@ -41,7 +42,7 @@ class TwoStrain(Rules):
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 200
+        self.resources = .2
         self.sk = 0.2  # Strategy of competitor. (Chance of sporulating)
         self.sr = 0.4
 
@@ -66,11 +67,11 @@ class TwoStrain(Rules):
         for patch in world.patches:
 
             if random.random() < .5:
-                patch.populations['rv'] = 30
-                patch.populations['rs'] = 30
+                patch.populations['rv'] = .0030
+                patch.populations['rs'] = .0030
             else:
-                patch.populations['kv'] = 30
-                patch.populations['ks'] = 30
+                patch.populations['kv'] = .0030
+                patch.populations['ks'] = .0030
 
     def reset_patch(self, patch):
         """
@@ -120,13 +121,13 @@ class TwoStrain(Rules):
         patch.populations['ks'] += change_ks * self.dt
         patch.resources += change_resources
 
-        # make sure none become negative
-        for key, value in patch.populations.items():
-            if value < 0:
-                patch.populations[key] = 0
-
-        if patch.resources < 0:
-            patch.resources = 0
+        # # make sure none become negative
+        # for key, value in patch.populations.items():
+        #     if value < 0:
+        #         patch.populations[key] = 0
+        #
+        # if patch.resources < 0:
+        #     patch.resources = 0
 
     def colonize(self, world):
         """
@@ -208,15 +209,105 @@ class TwoStrain(Rules):
             print(f"    Population: {str(patch.populations)}")
             print(f"    Resources: {patch.resources}")
 
-            f = open('save_data/patch_' + str(patch.id) + '.csv', 'a+')
-            f.write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
-                    str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
-                    str(patch.resources) + '\n')
+            # f = open('save_data/patch_' + str(patch.id) + '.csv', 'a+')
+            # f.write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
+            #         str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
+            #         str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
     def stop_condition(self, world):
         return world.age > self.stop_time
+
+
+    # todo: Something is buggy here -- it's returning False when it shouldn't
+    def at_equilibrium(self, patch, p=0.05, epsilon=0.0001):
+        """
+        Returns which equilibrium a patch is at, or False if at none.
+
+        Args:
+            p: error percent, from general > within percent
+            epsilon: epsilon from general.py > within percent
+
+        Returns: a string describing the equilibrium, or False if not at one.
+
+        """
+
+        ignore_sign = True
+
+        # First possible equilibrium, with only the competitor surviving
+        try:
+            # These formulas have been calculated in Mathematica
+            predicted_resources = self.mu_v / ((self.sk - 1) * self.c * self.alpha)
+            predicted_kv = (
+                                       self.c * self.alpha * self.gamma - self.sk * self.c * self.gamma * self.alpha - self.mu_R * self.mu_v) / (
+                                       self.c * self.mu_v)
+            predicted_ks = (self.sk * (
+                        -self.c * self.alpha + self.sk * self.c * self.alpha * self.gamma + self.mu_R * self.mu_v)) / (
+                                       (-1 + self.sk) * self.c * self.mu_s)
+            predicted_rv = 0
+            predicted_rs = 0
+            print("\nPredictions: Resources, kv, ks")
+            print(predicted_resources, patch.resources)
+            print(predicted_kv, patch.populations['kv'])
+            print(predicted_ks, patch.populations['ks'])
+            assert within_percent(patch.resources, predicted_resources, 0.05, epsilon=0.00005, ignore_sign=ignore_sign)
+            assert within_percent(patch.populations['kv'], predicted_kv, 0.05, epsilon=0.00005, ignore_sign=ignore_sign)
+            assert within_percent(patch.populations['ks'], predicted_ks, 0.05, epsilon=0.00005, ignore_sign=ignore_sign)
+            assert within_percent(patch.populations['rv'], predicted_rv, 0.05, epsilon=0.00005, ignore_sign=ignore_sign)
+            assert within_percent(patch.populations['rs'], predicted_rs, 0.05, epsilon=0.00005, ignore_sign=ignore_sign)
+            return "Competitor"
+
+        # Otherwise could be second possible equilibrium
+        except AssertionError:
+            try:
+                predicted_resources = self.mu_v / ((self.sr - 1) * self.c * self.alpha)
+                predicted_rv = (
+                                           self.c * self.alpha * self.gamma - self.sr * self.c * self.gamma * self.alpha - self.mu_R * self.mu_v) / (
+                                           self.c * self.mu_v)
+                predicted_rs = (self.sr * (
+                            -self.c * self.alpha + self.sr * self.c * self.alpha * self.gamma + self.mu_R * self.mu_v)) / (
+                                           (-1 + self.sr) * self.c * self.mu_s)
+                predicted_kv = 0
+                predicted_ks = 0
+                print("\nPredictions: Resources, rv, rs")
+                print(predicted_resources, patch.resources)
+                print(predicted_rv, patch.populations['rv'])
+                print(predicted_rs, patch.populations['rs'])
+                assert within_percent(patch.resources, predicted_resources, 0.05, epsilon=0.00005,
+                                      ignore_sign=ignore_sign)
+                assert within_percent(patch.populations['rv'], predicted_rv, 0.05, epsilon=0.00005,
+                                      ignore_sign=ignore_sign)
+                assert within_percent(patch.populations['rs'], predicted_rs, 0.05, epsilon=0.00005,
+                                      ignore_sign=ignore_sign)
+                assert within_percent(patch.populations['kv'], predicted_kv, 0.05, epsilon=0.00005,
+                                      ignore_sign=ignore_sign)
+                assert within_percent(patch.populations['ks'], predicted_ks, 0.05, epsilon=0.00005,
+                                      ignore_sign=ignore_sign)
+                return "Colonizer"
+            # Finally could be the last possible equilibrium
+            except AssertionError:
+                try:
+                    predicted_resources = self.gamma / self.mu_R
+                    predicted_rv = 0
+                    predicted_rs = 0
+                    predicted_kv = 0
+                    predicted_ks = 0
+                    print("\nPredictions: Resources")
+                    print(predicted_resources, patch.resources)
+                    assert within_percent(patch.resources, predicted_resources, 0.05, epsilon=0.00005,
+                                          ignore_sign=ignore_sign)
+                    assert within_percent(patch.populations['rv'], predicted_rv, 0.05, epsilon=0.00005,
+                                          ignore_sign=ignore_sign)
+                    assert within_percent(patch.populations['rs'], predicted_rs, 0.05, epsilon=0.00005,
+                                          ignore_sign=ignore_sign)
+                    assert within_percent(patch.populations['kv'], predicted_kv, 0.05, epsilon=0.00005,
+                                          ignore_sign=ignore_sign)
+                    assert within_percent(patch.populations['ks'], predicted_ks, 0.05, epsilon=0.00005,
+                                          ignore_sign=ignore_sign)
+                    return "Extinction"
+                except AssertionError:
+                    return False
 
 
 if __name__ == "__main__":

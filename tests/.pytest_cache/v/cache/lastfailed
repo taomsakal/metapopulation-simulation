@@ -1,3 +1,4 @@
 {
-  "test_integration.py::TestNStrainsSimple": true
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_and_at_equilibrium": true,
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_normal": true
 }
