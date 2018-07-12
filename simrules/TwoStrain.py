@@ -32,7 +32,7 @@ class TwoStrain(Rules):
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
         self.c = 0.2  # Consumption rate for resources.
-        self.alpha = 0.2  # Conversion factor for resources into cells5
+        self.alpha = 0.2  # Conversion factor for resources into cells
         self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
@@ -41,15 +41,15 @@ class TwoStrain(Rules):
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.2  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 200
+        self.resources = 0.2
         self.sk = 0.2  # Strategy of competitor. (Chance of sporulating)
         self.sr = 0.4
 
         # Global Parameters
-        self.dt = 1  # Timestep size
+        self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
-        self.prob_death = 0.05  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.prob_death = 0  # Probability of a patch dying.
+        self.stop_time = 100000  # Iterations to run
         self.num_flies = 50  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
@@ -66,11 +66,11 @@ class TwoStrain(Rules):
         for patch in world.patches:
 
             if random.random() < .5:
-                patch.populations['rv'] = 30
-                patch.populations['rs'] = 30
+                patch.populations['rv'] = 0.03
+                patch.populations['rs'] = 0.03
             else:
-                patch.populations['kv'] = 30
-                patch.populations['ks'] = 30
+                patch.populations['kv'] = 0.03
+                patch.populations['ks'] = 0.03
 
     def reset_patch(self, patch):
         """
@@ -118,15 +118,17 @@ class TwoStrain(Rules):
         patch.populations['rs'] += change_rs * self.dt
         patch.populations['kv'] += change_kv * self.dt
         patch.populations['ks'] += change_ks * self.dt
-        patch.resources += change_resources
+        patch.resources += change_resources * self.dt
 
         # make sure none become negative
+
         for key, value in patch.populations.items():
             if value < 0:
                 patch.populations[key] = 0
 
         if patch.resources < 0:
             patch.resources = 0
+
 
     def colonize(self, world):
         """

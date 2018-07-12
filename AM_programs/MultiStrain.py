@@ -16,12 +16,12 @@ for i in range(0, numberStrains):
 
 time = numpy.linspace(0, n, n * 20 + 1)
 
-growRS = 0.1
-eatChance = 0.9
-wiltChance = 0.005
-conversionRate = 0.25
-vDeathChance = 0.05
-sDeathChance = 0.005
+growRS = 10
+eatChance = 0.2
+wiltChance = 0.01
+conversionRate = 0.2
+vDeathChance = 0.1
+sDeathChance = 0.05
 
 
 def multi_yeast_model(ic, t, g, e, w, c, vd, sd, sc):
