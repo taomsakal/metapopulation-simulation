@@ -36,41 +36,48 @@ class TwoStrain(Rules):
         self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
+        self.activation = 0.015  # vegetation factor
         self.gamma = 10  # Rate of resource renewal
-        self.kv_fly_survival = 0.2  # Probability of surviving the fly gut
+        self.kv_fly_survival = 0.001  # Probability of surviving the fly gut
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.rv_fly_survival = 0.2  # Probability of surviving the fly gut
+        self.rv_fly_survival = 0.001  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 0.2
-        self.sk = 0.2  # Strategy of competitor. (Chance of sporulating)
+        self.resources = 50
+        self.sk = 0.01  # Strategy of competitor. (Chance of sporulating)
         self.sr = 0.4
 
         # Global Parameters
         self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
-        self.prob_death = 0  # Probability of a patch dying.
-        self.stop_time = 100000  # Iterations to run
+        self.prob_death = 0.00004  # Probability of a patch dying.
+        self.stop_time = 1000000  # Iterations to run
         self.num_flies = 50  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
-        self.drop_single_yeast = True  # If true only pick one survivor to drop, instead of all
+        self.drop_single_yeast = False  # If true only pick one survivor to drop, instead of all
         self.yeast_size = 0.01  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
+
+        self.files = []
+        self.total_file = open('save_data/gen_totals.csv', 'a+')
 
     def set_initial_conditions(self, world):
         """ Give half the patches each strain. """
         for patch in world.patches:
 
             if random.random() < .5:
-                patch.populations['rv'] = 0.03
-                patch.populations['rs'] = 0.03
+                patch.populations['rv'] = 5
+                patch.populations['rs'] = 5
             else:
-                patch.populations['kv'] = 0.03
-                patch.populations['ks'] = 0.03
+                patch.populations['kv'] = 5
+                patch.populations['ks'] = 5
+
+        for patch in world.patches:
+            self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
     def reset_patch(self, patch):
         """
@@ -82,6 +89,7 @@ class TwoStrain(Rules):
 
         patch.c = self.c
         patch.alpha = self.alpha
+        patch.activation = self.activation
         patch.mu_v = self.mu_v
         patch.mu_s = self.mu_s
         patch.mu_R = self.mu_R
@@ -103,13 +111,13 @@ class TwoStrain(Rules):
 
         # Calculate the changes in the populations and resources
         change_rv = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (1 - patch.sr) - patch.mu_v * \
-                    patch.populations['rv']
-        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (patch.sr) - patch.mu_s * \
-                    patch.populations['rs']
+                    patch.populations['rv'] + patch.activation * patch.resources * patch.populations['rs']
+        change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * patch.sr - patch.mu_s * \
+                    patch.populations['rs'] - patch.activation * patch.resources * patch.populations['rs']
         change_kv = patch.alpha * patch.c * patch.resources * patch.populations['kv'] * (1 - patch.sk) - patch.mu_v * \
-                    patch.populations['kv']
+                    patch.populations['kv'] + patch.activation * patch.resources * patch.populations['ks']
         change_ks = patch.alpha * patch.c * patch.resources * patch.populations['kv'] * patch.sk - patch.mu_s * \
-                    patch.populations['ks']
+                    patch.populations['ks'] - patch.activation * patch.resources * patch.populations['ks']
         change_resources = - patch.c * patch.resources * patch.populations['kv'] - patch.c * patch.resources * \
                            patch.populations['rv'] + patch.gamma - patch.mu_R * patch.resources
 
@@ -203,6 +211,9 @@ class TwoStrain(Rules):
         print("=" * 30)
 
         sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])
+        total_resources = 0
+        for patch in world.patches:
+            total_resources += patch.resources
 
         print("\nIndividual Patch Info")
         for patch in world.patches:
@@ -210,12 +221,15 @@ class TwoStrain(Rules):
             print(f"    Population: {str(patch.populations)}")
             print(f"    Resources: {patch.resources}")
 
-            f = open('save_data/patch_' + str(patch.id) + '.csv', 'a+')
-            f.write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
-                    str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
-                    str(patch.resources) + '\n')
+            self.files[patch.id].write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
+                                       str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
+                                       str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
+
+        self.total_file.write(str(sum_dicts['rv']) + ',' + str(sum_dicts['rs']) + ',' +
+                              str(sum_dicts['kv']) + ',' + str(sum_dicts['ks']) + ',' +
+                              str(total_resources) + '\n')
 
     def stop_condition(self, world):
         return world.age > self.stop_time
