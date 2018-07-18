@@ -50,8 +50,8 @@ class TwoStrain(Rules):
         self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.00004  # Probability of a patch dying.
-        self.stop_time = 1000000  # Iterations to run
-        self.num_flies = 50  # Number of flies each colonization event
+        self.stop_time = 1000  # Iterations to run
+        self.num_flies = 0  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3

@@ -35,8 +35,8 @@ class Patch:
         self.reset_patch = world.rules.reset_patch
         self.reset_patch(self)
 
-        if initial_populations is not None:
-            self.populations = initial_populations  # Override
+        # if initial_populations is not None:
+        #     self.populations = initial_populations  # Override
 
         self._safety_check()
 
@@ -56,8 +56,8 @@ class Patch:
             raise Exception(error)
 
         # Test populations is good.
-        if self.populations is None:
-            logging.warning(f"Patch {self.id} has initiated with None for populations.")
+        # if self.populations is None:
+        #     logging.warning(f"Patch {self.id} has initiated with None for populations.")
 
     def update(self):
         """
@@ -70,14 +70,14 @@ class Patch:
 
         logging.debug("Patch {} updating with patch_update function {}".format(self.id, self.update))
 
-        try:
-            self.patch_update(self)
-        except:
-            if isinstance(self.update, Callable):
-                raise TypeError("patch_update() for patch {} must be a function, not {}".format(self.id, type(
-                    self.update)))
-            else:
-                raise Exception("Error with patch_update for patch {}.".format(self.id))
+        # try:
+        self.patch_update(self)
+        # except:
+        #     if isinstance(self.update, Callable):
+        #         raise TypeError("patch_update() for patch {} must be a function, not {}".format(self.id, type(
+        #             self.update)))
+        #     else:
+        #         raise Exception("Error with patch_update for patch {}.".format(self.id))
 
     def neighbor_ids(self):
         """
