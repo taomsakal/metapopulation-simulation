@@ -50,8 +50,8 @@ class TwoStrain(Rules):
         self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.00004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
-        self.num_flies = 0  # Number of flies each colonization event
+        self.stop_time = 100000  # Iterations to run
+        self.num_flies = 50  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -180,15 +180,19 @@ class TwoStrain(Rules):
                 survivors = {'rv': 0, 'rs': 0, 'kv': 0, 'ks': 0}
                 for key in hitchhikers:
                     if key == 'rv':
+                        patch.populations['rv'] -= self.yeast_size
                         if random.random() < self.rv_fly_survival:
                             survivors['rv'] += self.yeast_size
                     if key == 'rs':
+                        patch.populations['rs'] -= self.yeast_size
                         if random.random() < self.rs_fly_survival:
                             survivors['rs'] += self.yeast_size
                     if key == 'kv':
+                        patch.populations['kv'] -= self.yeast_size
                         if random.random() < self.kv_fly_survival:
                             survivors['kv'] += self.yeast_size
                     if key == 'ks':
+                        patch.populations['ks'] -= self.yeast_size
                         if random.random() < self.ks_fly_survival:
                             survivors['ks'] += self.yeast_size
 
