@@ -37,18 +37,20 @@ class TwoStrain(Rules):
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
         self.gamma = 10  # Rate of resource renewal
-        self.resources = float(input("Initial Resources: "))
-        self.num_strains = int(input("Number of Strains: "))
+        self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
+        self.num_strains = int(input("Number of Strains: "))  # Number of strains to test
 
         self.spore_chance = []
         self.germ_chance = []
         self.fly_v = []
         self.fly_s = []
-        for i in range(0, self.num_strains):
+        for i in range(0, self.num_strains):  # Iterates through each strain
             print("Strain " + str(i + 1))
-            self.spore_chance.append(float(input("Chance of Sporulation: ")))
-            self.germ_chance.append(float(input("Germination Factor: ")))
+            self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
+            self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
+            # Chance for vegetative cells to survive fly
             self.fly_v.append(float(input("Vegetative Cell Fly Survival Chance : ")))
+            # Chance for sporulated cells to survive fly
             self.fly_s.append(float(input("Sporulated Cell Fly Survival Chance : ")))
 
         # Global Parameters
@@ -75,15 +77,19 @@ class TwoStrain(Rules):
         initial_v = []
         initial_s = []
 
-        for i in range(0, self.num_strains):
+        for i in range(0, self.num_strains):  # Iterate through each strain
+            # Initial Vegetative Cells
             initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
+            # Initial Vegetative Cells
             initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
 
-        for patch in world.patches:
-            rand_strain = random.randrange(0, self.num_strains)
+        for patch in world.patches:  # Iterate through each patch
+            rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
+            # Fill the patch with a single strain
             patch.v_populations[rand_strain] = initial_v[rand_strain]
             patch.s_populations[rand_strain] = initial_s[rand_strain]
 
+        # Prepare an array of save files for each patch
         for patch in world.patches:
             self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
@@ -93,9 +99,11 @@ class TwoStrain(Rules):
         and a resource level of 0.
         """
 
+        # Set all populations to
         patch.v_populations = [0] * self.num_strains
         patch.s_populations = [0] * self.num_strains
 
+        # Reset patch parameters
         patch.c = self.c
         patch.alpha = self.alpha
         patch.mu_v = self.mu_v
@@ -115,22 +123,25 @@ class TwoStrain(Rules):
         Each individual has fitness of resource_level and reproduces by that amount.
         """
 
-        r_change = patch.gamma - patch.mu_R * patch.resources
+        r_change = patch.gamma - patch.mu_R * patch.resources  # Constant resources, death proportional to population
 
-        for i in range(0, self.num_strains):  # consider the germination technique. Threshhold?
+        for i in range(0, self.num_strains):  # Iterate through strains of patch
+            # Vegetative cell change = birth from resource consumption not spored - death rate + germinated spores
             v_change = patch.alpha * patch.c * patch.resources * patch.v_populations[i] * (1 - self.spore_chance[i]) - \
                        patch.mu_v * patch.v_populations[i] + self.germ_chance[i] * patch.resources * \
                        patch.s_populations[i]
+            # Sporulated cells = birth from resource consumption spored - death rate - germinated spores
             s_change = patch.alpha * patch.c * patch.resources * patch.v_populations[i] * self.spore_chance[i] - \
                        patch.mu_s * patch.s_populations[i] - self.germ_chance[i] * patch.resources * \
                        patch.s_populations[i]
-            r_change -= patch.c * patch.resources * patch.v_populations[i]
+            r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten resources
+            # Add population changes
             patch.v_populations[i] += v_change * self.dt
             patch.s_populations[i] += s_change * self.dt
 
-        patch.resources += r_change * self.dt
+        patch.resources += r_change * self.dt  # Add resource changes
 
-        # make sure none become negative
+        # Make sure none become negative
 
         for i in range(0, self.num_strains):
             if patch.v_populations[i] < 0:
@@ -155,6 +166,7 @@ class TwoStrain(Rules):
         for i in range(0, self.num_flies):
 
             patch = random.choice(world.patches)  # Pick the random patch that the fly lands on
+            # Determine number of cells eaten
             num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
                                                    self.fly_attack_rate, self.fly_handling_time))
 
@@ -168,6 +180,7 @@ class TwoStrain(Rules):
             if num_eaten > 0:
 
                 try:
+                    # Select the types of cells to be eaten
                     hitchhikers = random.choices(range(2 * self.num_strains), patch.v_populations + patch.s_populations,
                                                  k=num_eaten)
                 except IndexError:
@@ -183,6 +196,7 @@ class TwoStrain(Rules):
                 # print(hitchhikers)
                 v_survivors = [0] * self.num_strains
                 s_survivors = [0] * self.num_strains
+                # Remove the cell from the population. For each cell, check if it survives. If so, place it in survivors
                 for j in hitchhikers:
                     if j < self.num_strains:
                         patch.v_populations[j] -= self.yeast_size
@@ -203,6 +217,7 @@ class TwoStrain(Rules):
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
 
+        # Kill ALL the patches
         for patch in world.patches:
             if random.random() < self.prob_death:
                 self.reset_patch(patch)
@@ -216,6 +231,7 @@ class TwoStrain(Rules):
         s_population_totals = [0] * self.num_strains
         total_resources = 0
 
+        # Gather for totals from each patch
         for patch in world.patches:
             for i in range(0, self.num_strains):
                 v_population_totals[i] += patch.v_populations[i]
@@ -229,12 +245,14 @@ class TwoStrain(Rules):
             print(f"    Sporulated Population: {str(patch.s_populations)}")
             print(f"    Resources: {patch.resources}")
 
+            # Write to individual patch save files
             for i in range(0, self.num_strains):
                 self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
             self.files[patch.id].write(str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(v_population_totals) + str(s_population_totals) + str(total_resources)}")
 
+        # Write to gen_totals save file
         for i in range(0, self.num_strains):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write(str(total_resources) + '\n')

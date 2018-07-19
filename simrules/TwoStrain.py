@@ -42,9 +42,9 @@ class TwoStrain(Rules):
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.001  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 50
+        self.resources = 50  # Initial resources
         self.sk = 0.01  # Strategy of competitor. (Chance of sporulating)
-        self.sr = 0.4
+        self.sr = 0.4  # Strategy of colonizer
 
         # Global Parameters
         self.dt = 0.01  # Timestep size
@@ -67,6 +67,8 @@ class TwoStrain(Rules):
 
     def set_initial_conditions(self, world):
         """ Give half the patches each strain. """
+
+        # For each patch, select a strain to fill the patch
         for patch in world.patches:
 
             if random.random() < .5:
@@ -76,6 +78,7 @@ class TwoStrain(Rules):
                 patch.populations['kv'] = 5
                 patch.populations['ks'] = 5
 
+        # Open save files to write to
         for patch in world.patches:
             self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
@@ -87,6 +90,7 @@ class TwoStrain(Rules):
 
         patch.populations = {'rv': 0, 'kv': 0, 'rs': 0, 'ks': 0}  # Reset populations to 0
 
+        # Reset patch parameters
         patch.c = self.c
         patch.alpha = self.alpha
         patch.activation = self.activation
@@ -214,9 +218,9 @@ class TwoStrain(Rules):
         print("\n")
         print("=" * 30)
 
-        sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])
+        sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])  # Sum populations from patch
         total_resources = 0
-        for patch in world.patches:
+        for patch in world.patches:  # Sum resources from each patch
             total_resources += patch.resources
 
         print("\nIndividual Patch Info")
@@ -225,12 +229,14 @@ class TwoStrain(Rules):
             print(f"    Population: {str(patch.populations)}")
             print(f"    Resources: {patch.resources}")
 
+            # Append data to patch save files
             self.files[patch.id].write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
                                        str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
                                        str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
+        # Append data to gen_totals file
         self.total_file.write(str(sum_dicts['rv']) + ',' + str(sum_dicts['rs']) + ',' +
                               str(sum_dicts['kv']) + ',' + str(sum_dicts['ks']) + ',' +
                               str(total_resources) + '\n')
