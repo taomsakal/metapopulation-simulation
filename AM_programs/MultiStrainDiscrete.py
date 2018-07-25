@@ -9,7 +9,7 @@ from rules import Rules
 import general
 
 
-class TwoStrain(Rules):
+class MultiStrainDiscrete(Rules):
     """
     This is a discrete version of the main ODE model.
     It has the competitor and colonizer, both which have vegetative and sporulated cells.
@@ -25,7 +25,7 @@ class TwoStrain(Rules):
     Where k → competitor, c → colonizer, v → vegatative, and s → sporulated.
     """
 
-    def __init__(self):
+    def __init__(self, console_input=True):
 
         super().__init__()
 
@@ -37,21 +37,34 @@ class TwoStrain(Rules):
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
         self.gamma = 10  # Rate of resource renewal
-        self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
-        self.num_strains = int(input("Number of Strains: "))  # Number of strains to test
+        self.console_input = console_input
+
+        if console_input:
+            self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
+            self.num_strains = int(input("Number of Strains: "))  # Number of strains to test
+        else:
+            self.resources = 50
+            self.num_strains = 2
 
         self.spore_chance = []
         self.germ_chance = []
         self.fly_v = []
         self.fly_s = []
-        for i in range(0, self.num_strains):  # Iterates through each strain
-            print("Strain " + str(i + 1))
-            self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
-            self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
-            # Chance for vegetative cells to survive fly
-            self.fly_v.append(float(input("Vegetative Cell Fly Survival Chance : ")))
-            # Chance for sporulated cells to survive fly
-            self.fly_s.append(float(input("Sporulated Cell Fly Survival Chance : ")))
+
+        if console_input:
+            for i in range(0, self.num_strains):  # Iterates through each strain
+                print("Strain " + str(i + 1))
+                self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
+                self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
+                # Chance for vegetative cells to survive fly
+                self.fly_v.append(float(input("Vegetative Cell Fly Survival Chance : ")))
+                # Chance for sporulated cells to survive fly
+                self.fly_s.append(float(input("Sporulated Cell Fly Survival Chance : ")))
+        else:
+            self.spore_chance = [0.1] * self.num_strains
+            self.germ_chance = [0.015] * self.num_strains
+            self.fly_v = [0.001] * self.num_strains
+            self.fly_s = [0.8] * self.num_strains
 
         # Global Parameters
         self.dt = 0.01  # Timestep size
@@ -69,19 +82,25 @@ class TwoStrain(Rules):
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
 
-        self.files = []
-        self.total_file = open('save_data/gen_totals.csv', 'a+')
+        if console_input:
+            self.files = []
+            self.total_file = open('save_data/gen_totals.csv', 'a+')
 
     def set_initial_conditions(self, world):
         """ Give half the patches each strain. """
         initial_v = []
         initial_s = []
 
-        for i in range(0, self.num_strains):  # Iterate through each strain
-            # Initial Vegetative Cells
-            initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
-            # Initial Vegetative Cells
-            initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
+        if self.console_input:
+            for i in range(0, self.num_strains):  # Iterate through each strain
+                # Initial Vegetative Cells
+                initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
+                # Initial Sporulated Cells
+                initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
+        else:
+            for i in range(0, self.num_strains):
+                initial_v.append(5)
+                initial_s.append(5)
 
         for patch in world.patches:  # Iterate through each patch
             rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
@@ -90,8 +109,9 @@ class TwoStrain(Rules):
             patch.s_populations[rand_strain] = initial_s[rand_strain]
 
         # Prepare an array of save files for each patch
-        for patch in world.patches:
-            self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
+        if self.console_input:
+            for patch in world.patches:
+                self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
     def reset_patch(self, patch):
         """
@@ -246,20 +266,22 @@ class TwoStrain(Rules):
             print(f"    Resources: {patch.resources}")
 
             # Write to individual patch save files
-            for i in range(0, self.num_strains):
-                self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
-            self.files[patch.id].write(str(patch.resources) + '\n')
+            if self.console_input:
+                for i in range(0, self.num_strains):
+                    self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
+                self.files[patch.id].write(str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(v_population_totals) + str(s_population_totals) + str(total_resources)}")
 
         # Write to gen_totals save file
-        for i in range(0, self.num_strains):
-            self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
-        self.total_file.write(str(total_resources) + '\n')
+        if self.console_input:
+            for i in range(0, self.num_strains):
+                self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
+            self.total_file.write(str(total_resources) + '\n')
 
     def stop_condition(self, world):
         return world.age > self.stop_time
 
 
 if __name__ == "__main__":
-    run(World(TwoStrain()))
+    run(World(MultiStrainDiscrete(True)))
