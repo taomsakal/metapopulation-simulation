@@ -49,6 +49,27 @@ class Rules:
 
         logging.warning(f"kill_patches() for {world.name} does nothing.")
 
+    def check_param_lists(self, vect_list):
+        """
+        Checks that each of the parameter vectors are probability values. (Ie between zero and one)
+        Args:
+            vect_list: list containing the list of parameters for the NStrain model
+
+        Returns:
+            True if all values are between 0 and 1 inclusive. False otherwise
+
+        """
+
+        for l in vect_list:
+            notprobabilties = [x for x in l if (x < 0 or x > 1)]
+            if notprobabilties:  # If list empty
+                logging.warning("One of the probability parameter lists contains a param that is not a probability. "
+                                "(Ie not between 0 and 1)")
+                return False
+
+
+        return True
+
     def census(self, world):
         logging.warning(f"census() for {world.name} does nothing.")
 

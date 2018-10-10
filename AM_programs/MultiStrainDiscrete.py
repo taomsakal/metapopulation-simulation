@@ -1,5 +1,6 @@
 from collections import defaultdict
 import random
+import os
 from main import run
 import networkx as nx
 from world import World
@@ -9,7 +10,7 @@ from rules import Rules
 import general
 
 
-class TwoStrain(Rules):
+class NStrain(Rules):
     """
     This is a discrete version of the main ODE model.
     It has the competitor and colonizer, both which have vegetative and sporulated cells.
@@ -25,71 +26,133 @@ class TwoStrain(Rules):
     Where k → competitor, c → colonizer, v → vegatative, and s → sporulated.
     """
 
-    def __init__(self):
+    def __init__(self, num_strains, console_input=True, spore_chance="manual", germ_chance="manual", fly_v="manual",
+                 fly_v_survival="manual", fly_s_survival="manual"):
+        """
+        Creates a discrete multi-strain simulation. The individuals each have two states (sporulated/vegetative) but
+        there can be an arbitrary number of strains.
+
+        Args:
+            num_strains: The number of strains
+            console_input: If true then put in all parameters via console manually. Good for small, one off runs.
+            spore_chance: A vector of the form [x1, x2, ..., xn] where xi is the chance of sporulation of strain i.
+            germ_chance: A vector like spore_chance except for germination chance.
+            fly_s_survival: A vector like above but for fly survival chance for sporulated cells
+            fly_v_survival: A vector like above but for fly survival chance of vegetative cells
+        """
 
         super().__init__()
+        self.console_input = console_input
 
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
+        logging.info("Setting default patch parameters")
         self.c = 0.2  # Consumption rate for resources.
         self.alpha = 0.2  # Conversion factor for resources into cells
         self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
         self.gamma = 10  # Rate of resource renewal
-        self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
-        self.num_strains = int(input("Number of Strains: "))  # Number of strains to test
+        self.resources = 0.5
+        self.num_strains = num_strains
 
-        self.spore_chance = []
-        self.germ_chance = []
-        self.fly_v = []
-        self.fly_s = []
-        for i in range(0, self.num_strains):  # Iterates through each strain
-            print("Strain " + str(i + 1))
-            self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
-            self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
-            # Chance for vegetative cells to survive fly
-            self.fly_v.append(float(input("Vegetative Cell Fly Survival Chance : ")))
-            # Chance for sporulated cells to survive fly
-            self.fly_s.append(float(input("Sporulated Cell Fly Survival Chance : ")))
+        self.spore_chance = []  # Chance of sporulation for each strain
+        self.germ_chance = []  # Chance of germination for each strain
+        self.fly_v_survival = []  # Chance of veg cell survival for each strain
+        self.fly_s_survival = []  # Chance for sporulated cell survival for each strain
+
+        self.save_patch_data = False  # If we save patch by patch data too. This can eat up a lot of storage space.
+
+        if console_input:
+            logging.info("Getting user input for parameter values")
+        else:
+            logging.info("Skipping user input and using vectors for parameter values")
+            self.spore_chance = spore_chance
+            self.germ_chance = germ_chance
+            self.fly_s_survival = fly_s_survival
+            self.fly_v_survival = fly_v_survival
+
+        logging.info("Checking that all parameters have legal values.")
+        self.check_param_lists([spore_chance, germ_chance, fly_v_survival, fly_s_survival])
 
         # Global Parameters
         self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.00004  # Probability of a patch dying.
-        self.stop_time = 100000  # Iterations to run
+        self.stop_time = 50000  # Iterations to run
         self.num_flies = 50  # Number of flies each colonization event
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
-        self.drop_single_yeast = False  # If true only pick one survivor to drop, instead of all
+        self.drop_single_yeast = False  # If true only pick one survivor to drop, instead of all (todo: "True" not implemented)
         self.yeast_size = 0.01  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
 
         self.files = []
-        self.total_file = open('save_data/gen_totals.csv', 'a+')
+
+
+        # Create the data files
+        self.data_path = input("What shall we name the data folder for this simulation?")
+        self.data_path = f'save_data/{self.data_path}'
+
+        # Make the main totals file
+        self.total_file = self.init_csv(self.data_path, "totals.csv", [f"{i} Veg, {i} Spore," for i in range(0, num_strains)])
+        # Make another totals file that compares sporulation chance to
+        self.chance_by_sum_file = self.init_csv(self.data_path, "chance_by_sum.csv", [f"{i}," for i in spore_chance])
+
+
+
+        # todo close the files at the end
+
+
+
+
+    def ask_for_input(self, num_strains):
+        """Asks for the parameter input instead of reading the default"""
+
+        self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
+        self.num_strains = int(input("Number of Strains (overwrites given number): "))  # Number of strains to test
+        for i in range(0, self.num_strains):  # Iterates through each strain
+            print("Strain " + str(i + 1))
+            self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
+            self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
+            # Chance for vegetative cells to survive fly
+            self.fly_v_survival.append(float(input("Vegetative Cell Fly Survival Chance : ")))
+            # Chance for sporulated cells to survive fly
+            self.fly_s_survival.append(float(input("Sporulated Cell Fly Survival Chance : ")))
 
     def set_initial_conditions(self, world):
-        """ Give half the patches each strain. """
+        """
+        For each patch give a random strain.
+        """
         initial_v = []
         initial_s = []
 
-        for i in range(0, self.num_strains):  # Iterate through each strain
-            # Initial Vegetative Cells
-            initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
-            # Initial Vegetative Cells
-            initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
+        # decide on initial cells for each strain
+        if self.console_input:
+            for i in range(0, self.num_strains):  # Iterate through each strain
+                # Initial Vegetative Cells
+                initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
+                # Initial Vegetative Cells
+                initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
+        else:
+            # todo: for now just give each strain an intial number of one
+            initial_s = [1]*self.num_strains
+            initial_v = [1]*self.num_strains
 
-        for patch in world.patches:  # Iterate through each patch
-            rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
+        for i, patch in enumerate(world.patches):  # Iterate through each patch
+            # Give each strain a patch
+            rand_strain = i
+            #rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
             # Fill the patch with a single strain
             patch.v_populations[rand_strain] = initial_v[rand_strain]
             patch.s_populations[rand_strain] = initial_s[rand_strain]
 
         # Prepare an array of save files for each patch
+        # todo: move this line to a better location
         for patch in world.patches:
             self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
@@ -111,9 +174,9 @@ class TwoStrain(Rules):
         patch.mu_R = self.mu_R
         patch.gamma = self.gamma
         patch.resources = self.resources
-        patch.germ_chance = self.germ_chance
-        patch.fly_v = self.fly_v
-        patch.fly_s = self.fly_s
+        patch.germ_chance = self.germ_chance  # todo: see if we need these values or if they mess with stuff
+        patch.fly_v = self.fly_v_survival
+        patch.fly_s = self.fly_s_survival
         patch.spore_chance = self.spore_chance
 
         print(f"Patch {patch.id} has been reset.")
@@ -172,10 +235,6 @@ class TwoStrain(Rules):
 
             # print(f"num_eaten for patch {patch.id}: {num_eaten}")
 
-            if self.drop_single_yeast:
-                num_eaten = 1
-                # todo: does having this before survival-probabilities effect the simulation?
-
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
 
@@ -200,19 +259,23 @@ class TwoStrain(Rules):
                 for j in hitchhikers:
                     if j < self.num_strains:
                         patch.v_populations[j] -= self.yeast_size
-                        if random.random() < self.fly_v[j]:
+                        if random.random() < self.fly_v_survival[j]:
                             v_survivors[j] += self.yeast_size
                     else:
-                        patch.s_populations[j-self.num_strains] -= self.yeast_size
-                        if random.random() < self.fly_s[j-self.num_strains]:
-                            s_survivors[j-self.num_strains] += self.yeast_size
+                        patch.s_populations[j - self.num_strains] -= self.yeast_size
+                        if random.random() < self.fly_s_survival[j - self.num_strains]:
+                            s_survivors[j - self.num_strains] += self.yeast_size
 
                 # Add the survivors to a random neighboring patch.
                 # If no neighbors then the fly vanishes
                 drop_patch = patch.random_neighbor()
                 if drop_patch is not None:
-                    drop_patch.v_populations = [x+y for x, y in zip(drop_patch.v_populations, v_survivors)]
-                    drop_patch.s_populations = [x+y for x, y in zip(drop_patch.s_populations, s_survivors)]
+                    if self.drop_single_yeast:
+                        # Randomly choose only one survivor to drop
+                        #todo
+                        random.randint(0, self.num_strains)  # Choose random strain to keep
+                    drop_patch.v_populations = [x + y for x, y in zip(drop_patch.v_populations, v_survivors)]
+                    drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
 
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
@@ -224,8 +287,7 @@ class TwoStrain(Rules):
 
     def census(self, world):
 
-        print("\n")
-        print("=" * 30)
+        logging.info("Censusing and saving data")
 
         v_population_totals = [0] * self.num_strains
         s_population_totals = [0] * self.num_strains
@@ -233,33 +295,133 @@ class TwoStrain(Rules):
 
         # Gather for totals from each patch
         for patch in world.patches:
+            total_resources += patch.resources
             for i in range(0, self.num_strains):
                 v_population_totals[i] += patch.v_populations[i]
                 s_population_totals[i] += patch.s_populations[i]
-            total_resources += patch.resources
 
-        print("\nIndividual Patch Info")
-        for patch in world.patches:
-            print(f"Patch {patch.id}")
-            print(f"    Vegetative Population: {str(patch.v_populations)}")
-            print(f"    Sporulated Population: {str(patch.s_populations)}")
-            print(f"    Resources: {patch.resources}")
+        # print("\nIndividual Patch Info")
+        # for patch in world.patches:
+        #     print(f"Patch {patch.id}")
+        #     print(f"    Vegetative Population: {str(patch.v_populations)}")
+        #     print(f"    Sporulated Population: {str(patch.s_populations)}")
+        #     print(f"    Resources: {patch.resources}")
 
             # Write to individual patch save files
-            for i in range(0, self.num_strains):
-                self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
-            self.files[patch.id].write(str(patch.resources) + '\n')
+            if self.save_patch_data:
+                self.files[patch.id].write(f"{world.age}, {str(patch.resources)}")
+                for i in range(0, self.num_strains):
+                    self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
 
-        print(f"\nGEN {world.age} TOTALS: {str(v_population_totals) + str(s_population_totals) + str(total_resources)}")
+        if self.chance_by_sum_file.closed:
+            print("Opening chance by sum file")
+            self.chance_by_sum_file = open(f'{self.data_path}/chance_by_sum.csv', 'a')
+        if self.total_file.closed:
+            print("Opening totals file")
+            self.total_file = open(f'{self.data_path}/totals.csv', 'a')
+        self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
+        self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
 
-        # Write to gen_totals save file
-        for i in range(0, self.num_strains):
-            self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
-        self.total_file.write(str(total_resources) + '\n')
+        #Open the files until the end of the program
+
+
+
+
+        print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
+              # f"\n    Veg: {str(v_population_totals)}"
+              # f"\n    Spore:{str(s_population_totals)}"
+              # f"\n    Resources: {str(total_resources)}"
+              )
+
+
 
     def stop_condition(self, world):
         return world.age > self.stop_time
 
+    def init_csv(self, path, name, header):
+        """
+        creates a csv file with the header we specify.
+        Automatically adds an iteration and resources column.
+
+        Args:
+            path: location of file
+            name: <filename>.csv
+            header: list of strings to write in the header
+        """
+
+        # Make the Directory if needed
+        if not os.path.exists(path):
+            logging.info(f"Initializing the save data files in {self.data_path}")
+            os.makedirs(path)
+
+        with open(f'{self.data_path}/{name}', 'w+') as file:
+
+            # Make the headers of the CSV file
+            file.write("Iteration, Resources,")
+            for i in header:
+                file.write(i)
+            file.write("\n")
+
+        return file
+
+    def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
+        # Write to totals save file
+        self.chance_by_sum_file.write(str(world.age) + ",")
+        self.chance_by_sum_file.write(str(total_resources) + ",")
+        for i in range(0, self.num_strains):
+            self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
+        self.chance_by_sum_file.write("\n")
+
+    def update_totals_csv(self, world, total_resources, v_population_totals, s_population_totals):
+        # Write to totals save file
+        self.total_file.write(str(world.age) + ",")
+        self.total_file.write(str(total_resources) + ",")
+        for i in range(0, self.num_strains):
+            self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
+        self.total_file.write("\n")
+
+
+def random_probs(n):
+    """
+    Makes a list of random probabilities. Used to give input for large
+    Args:
+        n: number of strains
+
+    Returns:
+        A list of random probabilities length n
+    """
+
+    return [random.random() for x in range(0, n)]
+
+def spaced_probs(n):
+    """
+    Makes a vector for the n strains with evenly spaced probabilities between them.
+    Args:
+        n:
+        step:
+
+    Returns:
+
+    """
+
+    l = []
+    for i in range(0, n):
+        l.append(i/n)  # Normalize so that between 0 and one
+
+    return l
 
 if __name__ == "__main__":
-    run(World(TwoStrain()))
+
+    # Make random strain probabilities
+
+    num_strains = 1000
+    #sc = spaced_probs(num_strains)
+    sc = sorted(random_probs(num_strains))
+    gc = [1]*num_strains
+    fvs = [.2]*num_strains
+    fss = [.8]*num_strains
+    print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
+
+    run(World(NStrain(num_strains, console_input=False, spore_chance=sc, germ_chance=gc, fly_s_survival=fss, fly_v_survival=fvs)))
+
+

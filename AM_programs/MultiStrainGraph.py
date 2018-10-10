@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 file_path = 'save_data/' + input("Which file?") + '.csv'
 num_strains = int(input("How many strains?"))

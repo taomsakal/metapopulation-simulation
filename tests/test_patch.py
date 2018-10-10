@@ -4,6 +4,7 @@ import networkx as nx
 
 from world import World
 from patch import Patch
+from rules import Rules
 import general
 from simrules import testrules
 
@@ -136,3 +137,21 @@ class TestMap():
         assert world.patches[1].neighbor_ids() == [0, 2]
         assert world.patches[2].neighbor_ids() == [1, 3]
         assert world.patches[3].neighbor_ids() == [2]
+
+class TestMisc:
+
+    def test_check_param_lists(self):
+
+        rules = Rules()
+
+        l = [[1,2,3,4], [0,0,0,1]]
+        assert rules.check_param_lists(l) == False
+
+        l = [[-.2]]
+        assert rules.check_param_lists(l) == False
+
+        l = [[1,1,1,1,1,1,1], [0]]
+        assert rules.check_param_lists(l) == True
+
+        l = [[0.4, 0.2], [0.3, 0.3], [0.99, 0.11], [.2, .5]]
+        assert rules.check_param_lists(l) == True
