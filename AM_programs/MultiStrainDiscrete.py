@@ -53,8 +53,8 @@ class NStrain(Rules):
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for resources.
         self.gamma = 10  # Rate of resource renewal
-        self.resources = 0.5
         self.num_strains = num_strains
+        self.resources = 0.5  # Initial resource value for each patch
 
         self.spore_chance = []  # Chance of sporulation for each strain
         self.germ_chance = []  # Chance of germination for each strain
@@ -79,8 +79,9 @@ class NStrain(Rules):
         self.dt = 0.01  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.00004  # Probability of a patch dying.
-        self.stop_time = 50000  # Iterations to run
+        self.stop_time = 50  # Iterations to run
         self.num_flies = 50  # Number of flies each colonization event
+
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -143,13 +144,14 @@ class NStrain(Rules):
             initial_s = [1]*self.num_strains
             initial_v = [1]*self.num_strains
 
+        # Give each patch n random strains
         for i, patch in enumerate(world.patches):  # Iterate through each patch
-            # Give each strain a patch
-            rand_strain = i
-            #rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
-            # Fill the patch with a single strain
-            patch.v_populations[rand_strain] = initial_v[rand_strain]
-            patch.s_populations[rand_strain] = initial_s[rand_strain]
+            # rand_strain = i
+            for i in range(0, random.randrange(0, 20)):
+                rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
+                # Fill the patch with a single strain
+                patch.v_populations[rand_strain] += initial_v[rand_strain]
+                patch.s_populations[rand_strain] += initial_s[rand_strain]
 
         # Prepare an array of save files for each patch
         # todo: move this line to a better location
@@ -336,7 +338,40 @@ class NStrain(Rules):
 
 
     def stop_condition(self, world):
-        return world.age > self.stop_time
+        if world.age > self.stop_time:
+            self.last_things(world)
+            return True
+        else:
+            return False
+
+    def last_things(self, world):
+        """
+        Last steps before exiting the simulation.
+        """
+
+        # Gather for totals from each patch
+        v_population_totals = [0] * self.num_strains
+        s_population_totals = [0] * self.num_strains
+        total_resources = 0
+        for patch in world.patches:
+            total_resources += patch.resources
+            for i in range(0, self.num_strains):
+                v_population_totals[i] += patch.v_populations[i]
+                s_population_totals[i] += patch.s_populations[i]
+
+        # Make a csv with final equilibrium
+        self.init_csv(self.data_path, "final_eq.csv", ["k,", "Population,", "V pop,", "S pop,"])
+        with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
+            for i in range(0, num_strains):
+                final_eq.write(", ,")
+                final_eq.write(f"{self.spore_chance[i]},")
+                final_eq.write(f"{v_population_totals[i] + s_population_totals[i]}, {v_population_totals[i]}, {s_population_totals[i]}")
+                final_eq.write("\n")
+
+
+
+
+
 
     def init_csv(self, path, name, header):
         """
@@ -348,6 +383,8 @@ class NStrain(Rules):
             name: <filename>.csv
             header: list of strings to write in the header
         """
+
+        # todo
 
         # Make the Directory if needed
         if not os.path.exists(path):
