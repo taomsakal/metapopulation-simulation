@@ -16,7 +16,7 @@ class AddOne(Rules):
     def patch_update(self, patch):
         """
         Runs the population dynamics in a patch for one timestep. This usually manipulates population levels
-        and patch resources.
+        and patch init_resources_per_patch.
         """
 
         patch.populations += 1

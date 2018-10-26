@@ -1,2 +1,4 @@
 *.log
 *.csv
+*.xml
+.idea/*

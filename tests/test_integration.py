@@ -172,11 +172,11 @@ class TestTwoStrain:
         rules = TwoStrain()
 
         # Now setup specific parameters
-        rules.c = 0.1  # Consumption rate for resources.
-        rules.alpha = 0.2  # Conversion factor for resources into cells
+        rules.c = 0.1  # Consumption rate for init_resources_per_patch.
+        rules.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
         rules.mu_v = 0.1  # Background death rate for vegetative cells
         rules.mu_s = 0.05  # Background death rate for sporulated cells
-        rules.mu_R = 0.01  # "death" rate for resources.
+        rules.mu_R = 0.01  # "death" rate for init_resources_per_patch.
         rules.gamma = 1  # Rate of resource renewal
         rules.kv_fly_survival = 0.2  # Probability of surviving the fly gut
         rules.ks_fly_survival = 0.8  # Probability of surviving the fly gut
@@ -228,11 +228,11 @@ class TestTwoStrain:
         rules = TwoStrain()
 
         # Now setup specific parameters
-        rules.c = 0.1  # Consumption rate for resources.
-        rules.alpha = 0.2  # Conversion factor for resources into cells
+        rules.c = 0.1  # Consumption rate for init_resources_per_patch.
+        rules.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
         rules.mu_v = 0.1  # Background death rate for vegetative cells
         rules.mu_s = 0.05  # Background death rate for sporulated cells
-        rules.mu_R = 0.01  # "death" rate for resources.
+        rules.mu_R = 0.01  # "death" rate for init_resources_per_patch.
         rules.gamma = 1  # Rate of resource renewal
         rules.kv_fly_survival = 0.2  # Probability of surviving the fly gut
         rules.ks_fly_survival = 0.8  # Probability of surviving the fly gut
@@ -284,11 +284,11 @@ class TestTwoStrain:
         rules = TwoStrain()
 
         # Now setup specific parameters
-        rules.c = 0.1  # Consumption rate for resources.
-        rules.alpha = 0.2  # Conversion factor for resources into cells
+        rules.c = 0.1  # Consumption rate for init_resources_per_patch.
+        rules.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
         rules.mu_v = 0.1  # Background death rate for vegetative cells
         rules.mu_s = 0.05  # Background death rate for sporulated cells
-        rules.mu_R = 0.01  # "death" rate for resources.
+        rules.mu_R = 0.01  # "death" rate for init_resources_per_patch.
         rules.gamma = 1  # Rate of resource renewal
         rules.kv_fly_survival = 0.2  # Probability of surviving the fly gut
         rules.ks_fly_survival = 0.8  # Probability of surviving the fly gut

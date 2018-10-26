@@ -31,18 +31,18 @@ class TwoStrain(Rules):
 
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
-        self.c = 0.2  # Consumption rate for resources.
-        self.alpha = 0.2  # Conversion factor for resources into cells
+        self.c = 0.2  # Consumption rate for init_resources_per_patch.
+        self.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
         self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
-        self.mu_R = 0.01  # "death" rate for resources.
+        self.mu_R = 0.01  # "death" rate for init_resources_per_patch.
         self.activation = 0.015  # vegetation factor
         self.gamma = 10  # Rate of resource renewal
         self.kv_fly_survival = 0.001  # Probability of surviving the fly gut
         self.ks_fly_survival = 0.8  # Probability of surviving the fly gut
         self.rv_fly_survival = 0.001  # Probability of surviving the fly gut
         self.rs_fly_survival = 0.8  # Probability of surviving the fly gut
-        self.resources = 50  # Initial resources
+        self.resources = 50  # Initial init_resources_per_patch
         self.sk = 0.01  # Strategy of competitor. (Chance of sporulating)
         self.sr = 0.4  # Strategy of colonizer
 
@@ -113,7 +113,7 @@ class TwoStrain(Rules):
         Each individual has fitness of resource_level and reproduces by that amount.
         """
 
-        # Calculate the changes in the populations and resources
+        # Calculate the changes in the populations and init_resources_per_patch
         change_rv = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * (1 - patch.sr) - patch.mu_v * \
                     patch.populations['rv'] + patch.activation * patch.resources * patch.populations['rs']
         change_rs = patch.alpha * patch.c * patch.resources * patch.populations['rv'] * patch.sr - patch.mu_s * \
@@ -220,14 +220,14 @@ class TwoStrain(Rules):
 
         sum_dicts = helpers.merge_dicts([patch.populations for patch in world.patches])  # Sum populations from patch
         total_resources = 0
-        for patch in world.patches:  # Sum resources from each patch
+        for patch in world.patches:  # Sum init_resources_per_patch from each patch
             total_resources += patch.resources
 
         print("\nIndividual Patch Info")
         for patch in world.patches:
             print(f"Patch {patch.id}")
             print(f"    Population: {str(patch.populations)}")
-            print(f"    Resources: {patch.resources}")
+            print(f"    Resources: {patch.init_resources_per_patch}")
 
             # Append data to patch save files
             self.files[patch.id].write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +

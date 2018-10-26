@@ -47,19 +47,27 @@ class NStrain(Rules):
         # Default patch specific parameters
         # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
         logging.info("Setting default patch parameters")
-        self.c = 0.2  # Consumption rate for resources.
-        self.alpha = 0.2  # Conversion factor for resources into cells
+        self.c = 0.2  # Consumption rate for init_resources_per_patch.
+        self.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
         self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
-        self.mu_R = 0.01  # "death" rate for resources.
+        self.mu_R = 0.01  # "death" rate for init_resources_per_patch.
         self.gamma = 10  # Rate of resource renewal
         self.num_strains = num_strains
-        self.resources = 0.5  # Initial resource value for each patch
+        self.init_resources_per_patch = 0.5  # Initial resource value for each patch
 
         self.spore_chance = []  # Chance of sporulation for each strain
         self.germ_chance = []  # Chance of germination for each strain
         self.fly_v_survival = []  # Chance of veg cell survival for each strain
         self.fly_s_survival = []  # Chance for sporulated cell survival for each strain
+
+        self.s_population_totals = []
+        self.v_population_totals = []
+        self.total_resources = 0
+        self.all_population_totals = []  # The current population totals across all patches.
+        self.total_pop = 0
+
+        # todo move to bottom and init.
 
         self.save_patch_data = False  # If we save patch by patch data too. This can eat up a lot of storage space.
 
@@ -76,10 +84,11 @@ class NStrain(Rules):
         self.check_param_lists([spore_chance, germ_chance, fly_v_survival, fly_s_survival])
 
         # Global Parameters
-        self.dt = 0.01  # Timestep size
+        self.dt = 0.1  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
-        self.prob_death = 0.00004  # Probability of a patch dying.
-        self.stop_time = 50  # Iterations to run
+        self.prob_death = 0.004  # Probability of a patch dying.
+        self.stop_time = 1000  # Iterations to run
+        self.data_save_step = 100 # Save the data every this many generations
         self.num_flies = 50  # Number of flies each colonization event
 
 
@@ -94,27 +103,24 @@ class NStrain(Rules):
 
         self.files = []
 
-
         # Create the data files
         self.data_path = input("What shall we name the data folder for this simulation?")
         self.data_path = f'save_data/{self.data_path}'
 
         # Make the main totals file
-        self.total_file = self.init_csv(self.data_path, "totals.csv", [f"{i} Veg, {i} Spore," for i in range(0, num_strains)])
+        self.total_file = helpers.init_csv(self.data_path, "totals.csv",
+                                       ["Iter", "Res"] + [f"{i} Veg, {i} Spore" for i in range(0, num_strains)])
         # Make another totals file that compares sporulation chance to
-        self.chance_by_sum_file = self.init_csv(self.data_path, "chance_by_sum.csv", [f"{i}," for i in spore_chance])
-
-
+        self.chance_by_sum_file = helpers.init_csv(self.data_path, "chance_by_sum.csv",
+                                               ["Iter, Res"] + [f"{i}" for i in spore_chance] + ["Freq"])
 
         # todo close the files at the end
-
-
-
 
     def ask_for_input(self, num_strains):
         """Asks for the parameter input instead of reading the default"""
 
-        self.resources = float(input("Initial Resources: "))  # Initial resources, input from user
+        self.init_resources_per_patch = float(
+            input("Initial Resources: "))  # Initial init_resources_per_patch, input from user
         self.num_strains = int(input("Number of Strains (overwrites given number): "))  # Number of strains to test
         for i in range(0, self.num_strains):  # Iterates through each strain
             print("Strain " + str(i + 1))
@@ -141,8 +147,8 @@ class NStrain(Rules):
                 initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
         else:
             # todo: for now just give each strain an intial number of one
-            initial_s = [1]*self.num_strains
-            initial_v = [1]*self.num_strains
+            initial_s = [1] * self.num_strains
+            initial_v = [1] * self.num_strains
 
         # Give each patch n random strains
         for i, patch in enumerate(world.patches):  # Iterate through each patch
@@ -157,6 +163,8 @@ class NStrain(Rules):
         # todo: move this line to a better location
         for patch in world.patches:
             self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
+
+        self.update_patch_pops(world)
 
     def reset_patch(self, patch):
         """
@@ -175,7 +183,7 @@ class NStrain(Rules):
         patch.mu_s = self.mu_s
         patch.mu_R = self.mu_R
         patch.gamma = self.gamma
-        patch.resources = self.resources
+        patch.resources = self.init_resources_per_patch
         patch.germ_chance = self.germ_chance  # todo: see if we need these values or if they mess with stuff
         patch.fly_v = self.fly_v_survival
         patch.fly_s = self.fly_s_survival
@@ -188,7 +196,7 @@ class NStrain(Rules):
         Each individual has fitness of resource_level and reproduces by that amount.
         """
 
-        r_change = patch.gamma - patch.mu_R * patch.resources  # Constant resources, death proportional to population
+        r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
 
         for i in range(0, self.num_strains):  # Iterate through strains of patch
             # Vegetative cell change = birth from resource consumption not spored - death rate + germinated spores
@@ -199,7 +207,8 @@ class NStrain(Rules):
             s_change = patch.alpha * patch.c * patch.resources * patch.v_populations[i] * self.spore_chance[i] - \
                        patch.mu_s * patch.s_populations[i] - self.germ_chance[i] * patch.resources * \
                        patch.s_populations[i]
-            r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten resources
+            r_change -= patch.c * patch.resources * patch.v_populations[
+                i]  # Resource change -= eaten init_resources_per_patch
             # Add population changes
             patch.v_populations[i] += v_change * self.dt
             patch.s_populations[i] += s_change * self.dt
@@ -207,7 +216,6 @@ class NStrain(Rules):
         patch.resources += r_change * self.dt  # Add resource changes
 
         # Make sure none become negative
-
         for i in range(0, self.num_strains):
             if patch.v_populations[i] < 0:
                 patch.v_populations[i] = 0
@@ -274,7 +282,7 @@ class NStrain(Rules):
                 if drop_patch is not None:
                     if self.drop_single_yeast:
                         # Randomly choose only one survivor to drop
-                        #todo
+                        # todo
                         random.randint(0, self.num_strains)  # Choose random strain to keep
                     drop_patch.v_populations = [x + y for x, y in zip(drop_patch.v_populations, v_survivors)]
                     drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
@@ -287,55 +295,75 @@ class NStrain(Rules):
             if random.random() < self.prob_death:
                 self.reset_patch(patch)
 
-    def census(self, world):
+    def update_patch_pops(self, world):
+        """
+        Sums the populations for all the patches to give a final number.
+        Also sets the number for the entire simulation
 
-        logging.info("Censusing and saving data")
+        Args:
+            world: The world
 
-        v_population_totals = [0] * self.num_strains
-        s_population_totals = [0] * self.num_strains
-        total_resources = 0
+        Returns:
+            A tuple (#init_resources_per_patch, #veg, #spore, #total)
+
+        """
+
+        # Reset the global counts
+        self.v_population_totals = [0] * self.num_strains
+        self.s_population_totals = [0] * self.num_strains
+        self.all_population_totals = [0] * self.num_strains
+        self.total_resources = 0
 
         # Gather for totals from each patch
         for patch in world.patches:
-            total_resources += patch.resources
+            self.total_resources += patch.resources
             for i in range(0, self.num_strains):
-                v_population_totals[i] += patch.v_populations[i]
-                s_population_totals[i] += patch.s_populations[i]
+                self.v_population_totals[i] += patch.v_populations[i]
+                self.s_population_totals[i] += patch.s_populations[i]
+                self.all_population_totals[i] += patch.v_populations[i] + patch.s_populations[i]
+
+        self.total_pop = sum(self.all_population_totals)
+
+        return (self.total_resources, self.v_population_totals, self.s_population_totals, self.all_population_totals)
+
+    def census(self, world):
+
+        logging.info("Censusing and saving data")
+        total_resources, v_population_totals, s_population_totals, final_totals = self.update_patch_pops(world)
 
         # print("\nIndividual Patch Info")
         # for patch in world.patches:
         #     print(f"Patch {patch.id}")
         #     print(f"    Vegetative Population: {str(patch.v_populations)}")
         #     print(f"    Sporulated Population: {str(patch.s_populations)}")
-        #     print(f"    Resources: {patch.resources}")
+        #     print(f"    Resources: {patch.init_resources_per_patch}")
 
-            # Write to individual patch save files
-            if self.save_patch_data:
-                self.files[patch.id].write(f"{world.age}, {str(patch.resources)}")
+        # Write to individual patch save files
+        if self.save_patch_data:
+            for patch in world.patches:
+                self.files[patch.id].write(f"{world.age}, {str(patch.init_resources_per_patch)}")
                 for i in range(0, self.num_strains):
                     self.files[patch.id].write(str(patch.v_populations[i]) + ',' + str(patch.s_populations[i]) + ',')
 
+        # Open closed data files
         if self.chance_by_sum_file.closed:
             print("Opening chance by sum file")
             self.chance_by_sum_file = open(f'{self.data_path}/chance_by_sum.csv', 'a')
         if self.total_file.closed:
             print("Opening totals file")
             self.total_file = open(f'{self.data_path}/totals.csv', 'a')
-        self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
-        self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
 
-        #Open the files until the end of the program
+        # Update the data files every n'th step
+        if world.age % self.data_save_step == 0:
+            self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
+            self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
 
-
-
-
+        # Print current progress.
         print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
               # f"\n    Veg: {str(v_population_totals)}"
               # f"\n    Spore:{str(s_population_totals)}"
               # f"\n    Resources: {str(total_resources)}"
               )
-
-
 
     def stop_condition(self, world):
         if world.age > self.stop_time:
@@ -349,67 +377,31 @@ class NStrain(Rules):
         Last steps before exiting the simulation.
         """
 
-        # Gather for totals from each patch
-        v_population_totals = [0] * self.num_strains
-        s_population_totals = [0] * self.num_strains
-        total_resources = 0
-        for patch in world.patches:
-            total_resources += patch.resources
-            for i in range(0, self.num_strains):
-                v_population_totals[i] += patch.v_populations[i]
-                s_population_totals[i] += patch.s_populations[i]
+        self.update_patch_pops(world)
 
         # Make a csv with final equilibrium
-        self.init_csv(self.data_path, "final_eq.csv", ["k,", "Population,", "V pop,", "S pop,"])
+        helpers.init_csv(self.data_path, "final_eq.csv", ["id", "S Prob", "Pop Num", "V pop", "S pop", "Freq"])
         with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
             for i in range(0, num_strains):
-                final_eq.write(", ,")
                 final_eq.write(f"{self.spore_chance[i]},")
-                final_eq.write(f"{v_population_totals[i] + s_population_totals[i]}, {v_population_totals[i]}, {s_population_totals[i]}")
+                final_eq.write(
+                    f"{i}, {self.all_population_totals[i]}, {self.v_population_totals[i]}, {self.s_population_totals[i]}, {self.all_population_totals[i]/self.total_pop}")
                 final_eq.write("\n")
-
-
-
-
-
-
-    def init_csv(self, path, name, header):
-        """
-        creates a csv file with the header we specify.
-        Automatically adds an iteration and resources column.
-
-        Args:
-            path: location of file
-            name: <filename>.csv
-            header: list of strings to write in the header
-        """
-
-        # todo
-
-        # Make the Directory if needed
-        if not os.path.exists(path):
-            logging.info(f"Initializing the save data files in {self.data_path}")
-            os.makedirs(path)
-
-        with open(f'{self.data_path}/{name}', 'w+') as file:
-
-            # Make the headers of the CSV file
-            file.write("Iteration, Resources,")
-            for i in header:
-                file.write(i)
-            file.write("\n")
-
-        return file
+    
 
     def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
+        """ Updates the chance by sume csv """
         # Write to totals save file
-        self.chance_by_sum_file.write(str(world.age) + ",")
+        self.chance_by_sum_file.write(f"{world.age},")
         self.chance_by_sum_file.write(str(total_resources) + ",")
         for i in range(0, self.num_strains):
             self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
+        self.chance_by_sum_file.write(
+            f"{(v_population_totals[0] + s_population_totals[0]) / (v_population_totals[0] + s_population_totals[0] + (v_population_totals[1] + s_population_totals[1]) )} ")
         self.chance_by_sum_file.write("\n")
 
     def update_totals_csv(self, world, total_resources, v_population_totals, s_population_totals):
+        """ Updates the totals csv"""
         # Write to totals save file
         self.total_file.write(str(world.age) + ",")
         self.total_file.write(str(total_resources) + ",")
@@ -418,47 +410,25 @@ class NStrain(Rules):
         self.total_file.write("\n")
 
 
-def random_probs(n):
-    """
-    Makes a list of random probabilities. Used to give input for large
-    Args:
-        n: number of strains
-
-    Returns:
-        A list of random probabilities length n
-    """
-
-    return [random.random() for x in range(0, n)]
-
-def spaced_probs(n):
-    """
-    Makes a vector for the n strains with evenly spaced probabilities between them.
-    Args:
-        n:
-        step:
-
-    Returns:
-
-    """
-
-    l = []
-    for i in range(0, n):
-        l.append(i/n)  # Normalize so that between 0 and one
-
-    return l
 
 if __name__ == "__main__":
 
+    num_iterations = 1
+    num_strains = 2
+    final_eqs = []
+
     # Make random strain probabilities
+    # sc = spaced_probs(num_strains)
+    # sc = sorted(random_probs(num_strains))
+    sc = [0.35, 0.35]
+    gc = [1] * num_strains
+    fvs = [.2] * num_strains
+    fss = [.8] * num_strains
 
-    num_strains = 1000
-    #sc = spaced_probs(num_strains)
-    sc = sorted(random_probs(num_strains))
-    gc = [1]*num_strains
-    fvs = [.2]*num_strains
-    fss = [.8]*num_strains
-    print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
+    for i in range(0, num_iterations):
+        print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
 
-    run(World(NStrain(num_strains, console_input=False, spore_chance=sc, germ_chance=gc, fly_s_survival=fss, fly_v_survival=fvs)))
-
-
+        world = World(NStrain(num_strains, console_input=False, spore_chance=sc, germ_chance=gc, fly_s_survival=fss,
+                              fly_v_survival=fvs))
+        run(world)
+        final_eqs.append(world.rules.update_patch_pops(world))  # Append final census total

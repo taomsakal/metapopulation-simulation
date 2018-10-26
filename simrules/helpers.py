@@ -1,6 +1,8 @@
 """
 Functions to help construct the simrules.
 """
+import os
+import logging
 import random
 
 
@@ -99,3 +101,64 @@ def sum_dict(dict_):
         sum_ += value
 
     return sum_
+
+
+def init_csv(path, name, header):
+    """
+    creates a csv file with the header we specify.
+    Automatically adds an iteration and init_resources_per_patch column.
+
+    Args:
+        path: the path to the folder the file lives in
+        name: <filename>.csv
+        header: list of strings to write in the header
+    """
+
+    # todo
+
+    # Make the Directory if needed
+    if not os.path.exists(path):
+        logging.info(f"Initializing the save data files in {path}")
+        os.makedirs(path)
+
+    with open(f'{path}/{name}', 'w+') as file:
+
+        # Make the headers of the CSV file
+        for i in header:
+            file.write(i)
+            file.write(',')
+        file.write("\n")
+
+    return file
+
+
+
+def random_probs(n):
+    """
+    Makes a list of random probabilities. Used to give input for large
+    Args:
+        n: number of strains
+
+    Returns:
+        A list of random probabilities length n
+    """
+
+    return [random.random() for x in range(0, n)]
+
+
+def spaced_probs(n):
+    """
+    Makes a vector for the n strains with evenly spaced probabilities between them.
+    Args:
+        n:
+        step:
+
+    Returns:
+
+    """
+
+    l = []
+    for i in range(0, n):
+        l.append(i / n)  # Normalize so that between 0 and one
+
+    return l
