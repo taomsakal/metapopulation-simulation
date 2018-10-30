@@ -87,7 +87,7 @@ class NStrain(Rules):
         self.dt = 0.1  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.stop_time = 10000  # Iterations to run
         self.data_save_step = 100 # Save the data every this many generations
         self.num_flies = 50  # Number of flies each colonization event
 
@@ -420,7 +420,7 @@ if __name__ == "__main__":
     # Make random strain probabilities
     # sc = spaced_probs(num_strains)
     # sc = sorted(random_probs(num_strains))
-    sc = [0.35, 0.35]
+    sc = [0.35, 0.5]
     gc = [1] * num_strains
     fvs = [.2] * num_strains
     fss = [.8] * num_strains
