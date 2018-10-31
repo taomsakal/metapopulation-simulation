@@ -109,10 +109,10 @@ class NStrain(Rules):
 
         # Make the main totals file
         self.total_file = helpers.init_csv(self.data_path, "totals.csv",
-                                       ["Iter", "Res"] + [f"{i} Veg, {i} Spore" for i in range(0, num_strains)])
+                                       ["Iteration", "Resources"] + [f"Strain {i} (Veg), Strain {i} (Spore)" for i in range(0, num_strains)])
         # Make another totals file that compares sporulation chance to
         self.chance_by_sum_file = helpers.init_csv(self.data_path, "chance_by_sum.csv",
-                                               ["Iter, Res"] + [f"{i}" for i in spore_chance] + ["Freq"])
+                                               ["Iteration, Resources"] + [f"Strain {i}" for i in spore_chance] + ["Frequency"])
 
         # todo close the files at the end
 
@@ -380,12 +380,11 @@ class NStrain(Rules):
         self.update_patch_pops(world)
 
         # Make a csv with final equilibrium
-        helpers.init_csv(self.data_path, "final_eq.csv", ["id", "S Prob", "Pop Num", "V pop", "S pop", "Freq"])
+        helpers.init_csv(self.data_path, "final_eq.csv", ["id", "Sporulation Probability", "Total Population", "Veg Population", "Spore Population", "Frequency"])
         with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
             for i in range(0, num_strains):
-                final_eq.write(f"{self.spore_chance[i]},")
                 final_eq.write(
-                    f"{i}, {self.all_population_totals[i]}, {self.v_population_totals[i]}, {self.s_population_totals[i]}, {self.all_population_totals[i]/self.total_pop}")
+                    f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},{self.all_population_totals[i]/self.total_pop}")
                 final_eq.write("\n")
     
 
@@ -396,6 +395,7 @@ class NStrain(Rules):
         self.chance_by_sum_file.write(str(total_resources) + ",")
         for i in range(0, self.num_strains):
             self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
+        try:
         self.chance_by_sum_file.write(
             f"{(v_population_totals[0] + s_population_totals[0]) / (v_population_totals[0] + s_population_totals[0] + (v_population_totals[1] + s_population_totals[1]) )} ")
         self.chance_by_sum_file.write("\n")
@@ -414,13 +414,13 @@ class NStrain(Rules):
 if __name__ == "__main__":
 
     num_iterations = 1
-    num_strains = 2
+    num_strains = 3
     final_eqs = []
 
     # Make random strain probabilities
     # sc = spaced_probs(num_strains)
     # sc = sorted(random_probs(num_strains))
-    sc = [0.35, 0.5]
+    sc = [0.35, 0.5, 0.8]
     gc = [1] * num_strains
     fvs = [.2] * num_strains
     fss = [.8] * num_strains
