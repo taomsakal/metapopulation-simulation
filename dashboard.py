@@ -27,6 +27,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None
     try:
         df = pd.read_csv(csv_path)  # Load the csv into a dataframe
     except ValueError:
+        print("Could not read csv. Attempting to read dataframe")
         df = csv_path  # todo make explicit that can put csv or dataframe in this
 
     # If x_axis is None then use the first column in the csv as x
@@ -183,7 +184,7 @@ def generate_table(dataframe, max_rows=10):
     # ),
 
 
-def run_dash_server(folder_name, average_eqs):
+def run_dash_server(folder_name):
     # global folder_path
     # folder_path = f'../AM_programs/save_data/test/'
 
@@ -191,6 +192,8 @@ def run_dash_server(folder_name, average_eqs):
     chance_by_sum_path = folder_path + 'chance_by_sum.csv'
     final_eq_path = folder_path + 'final_eq.csv'
     totals_path = folder_path + 'totals.csv'
+    average_eqs_path = folder_path + 'average_eqs.csv'
+    single_spore_path = folder_path + 'single_strain_averages.csv'
 
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -205,14 +208,11 @@ def run_dash_server(folder_name, average_eqs):
         make_graph_from_csv(chance_by_sum_path, 'Strains through Time'),
         make_graph_from_csv(totals_path, 'Strains through Time (States Split)'),
         make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
+        make_graph_from_csv(average_eqs_path, 'Average Eqs', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
+        make_graph_from_csv(single_spore_path, 'Single Strain Curve', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
+        make_graph_from_csv(folder_path + 'double_strain_averages.csv', 'Double Strain Curve', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
 
-        dcc.Graph(
-            id='average eq num',
-            figure={
-                'data': [
-                    {'x': average_eqs[0], 'y': average_eqs[1], 'type': 'bar'}
-                ],
-                'layout': {'title': 'Average Eqs'}})
+
 
     ], style={'columnCount': 1})
 
