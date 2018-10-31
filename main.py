@@ -12,6 +12,8 @@ The Simulation itself is an object. This is so we can stop it, save it, and then
 
 import logging
 import networkx as nx
+
+from simrules import helpers
 from world import World
 from simrules.NStrainsSimple import NStrainsSimple
 
@@ -40,7 +42,5 @@ def run(world, log_name='simulation.log'):
 
     logging.basicConfig(filename='simulation.log', level=logging.INFO)
     logging.info('Started')
-
     simulate(world)
-
     logging.info('Finished')
