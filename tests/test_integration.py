@@ -6,7 +6,7 @@ import main
 from world import World
 from simrules.NStrainsSimple import NStrainsSimple
 from simrules.TwoStrain import TwoStrain
-from AM_programs.MultiStrainDiscrete import MultiStrainDiscrete
+from AM_programs.NStrain import NStrain
 from general import within_percent
 import networkx as nx
 
@@ -67,14 +67,17 @@ class TestNStrainsSimple:
 
         assert True
 
+class TestNStrain:
 
-class TestMultiStrainDiscrete:
+    NStrain3 = NStrain(3, folder_name="test_no_death", spore_chance=[0.1, 0.2, 0.3], germ_chance=[.2]*3, fly_s_survival=[.1]*3, fly_v_survival=[.2]*3 )
+
+    # Todo: Import the helpers random number generators and fix the rules for each test. Then iterate through a random number of num_cases cases. 
 
     def test_no_death(self):
         """ Test that all populations spread """
 
         for i in range(0, 10):
-            rules = MultiStrainDiscrete(False)
+            rules = NStrain(3, folder_name="test_no_death", spore_chance=[0.1, 0.2, 0.3], germ_chance=[.2]*3, fly_s_survival=[.1]*3, fly_v_survival=[.2]*3 )
             rules.num_strains = 3
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0
@@ -99,7 +102,7 @@ class TestMultiStrainDiscrete:
 
         for i in range(0, 10):
 
-            rules = MultiStrainDiscrete(False)
+            rules = NStrain(False)
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0.5
             rules.mu_s = 0.5
@@ -117,7 +120,7 @@ class TestMultiStrainDiscrete:
         """ See if crashes during a long run or a heavy one"""
 
         # Long run
-        rules = MultiStrainDiscrete(False)
+        rules = NStrain(False)
         rules.num_strains = 20
         rules.worldmap = nx.complete_graph(5)
         rules.resources = 500
@@ -131,7 +134,7 @@ class TestMultiStrainDiscrete:
         assert True
 
         # High node run
-        rules = MultiStrainDiscrete(False)
+        rules = NStrain(False)
         rules.num_strains = 81
         rules.worldmap = nx.complete_graph(99)
         rules.resources = 2000
@@ -146,7 +149,7 @@ class TestMultiStrainDiscrete:
 
     def test_line(self):
         """ See if crashes when on a line graph """
-        rules = MultiStrainDiscrete(False)
+        rules = NStrain(False)
         rules.num_strains = 3
         rules.spore_chance = [0.1] * 3
         rules.germ_chance = [0.015] * 3
@@ -188,7 +191,7 @@ class TestTwoStrain:
         rules.dt = 1  # Timestep size
         rules.worldmap = nx.complete_graph(1)  # The worldmap
         rules.prob_death = 0.00  # Probability of a patch dying.
-        rules.stop_time = 1000  # Iterations to run
+        rules.stop_time = 2000  # Iterations to run
         rules.num_flies = 0  # Number of flies each colonization event
         rules.fly_attack_rate = 0.3
         rules.fly_handling_time = 0.3

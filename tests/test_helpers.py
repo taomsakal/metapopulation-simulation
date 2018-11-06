@@ -51,6 +51,7 @@ def test_merge_dicts():
 def test_sum_dict():
     assert sum_dict({}) == 0
     assert sum_dict({'a': 0}) == 0
+    assert sum_dict({'a': 0, 'b': 0}) == 0
     assert sum_dict({'a': 0, 'b': 1}) == 1
     assert sum_dict({'a': 0, 'b': 1, 'c': 2}) == 3
     assert sum_dict({'a': 0, 'b': 1, 'c': 2, 'd': .3}) == 3.3

@@ -29,7 +29,7 @@ class NStrain(Rules):
     Where k → competitor, c → colonizer, v → vegatative, and s → sporulated.
     """
 
-    def __init__(self, num_strains, console_input=True, spore_chance="manual", germ_chance="manual", fly_v="manual",
+    def __init__(self, num_strains, console_input=False, spore_chance="manual", germ_chance="manual", fly_v="manual",
                  fly_v_survival="manual", fly_s_survival="manual", folder_name=None, save_data=True):
         """
         Creates a discrete multi-strain simulation. The individuals each have two states (sporulated/vegetative) but
@@ -93,7 +93,7 @@ class NStrain(Rules):
         self.dt = 0.1  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 5000  # Iterations to run
+        self.stop_time = 1000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
         self.num_flies = 50  # Number of flies each colonization event
 
@@ -548,12 +548,12 @@ if __name__ == "__main__":
 
     folder_name = 'test_runs'
 
-    single_spore_curve(folder_name, 20, 5)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 5, 3)  #todo: for some reason this overwrites the single non-looped data
 
-    double_spore_curve(folder_name, 20, 5)
+    double_spore_curve(folder_name, 5, 3)
 
     # Run i times. Report back
-    basic_sim(10, 5, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(5, 3, folder_name)  # Run a basic simulation on n strains and i loops
 
 
 

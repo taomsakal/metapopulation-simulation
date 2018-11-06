@@ -63,7 +63,7 @@ class TwoStrain(Rules):
         # Ie mush all current patches into a pool and redistribute to new patches.
 
         self.files = []
-        self.total_file = open('save_data/gen_totals.csv', 'a+')
+        # self.total_file = open('save_data/gen_totals.csv', 'a+')  # Saving is currently broken for this
 
     def set_initial_conditions(self, world):
         """ Give half the patches each strain. """
@@ -79,8 +79,8 @@ class TwoStrain(Rules):
                 patch.populations['ks'] = 5
 
         # Open save files to write to
-        for patch in world.patches:
-            self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
+        # for patch in world.patches:
+        #     self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
     def reset_patch(self, patch):
         """
@@ -227,19 +227,20 @@ class TwoStrain(Rules):
         for patch in world.patches:
             print(f"Patch {patch.id}")
             print(f"    Population: {str(patch.populations)}")
-            print(f"    Resources: {patch.init_resources_per_patch}")
+            print(f"    Resources: {patch.resources}")
 
             # Append data to patch save files
-            self.files[patch.id].write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
-                                       str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
-                                       str(patch.resources) + '\n')
+            # self.files[patch.id].write(str(patch.populations['rv']) + ',' + str(patch.populations['rs']) + ',' +
+            #                            str(patch.populations['kv']) + ',' + str(patch.populations['ks']) + ',' +
+            #                            str(patch.resources) + '\n')
 
         print(f"\nGEN {world.age} TOTALS: {str(sum_dicts)}.")
 
         # Append data to gen_totals file
-        self.total_file.write(str(sum_dicts['rv']) + ',' + str(sum_dicts['rs']) + ',' +
-                              str(sum_dicts['kv']) + ',' + str(sum_dicts['ks']) + ',' +
-                              str(total_resources) + '\n')
+        # Saving is currently broken Totals file removed to not break test
+        # self.total_file.write(str(sum_dicts['rv']) + ',' + str(sum_dicts['rs']) + ',' +
+        #                       str(sum_dicts['kv']) + ',' + str(sum_dicts['ks']) + ',' +
+        #                       str(total_resources) + '\n')
 
     def stop_condition(self, world):
         return world.age > self.stop_time

@@ -1,1 +1,16 @@
-{}
+{
+  "test_integration.py::TestMultiStrainDiscrete::()::test_high_death": true,
+  "test_integration.py::TestMultiStrainDiscrete::()::test_line": true,
+  "test_integration.py::TestMultiStrainDiscrete::()::test_no_death": true,
+  "test_integration.py::TestMultiStrainDiscrete::()::test_stress": true,
+  "test_integration.py::TestNStrain": true,
+  "test_integration.py::TestNStrain::()::test_high_death": true,
+  "test_integration.py::TestNStrain::()::test_line": true,
+  "test_integration.py::TestNStrain::()::test_no_death": true,
+  "test_integration.py::TestNStrain::()::test_stress": true,
+  "test_integration.py::TestNStrainsSimple": true,
+  "test_integration.py::TestTwoStrain": true,
+  "test_integration.py::TestTwoStrain::()::test_equlibrium": true,
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_patches": true,
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_small_dt": true
+}

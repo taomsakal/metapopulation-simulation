@@ -60,12 +60,16 @@ class Rules:
 
         """
 
-        for l in vect_list:
-            notprobabilties = [x for x in l if (x < 0 or x > 1)]
-            if notprobabilties:  # If list empty
-                logging.warning("One of the probability parameter lists contains a param that is not a probability. "
-                                "(Ie not between 0 and 1)")
-                return False
+        try:
+            for l in vect_list:
+                notprobabilties = [x for x in l if (x < 0 or x > 1)]
+                if notprobabilties:  # If list empty
+                    logging.warning("One of the probability parameter lists contains a param that is not a probability. "
+                                    "(Ie not between 0 and 1)")
+                    return False
+        except:
+            logging.error("One of the probability parameters is not a number! Expect problems")
+            return False
 
 
         return True

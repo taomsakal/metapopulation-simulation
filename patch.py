@@ -35,8 +35,8 @@ class Patch:
         self.reset_patch = world.rules.reset_patch
         self.reset_patch(self)
 
-        # if initial_populations is not None:
-        #     self.populations = initial_populations  # Override
+        if initial_populations is not None:
+            self.populations = initial_populations  # Override
 
         self._safety_check()
 
