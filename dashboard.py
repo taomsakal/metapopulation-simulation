@@ -27,8 +27,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None
     try:
         df = pd.read_csv(csv_path)  # Load the csv into a dataframe
     except ValueError:
-        print("Could not read csv. Attempting to read dataframe")
-        df = csv_path  # todo make explicit that can put csv or dataframe in this
+        raise ValueError(f"Cannot find file at {csv_path}")
 
     # If x_axis is None then use the first column in the csv as x
     if x_axis is None:

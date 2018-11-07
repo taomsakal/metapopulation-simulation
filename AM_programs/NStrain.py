@@ -9,7 +9,6 @@ import time
 import numpy as np
 from simrules import helpers
 from rules import Rules
-import general
 import dashboard
 
 
@@ -93,7 +92,7 @@ class NStrain(Rules):
         self.dt = 0.1  # Timestep size
         self.worldmap = nx.complete_graph(100)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.stop_time = 5000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
         self.num_flies = 50  # Number of flies each colonization event
 
@@ -420,6 +419,9 @@ class NStrain(Rules):
         self.total_file.write("\n")
 
 def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
+
+    print("STRAT BASIC SIM")
+
     skip_simulation = False  # If true just display the dashboard but don't run the simulation
     final_eqs = []
     final_pops = []
@@ -486,6 +488,9 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     Returns:
 
     """
+
+    print("START SINGLE SPORE SIM")
+
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
                                   fly_s_survival=[1],fly_v_survival=[1], save_data=save_data))
@@ -521,6 +526,8 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
     """
 
+    print('START DOUBLE SPORE SIM')
+
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
                           fly_s_survival=[1], fly_v_survival=[1]))
@@ -548,18 +555,20 @@ if __name__ == "__main__":
 
     folder_name = 'test_runs'
 
-    single_spore_curve(folder_name, 5, 3)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 5, 1)  #todo: for some reason this overwrites the single non-looped data
 
-    double_spore_curve(folder_name, 5, 3)
+    double_spore_curve(folder_name, 1, 2)
 
     # Run i times. Report back
-    basic_sim(5, 3, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(5, 1, folder_name)  # Run a basic simulation on n strains and i loops
 
 
 
-
+    print('WOWWWWWWWWWWW'*10)
     dashboard.run_dash_server(folder_name)
+    print('STAAAAAAAAAAAAAAAAAAAAAAAAP')
 
+    time.sleep(1000000)
 
 
 
