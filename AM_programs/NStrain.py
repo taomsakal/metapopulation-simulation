@@ -1,3 +1,5 @@
+#!/usr/bin/env pypy
+
 from collections import defaultdict
 import random
 import os
@@ -10,6 +12,7 @@ import numpy as np
 from simrules import helpers
 from rules import Rules
 import dashboard
+
 
 
 class NStrain(Rules):
@@ -28,8 +31,8 @@ class NStrain(Rules):
     Where k → competitor, c → colonizer, v → vegatative, and s → sporulated.
     """
 
-    def __init__(self, num_strains, console_input=False, spore_chance="manual", germ_chance="manual", fly_v="manual",
-                 fly_v_survival="manual", fly_s_survival="manual", folder_name=None, save_data=True):
+    def __init__(self, num_strains, console_input=False, spore_chance=None, germ_chance=None,
+                 fly_v_survival=None, fly_s_survival=None, folder_name=None, save_data=True):
         """
         Creates a discrete multi-strain simulation. The individuals each have two states (sporulated/vegetative) but
         there can be an arbitrary number of strains.
@@ -60,6 +63,7 @@ class NStrain(Rules):
         self.num_strains = num_strains
         self.init_resources_per_patch = 0.5  # Initial resource value for each patch
 
+        # Variables that will be overwritten
         self.spore_chance = []  # Chance of sporulation for each strain
         self.germ_chance = []  # Chance of germination for each strain
         self.fly_v_survival = []  # Chance of veg cell survival for each strain
@@ -85,16 +89,15 @@ class NStrain(Rules):
             self.fly_s_survival = fly_s_survival
             self.fly_v_survival = fly_v_survival
 
-        logging.info("Checking that all parameters have legal values.")
-        self.check_param_lists([spore_chance, germ_chance, fly_v_survival, fly_s_survival])
+
 
         # Global Parameters
-        self.dt = 0.1  # Timestep size
-        self.worldmap = nx.complete_graph(100)  # The worldmap
+        self.dt = 0.5  # Timestep size
+        self.worldmap = nx.complete_graph(20)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 5000  # Iterations to run
+        self.stop_time = 1000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
-        self.num_flies = 50  # Number of flies each colonization event
+        self.num_flies = 3  # Number of flies each colonization event
 
 
         # The number of yeast eaten is a type 2 functional response
@@ -121,9 +124,25 @@ class NStrain(Rules):
                                                ["Iteration", "Resources"] + [f"Strain {i} (Veg), Strain {i} (Spore)" for i in range(0, num_strains)])
             # Make another totals file that compares sporulation chance to
             self.chance_by_sum_file = helpers.init_csv(self.data_path, "chance_by_sum.csv",
-                                                       ["Iteration, Resources"] + [f"Strain {i}" for i in spore_chance] + ["Frequency"])
+                                                       ["Iteration, Resources"] + [f"Strain {i}" for i in range(0, num_strains)] + ["Frequency"])
 
             # todo close the files at the end
+
+
+    def safety_checks(self, world):
+        """
+        Checks to make sure nothing greatly concerning is going on in terms of parameters. If not fails an assertion.
+        """
+
+        logging.info("Checking that all parameters have legal values.")
+        assert self.num_strains > 0 and isinstance(self.num_strains, int)
+        assert self.check_param_lists([self.spore_chance, self.germ_chance, self.fly_v_survival, self.fly_s_survival])
+
+        # Make sure there are populations to begin with
+        if world.age == 0:
+            for patch in world.patches:
+                assert sum(patch.v_populations) > 0
+                assert sum(patch.s_populations) > 0
 
     def ask_for_input(self, num_strains):
         """Asks for the parameter input instead of reading the default"""
@@ -132,7 +151,6 @@ class NStrain(Rules):
             input("Initial Resources: "))  # Initial init_resources_per_patch, input from user
         self.num_strains = int(input("Number of Strains (overwrites given number): "))  # Number of strains to test
         for i in range(0, self.num_strains):  # Iterates through each strain
-            print("Strain " + str(i + 1))
             self.spore_chance.append(float(input("Chance of Sporulation: ")))  # Chance to sporulate
             self.germ_chance.append(float(input("Germination Factor: ")))  # Chance to reactivate from sporulation
             # Chance for vegetative cells to survive fly
@@ -159,14 +177,12 @@ class NStrain(Rules):
             initial_s = [1] * self.num_strains
             initial_v = [1] * self.num_strains
 
-        # Give each patch n random strains
+        # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
-            # rand_strain = i
-            for i in range(0, random.randrange(0, 20)):
-                rand_strain = random.randrange(0, self.num_strains)  # Randomly select a strain
-                # Fill the patch with a single strain
-                patch.v_populations[rand_strain] += initial_v[rand_strain]
-                patch.s_populations[rand_strain] += initial_s[rand_strain]
+            strain = i % world.rules.num_strains
+            # Fill the patch with a single strain
+            patch.v_populations[strain] += initial_v[strain]
+            patch.s_populations[strain] += initial_s[strain]
 
         # Prepare an array of save files for each patch
         # todo: move this line to a better location
@@ -208,16 +224,20 @@ class NStrain(Rules):
         r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
 
         for i in range(0, self.num_strains):  # Iterate through strains of patch
-            # Vegetative cell change = birth from resource consumption not spored - death rate + germinated spores
-            v_change = patch.alpha * patch.c * patch.resources * patch.v_populations[i] * (1 - self.spore_chance[i]) - \
-                       patch.mu_v * patch.v_populations[i] + self.germ_chance[i] * patch.resources * \
-                       patch.s_populations[i]
-            # Sporulated cells = birth from resource consumption spored - death rate - germinated spores
-            s_change = patch.alpha * patch.c * patch.resources * patch.v_populations[i] * self.spore_chance[i] - \
-                       patch.mu_s * patch.s_populations[i] - self.germ_chance[i] * patch.resources * \
-                       patch.s_populations[i]
-            r_change -= patch.c * patch.resources * patch.v_populations[
-                i]  # Resource change -= eaten init_resources_per_patch
+
+            # Vegetative cell change
+            # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
+            v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (1 - self.spore_chance[i]) \
+                       - (patch.mu_v * patch.v_populations[i]) + (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+            # Sporulated cell change
+            # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
+            s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (self.spore_chance[i]) \
+                       - (patch.mu_s * patch.s_populations[i]) - (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+            r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten init_resources_per_patch
+
+
             # Add population changes
             patch.v_populations[i] += v_change * self.dt
             patch.s_populations[i] += s_change * self.dt
@@ -337,6 +357,8 @@ class NStrain(Rules):
 
     def census(self, world):
 
+        self.safety_checks(world)
+
         logging.info("Censusing and saving data")
         total_resources, v_population_totals, s_population_totals, final_totals = self.sum_populations(world)
 
@@ -357,10 +379,10 @@ class NStrain(Rules):
         if self.save_data:
             # Open closed data files
             if self.chance_by_sum_file.closed:
-                print("Opening chance by sum file")
+                # print("Opening chance by sum file")
                 self.chance_by_sum_file = open(f'{self.data_path}/chance_by_sum.csv', 'a')
             if self.total_file.closed:
-                print("Opening totals file")
+                # print("Opening totals file")
                 self.total_file = open(f'{self.data_path}/totals.csv', 'a')
 
             # Update the data files every n'th step
@@ -379,6 +401,9 @@ class NStrain(Rules):
         if world.age > self.stop_time:
             self.last_things(world)
             return True
+        elif sum(world.rules.sum_populations(world)[-1]) == 0:
+            logging.warning(f"Population went extinct at gen {world.age}! Ending Simulation!")
+            return True
         else:
             return False
 
@@ -394,9 +419,20 @@ class NStrain(Rules):
         with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
             for i in range(0, self.num_strains):
                 final_eq.write(
-                    f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},{self.all_population_totals[i]/self.total_pop}")
+                    f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},")
+                self.write_frequency(world, i)
                 final_eq.write("\n")
-    
+
+    def write_frequency(self, world, n):
+        "Writes a line with the frequency of the strain n"
+        try:
+            self.chance_by_sum_file.write(f"{(self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop},")
+        except ZeroDivisionError:
+            logging.warning("Population went extinct!")
+            self.chance_by_sum_file.write("-404,")  # -404 is out numeric symbol for went extinct. Ie species not found.
+        except IndexError:
+            logging.error(f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
+
     # Todo: Is possible for all to go extinct and there to be problems calculating frequency because of division by zero
     def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
         """ Updates the chance by sum csv """
@@ -406,7 +442,7 @@ class NStrain(Rules):
         for i in range(0, self.num_strains):
             self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
         total_pop = sum([v_population_totals[i] + s_population_totals[i] for i in range(len(v_population_totals))])
-        self.chance_by_sum_file.write(f"{(v_population_totals[0] + s_population_totals[0]) / total_pop}")
+        self.write_frequency(world, 0)
         self.chance_by_sum_file.write("\n")
 
     def update_totals_csv(self, world, total_resources, v_population_totals, s_population_totals):
@@ -420,7 +456,6 @@ class NStrain(Rules):
 
 def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
 
-    print("STRAT BASIC SIM")
 
     skip_simulation = False  # If true just display the dashboard but don't run the simulation
     final_eqs = []
@@ -444,6 +479,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
 
         # Run multiple simulations and get average
         for i in range(0, num_loops):
+            print(f"Running basic sim {i}/{num_loops}")
             # print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
 
             world = World(NStrain(num_strains, folder_name=name, console_input=False, spore_chance=sc, germ_chance=gc,
@@ -456,9 +492,18 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
             resources = list(world.rules.sum_populations(world))[0]
             run_pop = list(world.rules.sum_populations(world))[-1]
             run_sum = sum(run_pop)
-            run_strain_eqs = [strain / run_sum for strain in run_pop]
-            final_eqs.append(run_strain_eqs)  # Append final census total
-            final_pops.append(run_pop)
+            try:
+                if run_sum != 0:
+                    run_strain_eqs = [strain / run_sum for strain in run_pop]
+                    final_eqs.append(run_strain_eqs)  # Append final census total
+                    final_pops.append(run_pop)
+                else:
+                    run_strain_eqs = [0]*world.rules.num_strains
+                    final_eqs.append(run_strain_eqs)  # Append final census total
+                    final_pops.append(run_pop)
+            except:
+                logging.warning("Error dealing with an eq value. Skipping.")
+
             # print('runpop', run_pop)
             # print('runsum', run_sum)
             # print('run_strain_eqs', run_strain_eqs)
@@ -488,9 +533,6 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     Returns:
 
     """
-
-    print("START SINGLE SPORE SIM")
-
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
                                   fly_s_survival=[1],fly_v_survival=[1], save_data=save_data))
@@ -504,9 +546,6 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
         returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name+"/single_spore_curve", sc_override=[prob], save_data=False)
         pops.append(pop_avg[0])  # Take first intext because list isn't flat
 
-    print('average pops across sporulation probs', pops)
-    print('sc', sc)
-    print(zip(sc, pops))
     #avg_pops = sum(pops)/len(pops)
     #print('avg pops for 1 strain', avg_pops)
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
@@ -525,9 +564,6 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     Returns:
 
     """
-
-    print('START DOUBLE SPORE SIM')
-
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
                           fly_s_survival=[1], fly_v_survival=[1]))
@@ -536,14 +572,13 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     eqs = []
     sc = helpers.spaced_probs(resolution)  # The strain we vary
     sc_2 = 0.3  # The strain we hold constant's spore prob
+    coexistences = []
     for i, prob in enumerate(sc):
         print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
         returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
                                                   sc_override=[prob, sc_2])
         eqs.append(avg_eqs[0])  # Take first intext because list isn't flat
 
-    print('(2 strain) average eq across sporulation probs', eqs)
-    print('sc', sc)
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/double_strain_averages.csv", 'a') as f:
         for chance, eq in zip(sc, eqs):
@@ -553,24 +588,25 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'test_runs'
+    folder_name = '100 patch 3 fly 100 run average 1 germ chance'
 
-    single_spore_curve(folder_name, 5, 1)  #todo: for some reason this overwrites the single non-looped data
 
-    double_spore_curve(folder_name, 1, 2)
+    print("\nSINGLE SPORE CURVE")
+    single_spore_curve(folder_name, 40, 100)  #todo: for some reason this overwrites the single non-looped data
+
+    print("\nDOUBLE SPORE CURVE")
+    double_spore_curve(folder_name, 40, 100)
 
     # Run i times. Report back
-    basic_sim(5, 1, folder_name)  # Run a basic simulation on n strains and i loops
+    print("\nBASIC SIM")
+    basic_sim(10, 100, folder_name)  # Run a basic simulation on n strains and i loops
 
 
-
-    print('WOWWWWWWWWWWW'*10)
+    time.sleep(2)
+    print("Starting Server")
     dashboard.run_dash_server(folder_name)
-    print('STAAAAAAAAAAAAAAAAAAAAAAAAP')
 
-    time.sleep(1000000)
-
-
+    # todo Get dashboard working by itself so can explore old data
 
 
 

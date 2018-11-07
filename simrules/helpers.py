@@ -149,6 +149,7 @@ def random_probs(n):
 def spaced_probs(n):
     """
     Makes a vector for the n strains with evenly spaced probabilities between them.
+    Always include the prob of 1 too
     Args:
         n:
         step:
@@ -160,5 +161,6 @@ def spaced_probs(n):
     l = []
     for i in range(0, n):
         l.append(i / n)  # Normalize so that between 0 and one
+    l.append(1)
 
     return l

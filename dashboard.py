@@ -1,12 +1,12 @@
 import dash
+import os, sys
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 import plotly.graph_objs as go
 
+
 # df = pd.read_csv(final_eq_path)
-
-
 
 
 def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None):
@@ -27,7 +27,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None
     try:
         df = pd.read_csv(csv_path)  # Load the csv into a dataframe
     except ValueError:
-        raise ValueError(f"Cannot find file at {csv_path}")
+        raise ValueError(f"Cannot find file at {csv_path}. We are in {os.getcwd()}")
 
     # If x_axis is None then use the first column in the csv as x
     if x_axis is None:
@@ -43,20 +43,19 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None
 
     traces = []  # A list of traces (lines) that will be built from each column
     for i, col in enumerate(df.columns):
-        if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list): # ensure agree with wanted columns
+        if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list):  # ensure agree with wanted columns
             graph = go.Scatter(
-                x = df[x_axis],
-                y = df[col],
+                x=df[x_axis],
+                y=df[col],
                 # text = df.columns[i],
                 # mode = 'markers',
-                name = list(df)[i],
-                opacity = 0.8,
-                type = type
+                name=list(df)[i],
+                opacity=0.8,
+                type=type
             )
             traces.append(graph)
 
     return traces
-
 
 
 def make_graph_from_csv(csv_path, name, xaxis=None, type=None, ignore_list=None, include_list=None):
@@ -77,6 +76,7 @@ def make_graph_from_csv(csv_path, name, xaxis=None, type=None, ignore_list=None,
     traces = make_traces(csv_path, xaxis, type=type, ignore_list=ignore_list, include_list=include_list)
     return make_graph(traces, name)
 
+
 def make_graph(traces, name):
     graph = dcc.Graph(
         id=f'{name} (Generated Graph)',
@@ -86,8 +86,6 @@ def make_graph(traces, name):
         }
     )
     return graph
-
-
 
 
 def generate_table(dataframe, max_rows=10):
@@ -100,8 +98,6 @@ def generate_table(dataframe, max_rows=10):
             html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
         ]) for i in range(min(len(dataframe), max_rows))]
     )
-
-
 
     # dcc.Graph(
     #     id='life-exp-vs-gdp',
@@ -187,7 +183,7 @@ def run_dash_server(folder_name):
     # global folder_path
     # folder_path = f'../AM_programs/save_data/test/'
 
-    folder_path = f'../AM_programs/save_data/{folder_name}/'
+    folder_path = f'./AM_programs/save_data/{folder_name}/'
     chance_by_sum_path = folder_path + 'chance_by_sum.csv'
     final_eq_path = folder_path + 'final_eq.csv'
     totals_path = folder_path + 'totals.csv'
@@ -199,23 +195,27 @@ def run_dash_server(folder_name):
 
     app.layout = html.Div([
         dcc.Markdown(children=
-                     """### Crazy Cool Competition Colonization Computation """),
+                     f"### {folder_name} "),
 
         # dcc.Markdown(children="""#### Table of final equilibrium values"""),
         # generate_table(df),
 
         make_graph_from_csv(chance_by_sum_path, 'Strains through Time'),
         make_graph_from_csv(totals_path, 'Strains through Time (States Split)'),
-        make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
-        make_graph_from_csv(average_eqs_path, 'Average Eqs', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
-        make_graph_from_csv(single_spore_path, 'Single Strain Curve', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
-        make_graph_from_csv(folder_path + 'double_strain_averages.csv', 'Double Strain Curve', type='bar', ignore_list=['id'], xaxis='Sporulation Probability'),
+        make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'],
+                            xaxis='Sporulation Probability'),
+        make_graph_from_csv(average_eqs_path, 'Average Eqs', type='bar', ignore_list=['id'],
+                            xaxis='Sporulation Probability'),
+        make_graph_from_csv(single_spore_path, 'Single Strain Curve', type='bar', ignore_list=['id'],
+                            xaxis='Sporulation Probability'),
+        make_graph_from_csv(folder_path + 'double_strain_averages.csv', 'Double Strain Curve', type='bar',
+                            ignore_list=['id'], xaxis='Sporulation Probability'),
 
+    ], style={'columnCount': 2})
 
+    app.run_server()
 
-    ], style={'columnCount': 1})
-
-    app.run_server(debug=True)
-
-# if __name__ == "__main__":
-#     run_dash_server('test')
+if __name__ == "__main__":
+    print("Starting Server")
+    print(os.getcwd())
+    run_dash_server('20 patch 4 fly 100 run average')
