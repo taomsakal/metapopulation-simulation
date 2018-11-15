@@ -588,18 +588,18 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = '100 patch 3 fly 100 run average 1 germ chance'
+    folder_name = 'test'
 
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 40, 100)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 10, 2)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 40, 100)
+    double_spore_curve(folder_name, 10, 2)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 100, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(3, 2, folder_name)  # Run a basic simulation on n strains and i loops
 
 
     time.sleep(2)

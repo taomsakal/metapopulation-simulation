@@ -2,3 +2,5 @@
 *.csv
 *.xml
 .idea/*
+venv
+venv/*
