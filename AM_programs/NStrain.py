@@ -592,17 +592,27 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'matt'
+    folder_name = 'test'
+
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 10, 10)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 10, 2)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 10, 10)
+    double_spore_curve(folder_name, 10, 2)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 10, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(3, 2, folder_name)  # Run a basic simulation on n strains and i loops
+
+
+    time.sleep(2)
+    print("Starting Server")
+    dashboard.run_dash_server(folder_name)
+
+    # todo Get dashboard working by itself so can explore old data
+
+
 
 
 
