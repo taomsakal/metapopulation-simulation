@@ -218,4 +218,4 @@ def run_dash_server(folder_name):
 if __name__ == "__main__":
     print("Starting Server")
     print(os.getcwd())
-    run_dash_server('20 patch 4 fly 100 run average')
+    run_dash_server("matt")

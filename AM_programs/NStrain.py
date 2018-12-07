@@ -95,16 +95,16 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(20)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.stop_time = 2000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
         self.num_flies = 3  # Number of flies each colonization event
+        self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
+        self.germinate_on_drop = True  #If true then sporulated cells germinate immediatly when they are dropped.
 
-
-        # The number of yeast eaten is a type 2 functional response
+        # Change these params if the number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
-        self.drop_single_yeast = False  # If true only pick one survivor to drop, instead of all (todo: "True" not implemented)
         self.yeast_size = 0.01  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
@@ -268,23 +268,26 @@ class NStrain(Rules):
         for i in range(0, self.num_flies):
 
             patch = random.choice(world.patches)  # Pick the random patch that the fly lands on
+
             # Determine number of cells eaten
-            num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
+            if self.fly_stomach_size == "type 2":
+                num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
                                                    self.fly_attack_rate, self.fly_handling_time))
+            elif self.fly_stomach_size >= 0:
+                num_eaten = self.fly_stomach_size
 
             # print(f"num_eaten for patch {patch.id}: {num_eaten}")
-
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
 
                 try:
                     # Select the types of cells to be eaten
-                    hitchhikers = random.choices(range(2 * self.num_strains), patch.v_populations + patch.s_populations,
-                                                 k=num_eaten)
+                    hitchhikers = random.choices(range(0, 2 * self.num_strains), patch.v_populations + patch.s_populations,
+                                                 k=num_eaten)  # todo: This is probably broken because the populations can sneak into small negative numbers
                 except IndexError:
-                    if sum(patch.populations) > 0:
+                    if sum(patch.v_populations) > 0:
                         raise Exception(
-                            f"Cannot choose hitchikers in patch {patch.id} with population "
+                            f"Cannot choose {num_eaten} hitchikers out of {self.num_strains} strains in patch {patch.id} with population "
                             f"{patch.v_populations + patch.s_populations}")
                     else:
                         logging.info(f"Patch {patch.id} is empty, the fly dies a slow death of starvation...")
@@ -309,12 +312,12 @@ class NStrain(Rules):
                 # If no neighbors then the fly vanishes
                 drop_patch = patch.random_neighbor()
                 if drop_patch is not None:
-                    if self.drop_single_yeast:
-                        # Randomly choose only one survivor to drop
-                        # todo
-                        random.randint(0, self.num_strains)  # Choose random strain to keep
                     drop_patch.v_populations = [x + y for x, y in zip(drop_patch.v_populations, v_survivors)]
-                    drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
+                    # if spore cells germinate on the drop then add them directly to the veg populations
+                    if self.germinate_on_drop:
+                        drop_patch.v_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
+                    else:
+                        drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
 
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
@@ -465,7 +468,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     # sc = spaced_probs(num_strains)
     sc = sorted(helpers.random_probs(num_strains))
     # sc = [0.35, 0.5, 0.8]
-    gc = [1] * num_strains  # Germination Chance
+    gc = [0] * num_strains  # Germination Chance
     fvs = [.2] * num_strains  # Fly Veg Survival
     fss = [.8] * num_strains  # Fly Spore Survival
     if sc_override:
@@ -575,6 +578,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     coexistences = []
     for i, prob in enumerate(sc):
         print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
+        # Run the Simulation
         returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
                                                   sc_override=[prob, sc_2])
         eqs.append(avg_eqs[0])  # Take first intext because list isn't flat
@@ -588,28 +592,17 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = '100 patch 3 fly 100 run average 1 germ chance'
-
+    folder_name = 'matt'
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 40, 100)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 10, 10)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 40, 100)
+    double_spore_curve(folder_name, 10, 10)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 100, folder_name)  # Run a basic simulation on n strains and i loops
-
-
-    time.sleep(2)
-    print("Starting Server")
-    dashboard.run_dash_server(folder_name)
-
-    # todo Get dashboard working by itself so can explore old data
-
-
-
+    basic_sim(10, 10, folder_name)  # Run a basic simulation on n strains and i loops
 
 
 
