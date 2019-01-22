@@ -95,10 +95,12 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(20)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.stop_time = 5000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
         self.num_flies = 3  # Number of flies each colonization event
 
+        self.update_type = 'discrete' # 'discrete' or 'ode'. See the update function for details
+        self.patch_update_iterations = 5 # How many times to repeat the update function
 
         # The number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -209,50 +211,64 @@ class NStrain(Rules):
         patch.mu_R = self.mu_R
         patch.gamma = self.gamma
         patch.resources = self.init_resources_per_patch
-        patch.germ_chance = self.germ_chance  # todo: see if we need these values or if they mess with stuff
+        patch.germ_chance = self.germ_chance
         patch.fly_v = self.fly_v_survival
         patch.fly_s = self.fly_s_survival
         patch.spore_chance = self.spore_chance
 
         # print(f"Patch {patch.id} has been reset.")
 
-    def patch_update(self, patch):
+    def patch_update(self, patch, type='discrete'):
         """
         Each individual has fitness of resource_level and reproduces by that amount.
+
+        There are two types of of patch update. Discrete does a basic discrete stepwise model to calculate the
+        the next timestep. The size of the steps is controlled through the parameter dt.
+
+        Ode uses the ode code from multistrain.py and then calculates the eq from those values.
         """
 
-        r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
+        if type=='discrete':
 
-        for i in range(0, self.num_strains):  # Iterate through strains of patch
+            for i in range(0, self.patch_update_iterations):
 
-            # Vegetative cell change
-            # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
-            v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (1 - self.spore_chance[i]) \
-                       - (patch.mu_v * patch.v_populations[i]) + (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+                r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
 
-            # Sporulated cell change
-            # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
-            s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (self.spore_chance[i]) \
-                       - (patch.mu_s * patch.s_populations[i]) - (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+                for i in range(0, self.num_strains):  # Iterate through strains of patch
 
-            r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten init_resources_per_patch
+                    # Vegetative cell change
+                    # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
+                    v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (1 - self.spore_chance[i]) \
+                               - (patch.mu_v * patch.v_populations[i]) + (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+                    # Sporulated cell change
+                    # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
+                    s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (self.spore_chance[i]) \
+                               - (patch.mu_s * patch.s_populations[i]) - (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+                    r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten init_resources_per_patch
 
 
-            # Add population changes
-            patch.v_populations[i] += v_change * self.dt
-            patch.s_populations[i] += s_change * self.dt
+                    # Add population changes
+                    patch.v_populations[i] += v_change * self.dt
+                    patch.s_populations[i] += s_change * self.dt
 
-        patch.resources += r_change * self.dt  # Add resource changes
+                patch.resources += r_change * self.dt  # Add resource changes
 
-        # Make sure none become negative
-        for i in range(0, self.num_strains):
-            if patch.v_populations[i] < 0:
-                patch.v_populations[i] = 0
-            if patch.s_populations[i] < 0:
-                patch.s_populations[i] = 0
+                # Make sure none become negative
+                for i in range(0, self.num_strains):
+                    if patch.v_populations[i] < 0:
+                        patch.v_populations[i] = 0
+                    if patch.s_populations[i] < 0:
+                        patch.s_populations[i] = 0
 
-        if patch.resources < 0:
-            patch.resources = 0
+                if patch.resources < 0:
+                    patch.resources = 0
+
+        elif type=='ode':
+            pass
+
+
 
     def colonize(self, world):
         """
@@ -454,159 +470,6 @@ class NStrain(Rules):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write("\n")
 
-def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
-
-
-    skip_simulation = False  # If true just display the dashboard but don't run the simulation
-    final_eqs = []
-    final_pops = []
-
-    # Make random strain probabilities
-    # sc = spaced_probs(num_strains)
-    sc = sorted(helpers.random_probs(num_strains))
-    # sc = [0.35, 0.5, 0.8]
-    gc = [1] * num_strains  # Germination Chance
-    fvs = [.2] * num_strains  # Fly Veg Survival
-    fss = [.8] * num_strains  # Fly Spore Survival
-    if sc_override:
-        sc = sc_override
-
-    world = World(NStrain(num_strains, folder_name=name, console_input=False, spore_chance=sc, germ_chance=gc,
-                          fly_s_survival=fss,
-                          fly_v_survival=fvs, save_data=save_data))
-
-    if not skip_simulation:
-
-        # Run multiple simulations and get average
-        for i in range(0, num_loops):
-            print(f"Running basic sim {i}/{num_loops}")
-            # print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
-
-            world = World(NStrain(num_strains, folder_name=name, console_input=False, spore_chance=sc, germ_chance=gc,
-                                  fly_s_survival=fss,
-                                  fly_v_survival=fvs))
-            run(world)
-
-            # Make a list of final eq values
-            # todo: Put these in the simulation itself
-            resources = list(world.rules.sum_populations(world))[0]
-            run_pop = list(world.rules.sum_populations(world))[-1]
-            run_sum = sum(run_pop)
-            try:
-                if run_sum != 0:
-                    run_strain_eqs = [strain / run_sum for strain in run_pop]
-                    final_eqs.append(run_strain_eqs)  # Append final census total
-                    final_pops.append(run_pop)
-                else:
-                    run_strain_eqs = [0]*world.rules.num_strains
-                    final_eqs.append(run_strain_eqs)  # Append final census total
-                    final_pops.append(run_pop)
-            except:
-                logging.warning("Error dealing with an eq value. Skipping.")
-
-            # print('runpop', run_pop)
-            # print('runsum', run_sum)
-            # print('run_strain_eqs', run_strain_eqs)
-
-
-    # Find average final eq values
-    print(final_eqs)
-    average_eqs = list(np.average(np.array(final_eqs), axis=0))
-    average_pops = list(np.average(np.array(final_pops), axis=0))
-    print('average eqs', average_eqs)
-    print('average pops', average_pops)  # todo this is broken?
-    helpers.init_csv(world.rules.data_path, "average_eqs.csv", ["Sporulation Probability", "Average Eq Frequency"])
-    with open(world.rules.data_path + "/average_eqs.csv", 'a') as f:
-        for chance, eq in zip(sc, average_eqs):
-            f.write(f"{chance},{eq}\n")
-
-    return [sc, average_eqs, average_pops]
-
-def single_spore_curve(folder_name, resolution, iterations_for_average, save_data=True):
-    """
-    Makes the curve for a single strain by itself
-    Args:
-        folder_name:
-        resolution: How many times to partition the probability space
-        iterations_for_average: How many iterations to do for averaging
-
-    Returns:
-
-    """
-    # Make world just so can make path
-    world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
-                                  fly_s_survival=[1],fly_v_survival=[1], save_data=save_data))
-
-    helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
-
-    pops = []
-    sc = helpers.spaced_probs(resolution)
-    for i, prob in enumerate(sc):
-        print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
-        returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name+"/single_spore_curve", sc_override=[prob], save_data=False)
-        pops.append(pop_avg[0])  # Take first intext because list isn't flat
-
-    #avg_pops = sum(pops)/len(pops)
-    #print('avg pops for 1 strain', avg_pops)
-    helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
-    with open(world.rules.data_path + "/single_strain_averages.csv", 'a') as f:
-        for chance, eq in zip(sc, pops):
-            f.write(f"{chance},{eq}\n")
-
-def double_spore_curve(folder_name, resolution, iterations_for_average):
-    """
-
-    Args:
-        folder_name:
-        resolution: How many times to partition the probability space
-        iterations_for_average: How many iterations to do for averaging
-
-    Returns:
-
-    """
-    # Make world just so can make path
-    world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
-                          fly_s_survival=[1], fly_v_survival=[1]))
-    helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
-
-    eqs = []
-    sc = helpers.spaced_probs(resolution)  # The strain we vary
-    sc_2 = 0.3  # The strain we hold constant's spore prob
-    coexistences = []
-    for i, prob in enumerate(sc):
-        print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
-        returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
-                                                  sc_override=[prob, sc_2])
-        eqs.append(avg_eqs[0])  # Take first intext because list isn't flat
-
-    helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
-    with open(world.rules.data_path + "/double_strain_averages.csv", 'a') as f:
-        for chance, eq in zip(sc, eqs):
-            f.write(f"{chance},{eq}\n")
-
-#todo: node that the frequency of all strains should be equal if there is only one.
-
-if __name__ == "__main__":
-
-    folder_name = '100 patch 3 fly 100 run average 1 germ chance'
-
-
-    print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 40, 100)  #todo: for some reason this overwrites the single non-looped data
-
-    print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 40, 100)
-
-    # Run i times. Report back
-    print("\nBASIC SIM")
-    basic_sim(10, 100, folder_name)  # Run a basic simulation on n strains and i loops
-
-
-    time.sleep(2)
-    print("Starting Server")
-    dashboard.run_dash_server(folder_name)
-
-    # todo Get dashboard working by itself so can explore old data
 
 
 

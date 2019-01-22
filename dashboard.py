@@ -179,11 +179,23 @@ def generate_table(dataframe, max_rows=10):
     # ),
 
 
-def run_dash_server(folder_name):
+def run_dash_server(folder_name, direct_run=False):
+    """
+    Runs the dashboard for a dataset
+
+    Args:
+        folder_name: Where the folder is located
+        direct_run: True if running dashboard.py directly. This makes sure the relative paths are correct.
+
+    Returns:
+
+    """
     # global folder_path
     # folder_path = f'../AM_programs/save_data/test/'
 
-    folder_path = f'./AM_programs/save_data/{folder_name}/'
+    folder_path = f'../AM_programs/save_data/{folder_name}/'
+    if direct_run:
+        folder_path = folder_path[1:]
     chance_by_sum_path = folder_path + 'chance_by_sum.csv'
     final_eq_path = folder_path + 'final_eq.csv'
     totals_path = folder_path + 'totals.csv'
@@ -195,19 +207,26 @@ def run_dash_server(folder_name):
 
     app.layout = html.Div([
         dcc.Markdown(children=
-                     f"### {folder_name} "),
+                     f"### Metapopulation Simulation Results "),
 
         # dcc.Markdown(children="""#### Table of final equilibrium values"""),
         # generate_table(df),
-
+        f"""This is the data from {folder_name}. The raw csvs are located in {folder_path}""",
+        """--------------------------------------""",
+        """Below is the population of each strain through time. Each strain has the sum of their vegetative and sporulated states. This graph also includes resources""",
         make_graph_from_csv(chance_by_sum_path, 'Strains through Time'),
+        """Below is the same graph as above except with vegetative and sporulated cells plotted separately""",
         make_graph_from_csv(totals_path, 'Strains through Time (States Split)'),
+        """This graph is the final equilibrium values for the run.""",
         make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'],
                             xaxis='Sporulation Probability'),
+        """This graph is the total frequency of each equilibrium value after many runs""",
         make_graph_from_csv(average_eqs_path, 'Average Eqs', type='bar', ignore_list=['id'],
                             xaxis='Sporulation Probability'),
+        """This is the eq value averaged across many runs for a single strain. X axis is the proportion to become spores.""",
         make_graph_from_csv(single_spore_path, 'Single Strain Curve', type='bar', ignore_list=['id'],
                             xaxis='Sporulation Probability'),
+        """This ith the eq value averaged across many runs for two strains, where one strain is at sporulation strategy of .3""",
         make_graph_from_csv(folder_path + 'double_strain_averages.csv', 'Double Strain Curve', type='bar',
                             ignore_list=['id'], xaxis='Sporulation Probability'),
 
@@ -218,4 +237,4 @@ def run_dash_server(folder_name):
 if __name__ == "__main__":
     print("Starting Server")
     print(os.getcwd())
-    run_dash_server('20 patch 4 fly 100 run average')
+    run_dash_server('20 patch 4 fly 100 run average', direct_run=True)
