@@ -98,15 +98,18 @@ class NStrain(Rules):
         self.stop_time = 5000  # Iterations to run
         self.data_save_step = 40 # Save the data every this many generations
         self.num_flies = 3  # Number of flies each colonization event
+        self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
+        self.germinate_on_drop = True  #If true then sporulated cells germinate immediatly when they are dropped.
+
 
         self.update_type = 'discrete' # 'discrete' or 'ode'. See the update function for details
         self.patch_update_iterations = 5 # How many times to repeat the update function
 
-        # The number of yeast eaten is a type 2 functional response
+
+        # Change these params if the number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
-        self.drop_single_yeast = False  # If true only pick one survivor to drop, instead of all (todo: "True" not implemented)
         self.yeast_size = 0.01  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
@@ -284,23 +287,26 @@ class NStrain(Rules):
         for i in range(0, self.num_flies):
 
             patch = random.choice(world.patches)  # Pick the random patch that the fly lands on
+
             # Determine number of cells eaten
-            num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
+            if self.fly_stomach_size == "type 2":
+                num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
                                                    self.fly_attack_rate, self.fly_handling_time))
+            elif self.fly_stomach_size >= 0:
+                num_eaten = self.fly_stomach_size
 
             # print(f"num_eaten for patch {patch.id}: {num_eaten}")
-
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
 
                 try:
                     # Select the types of cells to be eaten
-                    hitchhikers = random.choices(range(2 * self.num_strains), patch.v_populations + patch.s_populations,
-                                                 k=num_eaten)
+                    hitchhikers = random.choices(range(0, 2 * self.num_strains), patch.v_populations + patch.s_populations,
+                                                 k=num_eaten)  # todo: This is probably broken because the populations can sneak into small negative numbers
                 except IndexError:
-                    if sum(patch.populations) > 0:
+                    if sum(patch.v_populations) > 0:
                         raise Exception(
-                            f"Cannot choose hitchikers in patch {patch.id} with population "
+                            f"Cannot choose {num_eaten} hitchikers out of {self.num_strains} strains in patch {patch.id} with population "
                             f"{patch.v_populations + patch.s_populations}")
                     else:
                         logging.info(f"Patch {patch.id} is empty, the fly dies a slow death of starvation...")
@@ -325,12 +331,12 @@ class NStrain(Rules):
                 # If no neighbors then the fly vanishes
                 drop_patch = patch.random_neighbor()
                 if drop_patch is not None:
-                    if self.drop_single_yeast:
-                        # Randomly choose only one survivor to drop
-                        # todo
-                        random.randint(0, self.num_strains)  # Choose random strain to keep
                     drop_patch.v_populations = [x + y for x, y in zip(drop_patch.v_populations, v_survivors)]
-                    drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
+                    # if spore cells germinate on the drop then add them directly to the veg populations
+                    if self.germinate_on_drop:
+                        drop_patch.v_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
+                    else:
+                        drop_patch.s_populations = [x + y for x, y in zip(drop_patch.s_populations, s_survivors)]
 
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
@@ -469,8 +475,6 @@ class NStrain(Rules):
         for i in range(0, self.num_strains):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write("\n")
-
-
 
 
 

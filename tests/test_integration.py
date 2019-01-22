@@ -186,59 +186,85 @@ class TestNStrain:
 
         assert True
 
+    def test_2_strain_1_with_no_colonization(self):
+        """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal"""
+
+        # This world is with two strains, but one cannot survive the fly
+        rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
+        rules.worldmap = nx.complete_graph(10)
+        rules.stop_time = 10000
+        rules.dt = 0.5
+        world = World(rules)
+        main.run(world)
+
+        # This world is with only the first strain
+        rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
+        rules2.worldmap = nx.complete_graph(10)
+        rules2.stop_time = 10000
+        rules2.dt = 0.5
+        world2 = World(rules2)
+        main.run(world)
+
+        world1pop = sum(world.rules.sum_populations()[0])
+        world2pop = sum(world2.rules.sum_populations()[0])
+
+        assert within_percent(world1pop[0], world2pop, 0.05, epsilon=0.0005)
+
 
     def test_equlibrium(self):
         """ Test that the system goes to the expected equilibrium. (Within 10%) """
 
-        # Important: Germ chance must be set to 0 for this to work
-        rules = NStrain(2, folder_name="test", fly_v_survival=[.2, .2], fly_s_survival=[.8, .8], spore_chance=[.2, .8], germ_chance=[0, 0])
+        for i in range(0, 10):
 
-        # Now setup specific parameters
-        rules.c = 0.1  # Consumption rate for init_resources_per_patch.
-        rules.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
-        rules.mu_v = 0.1  # Background death rate for vegetative cells
-        rules.mu_s = 0.05  # Background death rate for sporulated cells
-        rules.mu_R = 0.01  # "death" rate for init_resources_per_patch.
-        rules.gamma = 1  # Rate of resource renewal
-        rules.resources = 200
-        rules.dt = 1  # Timestep size
-        rules.worldmap = nx.complete_graph(10)  # The worldmap
-        rules.prob_death = 0.00  # Probability of a patch dying.
-        rules.stop_time = 10000  # Iterations to run
-        rules.num_flies = 0  # Number of flies each colonization event
-        rules.fly_attack_rate = 0.3
-        rules.fly_handling_time = 0.3
-        rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
+            # Important: Germ chance must be set to 0 for this to work
+            rules = NStrain(2, folder_name="test", fly_v_survival=[.2, .2], fly_s_survival=[.8, .8], spore_chance=[.2, .8], germ_chance=[0, 0])
 
-        world = World(rules)
+            # Now setup specific parameters
+            rules.c = 0.1  # Consumption rate for init_resources_per_patch.
+            rules.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
+            rules.mu_v = 0.1  # Background death rate for vegetative cells
+            rules.mu_s = 0.05  # Background death rate for sporulated cells
+            rules.mu_R = 0.01  # "death" rate for init_resources_per_patch.
+            rules.gamma = 1  # Rate of resource renewal
+            rules.resources = 200
+            rules.dt = 1  # Timestep size
+            rules.worldmap = nx.complete_graph(10)  # The worldmap
+            rules.prob_death = 0.00  # Probability of a patch dying.
+            rules.stop_time = 10000  # Iterations to run
+            rules.num_flies = 0  # Number of flies each colonization event
+            rules.fly_attack_rate = 0.3
+            rules.fly_handling_time = 0.3
+            rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
 
-        main.run(world)
+            world = World(rules)
 
-        for patch in world.patches:
+            main.run(world)
 
-            # First possible equilibrium
-            # 0 → Competitor, 1 → Colonizer
-            try:
-                assert within_percent(patch.resources, 6.25, 0.05)
-                assert within_percent(patch.v_populations[0], 1.5, 0.05)
-                assert within_percent(patch.s_populations[0], 0.75, 0.05)
-                assert within_percent(patch.v_populations[1], 0, 0, epsilon=0.00005)
-                assert within_percent(patch.s_populations[1], 0, 0, epsilon=0.00005)
-            # Otherwise could be second possible equilibrium
-            except AssertionError:
+            for patch in world.patches:
+
+                # First possible equilibrium
+                # 0 → Competitor, 1 → Colonizer
                 try:
-                    assert within_percent(patch.resources, 25, 0.05)
-                    assert within_percent(patch.v_populations[0], 0, 0, epsilon=0.05)
-                    assert within_percent(patch.s_populations[0], 0, 0, epsilon=0.05)
-                    assert within_percent(patch.v_populations[1], 0.3, 0.05)
-                    assert within_percent(patch.s_populations[1], 2.4, 0.05)
-                # Finally could be the last possible equilibrium
+                    assert within_percent(patch.resources, 6.25, 0.05)
+                    assert within_percent(patch.v_populations[0], 1.5, 0.05)
+                    assert within_percent(patch.s_populations[0], 0.75, 0.05)
+                    assert within_percent(patch.v_populations[1], 0, 0, epsilon=0.00005)
+                    assert within_percent(patch.s_populations[1], 0, 0, epsilon=0.00005)
+                # Otherwise could be second possible equilibrium
                 except AssertionError:
-                    assert within_percent(patch.resources, 100, 0.05)
-                    assert within_percent(patch.v_populations[0], 0, 0, epsilon=0.05)
-                    assert within_percent(patch.s_populations[0], 0, 0, epsilon=0.05)
-                    assert within_percent(patch.v_populations[1], 0, 0, epsilon=0.05)
-                    assert within_percent(patch.s_populations[1], 0, 0, epsilon=0.05)
+                    try:
+                        assert within_percent(patch.resources, 25, 0.05)
+                        assert within_percent(patch.v_populations[0], 0, 0, epsilon=0.05)
+                        assert within_percent(patch.s_populations[0], 0, 0, epsilon=0.05)
+                        assert within_percent(patch.v_populations[1], 0.3, 0.05)
+                        assert within_percent(patch.s_populations[1], 2.4, 0.05)
+                    # Finally could be the last possible equilibrium
+                    except AssertionError:
+                        assert within_percent(patch.resources, 100, 0.05)
+                        assert within_percent(patch.v_populations[0], 0, 0, epsilon=0.05)
+                        assert within_percent(patch.s_populations[0], 0, 0, epsilon=0.05)
+                        assert within_percent(patch.v_populations[1], 0, 0, epsilon=0.05)
+                        assert within_percent(patch.s_populations[1], 0, 0, epsilon=0.05)
 
 
 class TestTwoStrain:
