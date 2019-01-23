@@ -9,7 +9,7 @@ import plotly.graph_objs as go
 # df = pd.read_csv(final_eq_path)
 
 
-def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None):
+def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type='scatter'):
     """
     Make a trace for each column in the given csv file.
 
@@ -42,18 +42,32 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type=None
     ignore_list.append(x_axis)  # Never bother making a trace of the x-axis
 
     traces = []  # A list of traces (lines) that will be built from each column
-    for i, col in enumerate(df.columns):
-        if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list):  # ensure agree with wanted columns
-            graph = go.Scatter(
-                x=df[x_axis],
-                y=df[col],
-                # text = df.columns[i],
-                # mode = 'markers',
-                name=list(df)[i],
-                opacity=0.8,
-                type=type
-            )
-            traces.append(graph)
+    if type == 'scatter':
+        for i, col in enumerate(df.columns):
+            if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list):  # ensure agree with wanted columns
+                graph = go.Scatter(
+                    x=df[x_axis],
+                    y=df[col],
+                    # text = df.columns[i],
+                    # mode = 'markers',
+                    name=list(df)[i],
+                    opacity=0.8,
+                    # type=type
+                )
+                traces.append(graph)
+    elif type == 'bar':
+       for i, col in enumerate(df.columns):
+            if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list):
+                graph = go.Bar(
+                    x=df[x_axis],
+                    y=df[col],
+                    # text = df.columns[i],
+                    # mode = 'markers',
+                    name=list(df)[i],
+                    opacity=0.8,
+                    # type=type
+                )
+                traces.append(graph)
 
     return traces
 

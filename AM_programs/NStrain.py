@@ -14,7 +14,6 @@ from rules import Rules
 import dashboard
 
 
-
 class NStrain(Rules):
     """
     This is a discrete version of the main ODE model.
@@ -52,7 +51,8 @@ class NStrain(Rules):
         self.console_input = console_input
 
         # Default patch specific parameters
-        # (These are passed into the patch, which always uses it's own, meaning we can change these per patch.)
+        # These are passed into the patch, which always uses it's own, meaning we can change these per patch.
+        # For example, we can make some patches more dangerous than others.
         logging.info("Setting default patch parameters")
         self.c = 0.2  # Consumption rate for init_resources_per_patch.
         self.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
@@ -89,22 +89,20 @@ class NStrain(Rules):
             self.fly_s_survival = fly_s_survival
             self.fly_v_survival = fly_v_survival
 
-
-
         # Global Parameters
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(20)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
         self.stop_time = 5000  # Iterations to run
-        self.data_save_step = 40 # Save the data every this many generations
+        self.data_save_step = 40  # Save the data every this many generations
+
+        # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
         self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
-        self.germinate_on_drop = True  #If true then sporulated cells germinate immediatly when they are dropped.
+        self.germinate_on_drop = True  # If true then sporulated cells germinate immediatly when they are dropped.
 
-
-        self.update_type = 'discrete' # 'discrete' or 'ode'. See the update function for details
-        self.patch_update_iterations = 5 # How many times to repeat the update function
-
+        self.update_mode = 'discrete'  # 'discrete' or 'eq'. See the update function for details
+        self.patch_update_iterations = 5  # How many times to repeat the update function
 
         # Change these params if the number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
@@ -126,13 +124,15 @@ class NStrain(Rules):
 
             # Make the main totals file
             self.total_file = helpers.init_csv(self.data_path, "totals.csv",
-                                               ["Iteration", "Resources"] + [f"Strain {i} (Veg), Strain {i} (Spore)" for i in range(0, num_strains)])
+                                               ["Iteration", "Resources"] + [f"Strain {i} (Veg), Strain {i} (Spore)" for
+                                                                             i in range(0, num_strains)])
             # Make another totals file that compares sporulation chance to
             self.chance_by_sum_file = helpers.init_csv(self.data_path, "chance_by_sum.csv",
-                                                       ["Iteration, Resources"] + [f"Strain {i}" for i in range(0, num_strains)] + ["Frequency"])
+                                                       ["Iteration, Resources"] + [f"Strain {i}" for i in
+                                                                                   range(0, num_strains)] + [
+                                                           "Frequency"])
 
             # todo close the files at the end
-
 
     def safety_checks(self, world):
         """
@@ -178,9 +178,9 @@ class NStrain(Rules):
                 # Initial Vegetative Cells
                 initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
         else:
-            # todo: for now just give each strain an intial number of one
-            initial_s = [1] * self.num_strains
-            initial_v = [1] * self.num_strains
+            # todo: for now just give each strain an intial number
+            initial_s = [5] * self.num_strains
+            initial_v = [5] * self.num_strains
 
         # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
@@ -228,10 +228,10 @@ class NStrain(Rules):
         There are two types of of patch update. Discrete does a basic discrete stepwise model to calculate the
         the next timestep. The size of the steps is controlled through the parameter dt.
 
-        Ode uses the ode code from multistrain.py and then calculates the eq from those values.
+        Eq uses previously calculated values of each patch equlibrium and brings the patch to exactly that value.
         """
 
-        if type=='discrete':
+        if type == 'discrete':
 
             for i in range(0, self.patch_update_iterations):
 
@@ -241,16 +241,20 @@ class NStrain(Rules):
 
                     # Vegetative cell change
                     # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
-                    v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (1 - self.spore_chance[i]) \
-                               - (patch.mu_v * patch.v_populations[i]) + (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+                    v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
+                                1 - self.spore_chance[i]) \
+                               - (patch.mu_v * patch.v_populations[i]) + (
+                                           self.germ_chance[i] * patch.resources * patch.s_populations[i])
 
                     # Sporulated cell change
                     # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
-                    s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (self.spore_chance[i]) \
-                               - (patch.mu_s * patch.s_populations[i]) - (self.germ_chance[i] * patch.resources * patch.s_populations[i])
+                    s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
+                    self.spore_chance[i]) \
+                               - (patch.mu_s * patch.s_populations[i]) - (
+                                           self.germ_chance[i] * patch.resources * patch.s_populations[i])
 
-                    r_change -= patch.c * patch.resources * patch.v_populations[i]  # Resource change -= eaten init_resources_per_patch
-
+                    r_change -= patch.c * patch.resources * patch.v_populations[
+                        i]  # Resource change -= eaten init_resources_per_patch
 
                     # Add population changes
                     patch.v_populations[i] += v_change * self.dt
@@ -268,10 +272,16 @@ class NStrain(Rules):
                 if patch.resources < 0:
                     patch.resources = 0
 
-        elif type=='ode':
-            pass
-
-
+        # If calculating via equilibrium values, set all strains in each patch to be the eq value we calculated
+        # outside of the program.
+        elif type == 'eq':
+            for i in range(0, self.num_strains):
+                patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (
+                            1 - self.spore_chance[i]) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
+                patch.s_populations[i] = (self.spore_chance[i] * (
+                            (patch.c * patch.alpha * patch.gamma) * (1 - self.spore_chance[i]))) / (
+                                             (self.spore_chance[i] - 1)(patch.c * patch.mu_s))
+                patch.resources = -patch.mu_v / ((self.spore_chance[i] - 1) * patch.alpha * patch.c)
 
     def colonize(self, world):
         """
@@ -280,7 +290,6 @@ class NStrain(Rules):
         The fly then chooses a random neighbor patch to deposit the yeast cells onto.
 
         Warnings:
-            The fly doesn't actually remove the yeast cells from the patch when it eats them.
             We assume the fly eats few cells compared to the total number.
         """
 
@@ -291,25 +300,27 @@ class NStrain(Rules):
             # Determine number of cells eaten
             if self.fly_stomach_size == "type 2":
                 num_eaten = int(helpers.typeIIresponse(sum(patch.s_populations) + sum(patch.v_populations),
-                                                   self.fly_attack_rate, self.fly_handling_time))
+                                                       self.fly_attack_rate, self.fly_handling_time))
             elif self.fly_stomach_size >= 0:
                 num_eaten = self.fly_stomach_size
 
             # print(f"num_eaten for patch {patch.id}: {num_eaten}")
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
-
                 try:
+                    # Filter zeros out of patch populations
+                    patch_pops = patch.v_populations + patch.s_populations
+                    patch_pops = [x if x > 0 else 0 for x in patch_pops]
                     # Select the types of cells to be eaten
-                    hitchhikers = random.choices(range(0, 2 * self.num_strains), patch.v_populations + patch.s_populations,
-                                                 k=num_eaten)  # todo: This is probably broken because the populations can sneak into small negative numbers
+                    hitchhikers = random.choices(range(0, 2 * self.num_strains), weights=patch_pops,
+                                                 k=num_eaten)
                 except IndexError:
                     if sum(patch.v_populations) > 0:
                         raise Exception(
                             f"Cannot choose {num_eaten} hitchikers out of {self.num_strains} strains in patch {patch.id} with population "
                             f"{patch.v_populations + patch.s_populations}")
                     else:
-                        logging.info(f"Patch {patch.id} is empty, the fly dies a slow death of starvation...")
+                        logging.info(f"Patch {patch.id} is empty, the fly dies a slow sad death of starvation...")
                         hitchhikers = {}
 
                 # print(patch.populations)
@@ -414,10 +425,10 @@ class NStrain(Rules):
 
         # Print current progress.
         # print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
-              # f"\n    Veg: {str(v_population_totals)}"
-              # f"\n    Spore:{str(s_population_totals)}"
-              # f"\n    Resources: {str(total_resources)}"
-              # )
+        # f"\n    Veg: {str(v_population_totals)}"
+        # f"\n    Spore:{str(s_population_totals)}"
+        # f"\n    Resources: {str(total_resources)}"
+        # )
 
     def stop_condition(self, world):
         if world.age > self.stop_time:
@@ -437,7 +448,9 @@ class NStrain(Rules):
         self.sum_populations(world)
 
         # Make a csv with final equilibrium
-        helpers.init_csv(self.data_path, "final_eq.csv", ["id", "Sporulation Probability", "Total Population", "Veg Population", "Spore Population", "Frequency"])
+        helpers.init_csv(self.data_path, "final_eq.csv",
+                         ["id", "Sporulation Probability", "Total Population", "Veg Population", "Spore Population",
+                          "Frequency"])
         with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
             for i in range(0, self.num_strains):
                 final_eq.write(
@@ -448,12 +461,14 @@ class NStrain(Rules):
     def write_frequency(self, world, n):
         "Writes a line with the frequency of the strain n"
         try:
-            self.chance_by_sum_file.write(f"{(self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop},")
+            self.chance_by_sum_file.write(
+                f"{(self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop},")
         except ZeroDivisionError:
             logging.warning("Population went extinct!")
             self.chance_by_sum_file.write("-404,")  # -404 is out numeric symbol for went extinct. Ie species not found.
         except IndexError:
-            logging.error(f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
+            logging.error(
+                f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
 
     # Todo: Is possible for all to go extinct and there to be problems calculating frequency because of division by zero
     def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
@@ -475,10 +490,3 @@ class NStrain(Rules):
         for i in range(0, self.num_strains):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write("\n")
-
-
-
-
-
-
-

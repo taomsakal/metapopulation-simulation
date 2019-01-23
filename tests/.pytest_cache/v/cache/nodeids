@@ -1,6 +1,18 @@
 [
-  "test_integration.py::TestNStrain::()::test_no_death",
-  "test_integration.py::TestNStrain::()::test_high_death",
-  "test_integration.py::TestNStrain::()::test_stress",
-  "test_integration.py::TestNStrain::()::test_line"
+  "test_integration.py::TestNStrainsSimple::test_no_death",
+  "test_integration.py::TestNStrainsSimple::test_high_death",
+  "test_integration.py::TestNStrainsSimple::test_stress",
+  "test_integration.py::TestNStrainsSimple::test_trivial",
+  "test_integration.py::TestNStrainsSimple::test_line",
+  "test_integration.py::TestNStrain::test_no_death",
+  "test_integration.py::TestNStrain::test_no_death_with_flies_that_dont_eat",
+  "test_integration.py::TestNStrain::test_no_death_with_flies",
+  "test_integration.py::TestNStrain::test_heavy_death_in_patches",
+  "test_integration.py::TestNStrain::test_high_death",
+  "test_integration.py::TestNStrain::test_many_strain",
+  "test_integration.py::TestNStrain::test_many_node_run",
+  "test_integration.py::TestNStrain::test_line",
+  "test_integration.py::TestNStrain::test_2_strain_1_with_no_colonization",
+  "test_integration.py::TestNStrain::test_equlibrium_discrete_mode",
+  "test_integration.py::TestNStrain::test_equlibrium_eq_mode"
 ]

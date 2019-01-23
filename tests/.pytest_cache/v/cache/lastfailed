@@ -5,5 +5,8 @@
   "test_integration.py::TestNStrain::()::test_stress": true,
   "test_integration.py::TestTwoStrain::()::test_equlibrium": true,
   "test_integration.py::TestTwoStrain::()::test_equlibrium_patches": true,
-  "test_integration.py::TestTwoStrain::()::test_equlibrium_small_dt": true
+  "test_integration.py::TestTwoStrain::()::test_equlibrium_small_dt": true,
+  "test_integration.py::TestTwoStrain::test_equlibrium": true,
+  "test_integration.py::TestTwoStrain::test_equlibrium_patches": true,
+  "test_integration.py::TestTwoStrain::test_equlibrium_small_dt": true
 }
