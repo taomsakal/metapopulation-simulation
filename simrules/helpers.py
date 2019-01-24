@@ -114,14 +114,13 @@ def init_csv(path, name, header):
         header: list of strings to write in the header
     """
 
-    # todo
-
     # Make the Directory if needed
     if not os.path.exists(path):
         logging.info(f"Initializing the save data files in {path}")
         os.makedirs(path)
 
     with open(f'{path}/{name}', 'w+') as file:
+        file.truncate()  # Make sure file is empty
 
         # Make the headers of the CSV file
         for i in header:

@@ -16,20 +16,6 @@ import dashboard
 
 
 class NStrain(Rules):
-    """
-    This is a discrete version of the main ODE model.
-    It has the competitor and colonizer, both which have vegetative and sporulated cells.
-
-    Each population consists of the following dictionary
-    populations = {
-        'kv': integer number of cells
-        'rv': integer "  "
-        'ks': integer "  "
-        'rs': integer "  "
-        }
-
-    Where k → competitor, c → colonizer, v → vegatative, and s → sporulated.
-    """
 
     def __init__(self, num_strains, console_input=False, spore_chance=None, germ_chance=None,
                  fly_v_survival=None, fly_s_survival=None, folder_name=None, save_data=True):
@@ -92,17 +78,17 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.5  # Timestep size
-        self.worldmap = nx.complete_graph(30)  # The worldmap
+        self.worldmap = nx.complete_graph(50)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
         self.stop_time = 10000  # Iterations to run
-        self.data_save_step = 100  # Save the data every this many generations
+        self.data_save_step = 10  # Save the data every this many generations
 
         # Colonization Mode
-        self.colonize_mode = 'probabilities'
+        self.colonize_mode = 'fly'
 
         # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
-        self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
+        self.fly_stomach_size = 'type 2'  # Number of cells they each. Put in "type 2" for a type 2 functional response
         self.germinate_on_drop = True  # If true then sporulated cells germinate immediatly when they are dropped.
 
         # Update Params
@@ -137,7 +123,6 @@ class NStrain(Rules):
                                                                                    range(0, num_strains)] + [
                                                            "Frequency"])
 
-            # todo close the files at the end
 
     def safety_checks(self, world):
         """
@@ -196,8 +181,9 @@ class NStrain(Rules):
 
         # Prepare an array of save files for each patch
         # todo: move this line to a better location
-        for patch in world.patches:
-            self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
+        if self.save_patch_data:
+            for patch in world.patches:
+                self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
         self.sum_populations(world)
 
@@ -386,9 +372,8 @@ class NStrain(Rules):
         weighted_veg = [a * b for a, b in zip(veg, self.fly_v_survival)]
         weighted_spore = [a * b for a, b in zip(spores, self.fly_s_survival)]
         weights = weighted_veg + weighted_spore
+        weighted_sum = sum(weights)
 
-
-        weighted_sum = sum(weights)  # todo make exact prob function
         for patch in world.patches:
             if self.colonization_prob(weighted_sum):
                 colonist = random.choices(range(0, self.num_strains*2), weights=weights, k=1)[0]

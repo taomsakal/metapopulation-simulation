@@ -20,6 +20,8 @@ def random_simulation(n):
                    germ_chance=helpers.random_probs(num_strains), fly_s_survival=helpers.random_probs(num_strains),
                    fly_v_survival=helpers.random_probs(num_strains))
     rules.update_mode = random.choice(["discrete", "eq"])
+    rules.colonize_mode = random.choice(["fly", "probabilities"])
+    rules.fly_stomach_size = random.choice([1, 2, 10, 'type 2'])
     return rules
 
 class TestNStrainsSimple:
@@ -27,7 +29,7 @@ class TestNStrainsSimple:
     def test_no_death(self):
         """ Test that all populations spread """
 
-        for i in range(0, 10):
+        for i in range(0, 5):
 
             world = World(NStrainsSimple(3, nx.complete_graph(10), 0.0, 1.001, 400))
             main.simulate(world)
@@ -39,7 +41,7 @@ class TestNStrainsSimple:
     def test_high_death(self):
         """ Test that populations go extinct under a high dead rate """
 
-        for i in range(0, 10):
+        for i in range(0, 5):
 
             world = World(NStrainsSimple(2, nx.complete_graph(10), 0.5, 1.1, 500))
             main.simulate(world)
@@ -86,7 +88,7 @@ class TestNStrain:
     def test_no_death(self):
         """ Test that all populations spread when there is no death and patches do not die"""
 
-        for i in range(0, 10):
+        for i in range(0, 5):
             rules = random_simulation(10)
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0
@@ -112,7 +114,7 @@ class TestNStrain:
     def test_no_death_with_flies_that_dont_eat(self):
         """ Test that all populations spread when there is no death and patches do not die"""
 
-        for i in range(0, 10):
+        for i in range(0, 5):
             rules = random_simulation(10)
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0
@@ -140,7 +142,7 @@ class TestNStrain:
         """ Test that all populations spread when there is no death and patches do not die"""
         # Todo: This test always fails if the stomach size is not type 2. I cannot figure out why. But everything else works?
 
-        for i in range(0, 10):
+        for i in range(0, 5):
             rules = random_simulation(10)
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0
@@ -170,7 +172,7 @@ class TestNStrain:
     def test_heavy_death_in_patches(self):
         """ Test that all populations die when patch death is large, even if all populations are immortal."""
 
-        for i in range(0, 20):
+        for i in range(0, 5):
             rules = random_simulation(10)
             rules.worldmap = nx.complete_graph(10)
             rules.mu_v = 0
@@ -198,7 +200,7 @@ class TestNStrain:
             rules.mu_R = 0.99
             rules.prob_death = 0
             rules.resources = 10
-            rules.stop_time = 100000
+            rules.stop_time = 10000
             world = World(rules)
             main.simulate(world)
 
@@ -220,7 +222,7 @@ class TestNStrain:
             rules.dt = 1
             rules.prob_death = 0
             rules.resources = 1
-            rules.stop_time = 100000
+            rules.stop_time = 10000
             world = World(rules)
             main.simulate(world)
 
@@ -233,7 +235,7 @@ class TestNStrain:
     def test_many_strain(self):
         """ See if crashes during a many strain run"""
 
-        for i in range(0, 10):
+        for i in range(0, 5):
             # Long run
             rules = random_simulation(100)
             rules.worldmap = nx.complete_graph(5)
@@ -245,7 +247,7 @@ class TestNStrain:
 
     def test_many_node_run(self):
 
-        for i in range(0,10):
+        for i in range(0, 5):
             # High node run
             rules = random_simulation(20)
             rules.worldmap = nx.complete_graph(random.randint(1, 300))
@@ -277,7 +279,7 @@ class TestNStrain:
         """
 
 
-        for i in range(0,5):
+        for i in range(0, 5):
             # This world is with two strains, but one cannot survive the fly
             # This test has a high percent error because it sometimes takes a long time fall to correct values
             rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])

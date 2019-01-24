@@ -114,6 +114,7 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
 
 def double_spore_curve(folder_name, resolution, iterations_for_average):
     """
+    Runs the simulation for two strains, one strain fixed.
 
     Args:
         folder_name:
@@ -147,18 +148,18 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'test997'
+    folder_name = 'Type 2 Discrete Flies'
 
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 10, 3)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 20, 10)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 10, 3)
+    double_spore_curve(folder_name, 20, 10)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 3, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(20, 10, folder_name)  # Run a basic simulation on n strains and i loops
 
 
     print("Starting Server")

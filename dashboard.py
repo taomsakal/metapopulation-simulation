@@ -46,7 +46,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type='sca
     if type == 'scatter':
         for i, col in enumerate(df.columns):
             if (df.columns[i] not in ignore_list) and (df.columns[i] in include_list):  # ensure agree with wanted columns
-                graph = go.Scatter(
+                graph = go.Graph(
                     x=df[x_axis],
                     y=df[col],
                     # text = df.columns[i],
@@ -127,8 +127,7 @@ def run_dash_server(folder_name, direct_run=False):
     Returns:
 
     """
-    # global folder_path
-    # folder_path = f'../AM_programs/save_data/test/'
+    os.chdir(os.path.dirname(sys.argv[0]))  # Change current working directory to wherever dashboard.py is
 
     folder_path = f'../AM_programs/save_data/{folder_name}/'
     folder_path = (os.path.dirname(sys.argv[0]) + f'/AM_programs/save_data/{folder_name}/')
