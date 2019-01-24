@@ -11,7 +11,7 @@ import simrules.helpers as helpers
 from AM_programs.NStrain import NStrain
 from world import World
 from main import run
-
+import matplotlib.pyplot as plt
 
 def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
 
@@ -25,8 +25,8 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     sc = sorted(helpers.random_probs(num_strains))
     # sc = [0.35, 0.5, 0.8]
     gc = [1] * num_strains  # Germination Chance
-    fvs = [.2] * num_strains  # Fly Veg Survival
-    fss = [.8] * num_strains  # Fly Spore Survival
+    fvs = [0] * num_strains  # Fly Veg Survival
+    fss = [1] * num_strains  # Fly Spore Survival
     if sc_override:
         sc = sc_override
 
@@ -69,11 +69,11 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
 
 
     # Find average final eq values
-    print(final_eqs)
+    print("final_eqs:", final_eqs)
     average_eqs = list(np.average(np.array(final_eqs), axis=0))
     average_pops = list(np.average(np.array(final_pops), axis=0))
-    print('average eqs', average_eqs)
-    print('average pops', average_pops)  # todo this is broken?
+    print("average eqs:", average_eqs)
+    print("average pops:", average_pops)  # todo this is broken?
     helpers.init_csv(world.rules.data_path, "average_eqs.csv", ["Sporulation Probability", "Average Eq Frequency"])
     with open(world.rules.data_path + "/average_eqs.csv", 'a') as f:
         for chance, eq in zip(sc, average_eqs):
@@ -101,7 +101,7 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     pops = []
     sc = helpers.spaced_probs(resolution)
     for i, prob in enumerate(sc):
-        print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
+        print(f'\nCalculating Single Spore Curve. Now on spore_prob = {sc[i]}. ({i}/{resolution})')
         returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name+"/single_spore_curve", sc_override=[prob], save_data=False)
         pops.append(pop_avg[0])  # Take first intext because list isn't flat
 
@@ -125,7 +125,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     """
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
-                          fly_s_survival=[1], fly_v_survival=[1]))
+                          fly_s_survival=[1], fly_v_survival=[1], save_data=True))
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
 
     eqs = []
@@ -147,20 +147,19 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'test400'
+    folder_name = 'test997'
 
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 10, 5)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 10, 3)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 10, 5)
+    double_spore_curve(folder_name, 10, 3)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 5, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(10, 3, folder_name)  # Run a basic simulation on n strains and i loops
 
 
-    time.sleep(2)
     print("Starting Server")
     dashboard.run_dash_server(folder_name)

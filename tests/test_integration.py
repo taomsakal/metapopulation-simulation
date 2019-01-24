@@ -16,10 +16,11 @@ def random_simulation(n):
     """ Makes a random NSTrain simulation with up to n strains and default parms"""
 
     num_strains = random.randint(1, n)
-    return NStrain(num_strains, folder_name="test_no_death", spore_chance=helpers.random_probs(num_strains),
+    rules = NStrain(num_strains, folder_name="test_no_death", spore_chance=helpers.random_probs(num_strains),
                    germ_chance=helpers.random_probs(num_strains), fly_s_survival=helpers.random_probs(num_strains),
                    fly_v_survival=helpers.random_probs(num_strains))
-
+    rules.update_mode = random.choice(["discrete", "eq"])
+    return rules
 
 class TestNStrainsSimple:
 
@@ -189,21 +190,45 @@ class TestNStrain:
     def test_high_death(self):
         """ Test that populations go essentially extinct under a high dead rate """
 
-        for i in range(0, 20):
+        for i in range(0, 5):
             rules = random_simulation(10)
             rules.worldmap = nx.complete_graph(10)
-            rules.mu_v = 0.5
-            rules.mu_s = 0.5
-            rules.mu_R = 0.5
+            rules.mu_v = 0.99
+            rules.mu_s = 0.99
+            rules.mu_R = 0.99
             rules.prob_death = 0
             rules.resources = 10
-            rules.stop_time = 500
+            rules.stop_time = 100000
             world = World(rules)
             main.simulate(world)
 
             for patch in world.patches:
-                assert sum(patch.v_populations) < 2
-                assert sum(patch.s_populations) < 2
+                assert sum(patch.v_populations) < 1
+                assert sum(patch.v_populations) >= 0
+                assert sum(patch.s_populations) < 1
+                assert sum(patch.s_populations) >= 0
+
+    def test_full_death(self):
+        """ Test that populations go totally extinct under a mortality rate of 1 """
+
+        for i in range(0, 5):
+            rules = random_simulation(10)
+            rules.worldmap = nx.complete_graph(10)
+            rules.mu_v = 1
+            rules.mu_s = 1
+            rules.mu_R = 1
+            rules.dt = 1
+            rules.prob_death = 0
+            rules.resources = 1
+            rules.stop_time = 100000
+            world = World(rules)
+            main.simulate(world)
+
+            for patch in world.patches:
+                assert sum(patch.v_populations) < 1
+                assert sum(patch.v_populations) >= 0
+                assert sum(patch.s_populations) < 1
+                assert sum(patch.s_populations) >= 0
 
     def test_many_strain(self):
         """ See if crashes during a many strain run"""
@@ -254,19 +279,22 @@ class TestNStrain:
 
         for i in range(0,5):
             # This world is with two strains, but one cannot survive the fly
+            # This test has a high percent error because it sometimes takes a long time fall to correct values
             rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
-            rules.worldmap = nx.complete_graph(40)
+            rules.worldmap = nx.complete_graph(60)
             rules.stop_time = 200000
-            rules.dt = 0.5
+            rules.dt = 1
+            rules.prob_death = 0.005
             rules.update_mode = random.choice(['eq','discrete'])
             world = World(rules)
             main.run(world)
 
             # This world is with only the first strain
             rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
-            rules2.worldmap = nx.complete_graph(40)
+            rules2.worldmap = nx.complete_graph(60)
             rules2.stop_time = 200000
-            rules2.dt = 0.5
+            rules2.dt = 1
+            rules2.prob_death = 0.005
             random.choice(['eq', 'discrete'])
             world2 = World(rules2)
             main.run(world2)

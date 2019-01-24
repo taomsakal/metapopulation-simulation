@@ -3,6 +3,8 @@
   "test_integration.py::TestNStrain::()::test_line": true,
   "test_integration.py::TestNStrain::()::test_no_death": true,
   "test_integration.py::TestNStrain::()::test_stress": true,
+  "test_integration.py::TestNStrain::test_full_death": true,
+  "test_integration.py::TestNStrain::test_high_death": true,
   "test_integration.py::TestTwoStrain::()::test_equlibrium": true,
   "test_integration.py::TestTwoStrain::()::test_equlibrium_patches": true,
   "test_integration.py::TestTwoStrain::()::test_equlibrium_small_dt": true,

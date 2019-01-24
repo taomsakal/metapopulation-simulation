@@ -1,3 +1,4 @@
+from pathlib import Path
 import dash
 import os, sys
 import dash_core_components as dcc
@@ -27,7 +28,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type='sca
     try:
         df = pd.read_csv(csv_path)  # Load the csv into a dataframe
     except ValueError:
-        raise ValueError(f"Cannot find file at {csv_path}. We are in {os.getcwd()}")
+        raise ValueError(f"Cannot find file at {csv_path}.")
 
     # If x_axis is None then use the first column in the csv as x
     if x_axis is None:
@@ -49,7 +50,7 @@ def make_traces(csv_path, x_axis, ignore_list=None, include_list=None, type='sca
                     x=df[x_axis],
                     y=df[col],
                     # text = df.columns[i],
-                    # mode = 'markers',
+                    mode='lines',
                     name=list(df)[i],
                     opacity=0.8,
                     # type=type
@@ -113,84 +114,6 @@ def generate_table(dataframe, max_rows=10):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
-    # dcc.Graph(
-    #     id='life-exp-vs-gdp',
-    #     figure={
-    #         'data': [
-    #             go.Scatter(
-    #                 x=df[df['continent'] == i]['gdp per capita'],
-    #                 y=df[df['continent'] == i]['life expectancy'],
-    #                 text=df[df['continent'] == i]['country'],
-    #                 mode='markers',
-    #                 opacity=0.7,
-    #                 marker={
-    #                     'size': 15,
-    #                     'line': {'width': 0.5, 'color': 'white'}
-    #                 },
-    #                 name=i
-    #             ) for i in df.continent.unique()
-    #         ],
-    #         'layout': go.Layout(
-    #             xaxis={'type': 'log', 'title': 'GDP Per Capita'},
-    #             yaxis={'title': 'Life Expectancy'},
-    #             margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
-    #             legend={'x': 0, 'y': 1},
-    #             hovermode='closest'
-    #         )
-    #     }
-    # ),
-
-    # html.Label('Dropdown'),
-    # dcc.Dropdown(
-    #     options=[
-    #         {'label': 'New York City', 'value': 'NYC'},
-    #         {'label': u'Montréal', 'value': 'MTL'},
-    #         {'label': 'San Francisco', 'value': 'SF'}
-    #     ],
-    #     value='MTL'
-    # ),
-    #
-    # html.Label('Multi-Select Dropdown'),
-    # dcc.Dropdown(
-    #     options=[
-    #         {'label': 'New York City', 'value': 'NYC'},
-    #         {'label': u'Montréal', 'value': 'MTL'},
-    #         {'label': 'San Francisco', 'value': 'SF'}
-    #     ],
-    #     value=['MTL', 'SF'],
-    #     multi=True
-    # ),
-    #
-    # html.Label('Radio Items'),
-    # dcc.RadioItems(
-    #     options=[
-    #         {'label': 'New York City', 'value': 'NYC'},
-    #         {'label': u'Montréal', 'value': 'MTL'},
-    #         {'label': 'San Francisco', 'value': 'SF'}
-    #     ],
-    #     value='MTL'
-    # ),
-    #
-    # html.Label('Checkboxes'),
-    # dcc.Checklist(
-    #     options=[
-    #         {'label': 'New York City', 'value': 'NYC'},
-    #         {'label': u'Montréal', 'value': 'MTL'},
-    #         {'label': 'San Francisco', 'value': 'SF'}
-    #     ],
-    #     values=['MTL', 'SF']
-    # ),
-    #
-    # html.Label('Text Input'),
-    # dcc.Input(value='MTL', type='text'),
-    #
-    # html.Label('Slider'),
-    # dcc.Slider(
-    #     min=0,
-    #     max=9,
-    #     marks={i: 'Label {}'.format(i) if i == 1 else str(i) for i in range(1, 6)},
-    #     value=5,
-    # ),
 
 
 def run_dash_server(folder_name, direct_run=False):
@@ -208,13 +131,16 @@ def run_dash_server(folder_name, direct_run=False):
     # folder_path = f'../AM_programs/save_data/test/'
 
     folder_path = f'../AM_programs/save_data/{folder_name}/'
-    if direct_run:
-        folder_path = folder_path[1:]
-    chance_by_sum_path = folder_path + 'chance_by_sum.csv'
-    final_eq_path = folder_path + 'final_eq.csv'
-    totals_path = folder_path + 'totals.csv'
-    average_eqs_path = folder_path + 'average_eqs.csv'
-    single_spore_path = folder_path + 'single_strain_averages.csv'
+    folder_path = (os.path.dirname(sys.argv[0]) + f'/AM_programs/save_data/{folder_name}/')
+    folder_path = Path.cwd() / 'AM_programs' / 'save_data' / folder_name
+    print("Folder Path:", folder_path)
+    print(os.listdir(folder_path))
+
+    chance_by_sum_path = folder_path / 'chance_by_sum.csv'
+    final_eq_path = folder_path / 'final_eq.csv'
+    totals_path = folder_path / 'totals.csv'
+    average_eqs_path = folder_path / 'average_eqs.csv'
+    single_spore_path = folder_path / 'single_strain_averages.csv'
 
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -231,9 +157,10 @@ def run_dash_server(folder_name, direct_run=False):
         make_graph_from_csv(chance_by_sum_path, 'Strains through Time'),
         """Below is the same graph as above except with vegetative and sporulated cells plotted separately""",
         make_graph_from_csv(totals_path, 'Strains through Time (States Split)'),
-        """This graph is the final equilibrium values for the run.""",
-        make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'],
-                            xaxis='Sporulation Probability'),
+        # Todo The below graph is dead for some reason.
+        # """This graph is the final equilibrium values for the run.""",
+        # make_graph_from_csv(final_eq_path, 'Final Eq Values', type='bar', ignore_list=['id'],
+        #                     xaxis='Sporulation Probability'),
         """This graph is the total frequency of each equilibrium value after many runs""",
         make_graph_from_csv(average_eqs_path, 'Average Eqs', type='bar', ignore_list=['id'],
                             xaxis='Sporulation Probability'),
@@ -241,7 +168,7 @@ def run_dash_server(folder_name, direct_run=False):
         make_graph_from_csv(single_spore_path, 'Single Strain Curve', type='bar', ignore_list=['id'],
                             xaxis='Sporulation Probability'),
         """This ith the eq value averaged across many runs for two strains, where one strain is at sporulation strategy of .3""",
-        make_graph_from_csv(folder_path + 'double_strain_averages.csv', 'Double Strain Curve', type='bar',
+        make_graph_from_csv(folder_path / 'double_strain_averages.csv', 'Double Strain Curve', type='bar',
                             ignore_list=['id'], xaxis='Sporulation Probability'),
 
     ], style={'columnCount': 2})
@@ -251,4 +178,4 @@ def run_dash_server(folder_name, direct_run=False):
 if __name__ == "__main__":
     print("Starting Server")
     print(os.getcwd())
-    run_dash_server('20 patch 4 fly 100 run average', direct_run=True)
+    run_dash_server('test997', direct_run=True)
