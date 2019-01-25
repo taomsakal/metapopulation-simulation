@@ -13,9 +13,8 @@ from world import World
 from main import run
 import matplotlib.pyplot as plt
 
+
 def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
-
-
     skip_simulation = False  # If true just display the dashboard but don't run the simulation
     final_eqs = []
     final_pops = []
@@ -23,7 +22,6 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     # Make random strain probabilities
     # sc = spaced_probs(num_strains)
     sc = sorted(helpers.random_probs(num_strains))
-    # sc = [0.35, 0.5, 0.8]
     gc = [0] * num_strains  # Germination Chance
     fvs = [0] * num_strains  # Fly Veg Survival
     fss = [1] * num_strains  # Fly Spore Survival
@@ -56,13 +54,11 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
                     final_eqs.append(run_strain_eqs)  # Append final census total
                     final_pops.append(run_pop)
                 else:
-                    run_strain_eqs = [0]*world.rules.num_strains
+                    run_strain_eqs = [0] * world.rules.num_strains
                     final_eqs.append(run_strain_eqs)  # Append final census total
                     final_pops.append(run_pop)
             except:
                 logging.warning("Error dealing with an eq value. Skipping.")
-
-
 
     # Find average final eq values
     print("final_eqs:", final_eqs)
@@ -77,6 +73,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
 
     return [sc, average_eqs, average_pops]
 
+
 def single_spore_curve(folder_name, resolution, iterations_for_average, save_data=True):
     """
     Makes the curve for a single strain by itself
@@ -90,7 +87,7 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     """
     # Make world just so can make path
     world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
-                                  fly_s_survival=[1],fly_v_survival=[1], save_data=save_data))
+                          fly_s_survival=[1], fly_v_survival=[1], save_data=save_data))
 
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
 
@@ -98,13 +95,15 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     sc = helpers.spaced_probs(resolution)
     for i, prob in enumerate(sc):
         print(f'\nCalculating Single Spore Curve. Now on spore_prob = {sc[i]}. ({i}/{resolution})')
-        returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name+"/single_spore_curve", sc_override=[prob], save_data=False)
-        pops.append(pop_avg[0])  # Take first intext because list isn't flat
+        returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name + "/single_spore_curve",
+                                                  sc_override=[prob], save_data=False)
+        pops.append(pop_avg[0])  # Take first index because list isn't flat
 
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/single_strain_averages.csv", 'a') as f:
         for chance, eq in zip(sc, pops):
             f.write(f"{chance},{eq}\n")
+
 
 def double_spore_curve(folder_name, resolution, iterations_for_average):
     """
@@ -126,7 +125,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     eqs = []
     sc = helpers.spaced_probs(resolution)  # The strain we vary
     sc_2 = 0.3  # The strain we hold constant's spore prob
-    coexistences = []
+
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
         returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
@@ -138,17 +137,15 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
         for chance, eq in zip(sc, eqs):
             f.write(f"{chance},{eq}\n")
 
-#todo: node that the frequency of all strains should be equal if there is only one.
 
 if __name__ == "__main__":
-
     folder_name = 'Colonization 1000'
 
     r = 10  # Times to repeat for average
     steps = 20
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, steps, r)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, steps, r)
 
     print("\nDOUBLE SPORE CURVE")
     double_spore_curve(folder_name, steps, r)

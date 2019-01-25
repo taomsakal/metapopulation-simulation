@@ -175,6 +175,46 @@ class TestNStrainEq:
                 assert sum(patch.s_populations) < 10*(10**20)
                 assert sum(patch.s_populations) >= 0
 
+    def test_n_strain_all_but_one_with_no_pop(self):
+        """ Just having one strain should be the same as having n but with only the first one having any population
+        """
+
+
+
+
+        for i in range(0, TEST_ITERATIONS):
+
+            # This world is with two strains, but one cannot survive the fly
+            # This test has a high percent error because it sometimes takes a long time fall to correct values
+            rules = NStrain(random.randint(1, 10), folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
+            rules.worldmap = nx.complete_graph(10)
+            rules.stop_time = 10000
+            rules.dt = 1
+            rules.prob_death = 0.0005
+            rules.v_population_totals = [x if i ==0 else 0 for i, x in enumerate(rules.v_population_totals)]
+            rules.v_population_totals = [x if i ==0 else 0 for i, x in enumerate(rules.s_population_totals)]
+            world = World(rules)
+            rules.update_mode = "discrete"
+            main.run(world)
+
+            # This world is with only the first strain
+            rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
+            rules2.worldmap = nx.complete_graph(10)
+            rules2.stop_time = 10000
+            rules2.dt = 1
+            rules2.update_mode = "discrete"
+            rules2.prob_death = 0.0005
+            world2 = World(rules2)
+            main.run(world2)
+
+
+
+
+        world1pop = sum(world.rules.sum_populations(world)[-1])
+        world2pop = sum(world2.rules.sum_populations(world2)[-1])
+
+        assert within_percent(world1pop, world2pop, 0.15, epsilon=0.0005)
+
     def test_2_strain_1_with_no_colonization_discrete(self):
         """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal
         That is, the second strain does not effect the long term dynamics
@@ -191,7 +231,9 @@ class TestNStrainEq:
             rules.worldmap = nx.complete_graph(5)
             rules.stop_time = 10000
             rules.dt = 1
+            rules.num_flies = 0
             rules.prob_death = 0.0005
+            rules.colonization_prob_slope = 0
             world = World(rules)
             rules.update_mode = "discrete"
             main.run(world)
@@ -202,6 +244,8 @@ class TestNStrainEq:
             rules2.stop_time = 10000
             rules2.dt = 1
             rules2.update_mode = "discrete"
+            rules2.colonization_prob_slope = 0
+            rules2.num_flies = 0
             rules2.prob_death = 0.0005
             world2 = World(rules2)
             main.run(world2)
@@ -219,25 +263,30 @@ class TestNStrainEq:
         We need to up the patch number for this test else stochasticity can cause it to fail
         """
 
+        # TODO This test is broken
 
         for i in range(0, TEST_ITERATIONS):
 
             # This world is with two strains, but one cannot survive the fly
             # This test has a high percent error because it sometimes takes a long time fall to correct values
             rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
-            rules.worldmap = nx.complete_graph(5)
-            rules.stop_time = 20000
+            rules.worldmap = nx.complete_graph(10)
+            rules.stop_time = 5000
             rules.dt = 1
             rules.prob_death = 0.0005
             world = World(rules)
+            rules.colonization_prob_slope = 0
+            rules.num_flies = 0
             rules.update_mode = "eq"
             main.run(world)
 
             # This world is with only the first strain
             rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
-            rules2.worldmap = nx.complete_graph(5)
-            rules2.stop_time = 20000
+            rules2.worldmap = nx.complete_graph(10)
+            rules2.stop_time = 5000
             rules2.dt = 1
+            rules2.colonization_prob_slope = 0
+            rules2.num_flies = 0
             rules2.update_mode = "eq"
             rules2.prob_death = 0.0005
             world2 = World(rules2)
@@ -258,15 +307,24 @@ class TestNStrainEq:
             # This test has a high percent error because it sometimes takes a long time fall to correct values
             rules = NStrain(2, folder_name="test", fly_s_survival=[.5, .5], fly_v_survival=[.8, .8], spore_chance=[.8, .8], germ_chance=[.2, .2])
             rules.worldmap = nx.complete_graph(10)
-            rules.stop_time = 20000
+            rules.stop_time = 2000
             rules.dt = 1
             rules.prob_death = 0.005
             world = World(rules)
             main.run(world)
 
+            rules2 = NStrain(2, folder_name="test", fly_s_survival=[.5, .5], fly_v_survival=[.8, .8],
+                            spore_chance=[.8, .8], germ_chance=[.2, .2])
+            rules2.worldmap = nx.complete_graph(10)
+            rules2.stop_time = 2000
+            rules2.dt = 1
+            rules2.prob_death = 0.005
+            world2 = World(rules2)
+            main.run(world2)
 
-            pop1 = world.rules.sum_populations(world)[0]
-            pop2 = world.rules.sum_populations(world)[1]
+
+            pop1 = sum(world.rules.sum_populations(world)[-1])
+            pop2 = sum(world2.rules.sum_populations(world)[-1])
 
             freq = pop1 / (pop1 + pop2)
             sums.append(freq)
@@ -358,7 +416,6 @@ class TestNStrainEq:
             rules.fly_stomach_size = random.choice([1, 2, 3, 4, 'type2'])
             rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
             rules.update_mode = 'eq'
-            rules.colonize_mode = "fly"
 
             world = World(rules)
 

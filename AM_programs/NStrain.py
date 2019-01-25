@@ -82,7 +82,7 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(50)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 200  # Iterations to run
+        self.stop_time = 2000  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
@@ -144,12 +144,13 @@ class NStrain(Rules):
                 assert sum(patch.v_populations) > 0
                 assert sum(patch.s_populations) > 0
 
-        for i in range(1, self.num_strains):
-            try:
-                assert self.spore_chance[i-1] <= self.spore_chance[i]  # If fails then direct jump to eq update type won't work because it assumes they are ordered
-            except:
-                Exception(f"Our sporulation chances are not ordered correctly. Specifically {self.spore_chance[i-1]} is not less than {self.spore_chance[i]} \n" +
-                          f"The spore chance vector is {self.spore_chance}")
+        if self.num_strains > 1:
+            for i in range(1, self.num_strains):
+                try:
+                    assert self.spore_chance[i-1] <= self.spore_chance[i]  # If fails then direct jump to eq update type won't work because it assumes they are ordered
+                except:
+                    Exception(f"Our sporulation chances are not ordered correctly. Specifically {self.spore_chance[i-1]} is not less than {self.spore_chance[i]} \n" +
+                              f"The spore chance vector is {self.spore_chance}")
 
     def ask_for_input(self, num_strains):
         """Asks for the parameter input instead of reading the default"""
