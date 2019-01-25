@@ -74,3 +74,21 @@ def test_has_positive():
     assert has_positive(f) == True
     assert has_positive(g) == False
 
+
+def test_find_winner():
+    a = [10, 2, 3, 4]
+    b = [0, 0, 0, 0]
+    c = [0, 1, 1, 1]
+    d = [0, 1.5, 0]
+    e = [0, 0, 1]
+    f = [0, 0, 0]
+
+    assert find_winner(a, b) == 0
+    assert find_winner(b, a) == 0
+    assert find_winner(c, a) == 0
+    assert find_winner(c, b) == 1
+    assert find_winner(d, e) == 1
+    assert find_winner(d, d) == 1
+    assert find_winner(e, e) == 2
+    assert find_winner(e, f) == 2
+    assert find_winner(f, f) == "no winner"

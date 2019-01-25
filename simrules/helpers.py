@@ -142,7 +142,7 @@ def random_probs(n):
         A list of random probabilities length n
     """
 
-    return [random.random() for x in range(0, n)]
+    return sorted([random.random() for x in range(0, n)])
 
 
 def spaced_probs(n):
@@ -162,5 +162,20 @@ def spaced_probs(n):
         l.append(i / n)  # Normalize so that between 0 and one
     l.append(1)
 
-    return l
+    return sorted(l)
 
+def find_winner(v_pops, s_pops):
+    # Todo: add a mode for when we do not know the order. Right now we assume the lowest number has lowest sporulation
+
+    # Find the best competitor
+    totals = [a + b for a, b in zip(v_pops, s_pops)]  # Todo: During summation we should note the patch populations so do not have to recalculate?
+    totals = [x for x in enumerate(totals) if x[1] > 0] # Make list of form [(strain num, pop)), .... ]
+
+    # If no strains then return string saying so
+    if not totals:
+        return "no winner"
+
+    # Strains are ordered by sporulation prob, so choose smallest to be winner.
+    winner = totals[0][0]
+
+    return winner

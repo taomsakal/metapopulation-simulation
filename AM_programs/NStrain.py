@@ -82,12 +82,12 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(50)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
-        self.data_save_step = 10  # Save the data every this many generations
+        self.stop_time = 5000  # Iterations to run
+        self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
         self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1/1000  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonization_prob_slope = 1/100  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
@@ -144,6 +144,13 @@ class NStrain(Rules):
                 assert sum(patch.v_populations) > 0
                 assert sum(patch.s_populations) > 0
 
+        for i in range(1, self.num_strains):
+            try:
+                assert self.spore_chance[i-1] <= self.spore_chance[i]  # If fails then direct jump to eq update type won't work because it assumes they are ordered
+            except:
+                Exception(f"Our sporulation chances are not ordered correctly. Specifically {self.spore_chance[i-1]} is not less than {self.spore_chance[i]} \n" +
+                          f"The spore chance vector is {self.spore_chance}")
+
     def ask_for_input(self, num_strains):
         """Asks for the parameter input instead of reading the default"""
 
@@ -174,8 +181,8 @@ class NStrain(Rules):
                 initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
         else:
             # todo: for now just give each strain an intial number
-            initial_s = [5] * self.num_strains
-            initial_v = [5] * self.num_strains
+            initial_s = [self.yeast_size] * self.num_strains
+            initial_v = [self.yeast_size] * self.num_strains
 
         # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
@@ -217,7 +224,7 @@ class NStrain(Rules):
 
         # print(f"Patch {patch.id} has been reset.")
 
-    def patch_update(self, patch, type='discrete'):
+    def patch_update(self, patch):
         """
         Each individual has fitness of resource_level and reproduces by that amount.
 
@@ -227,8 +234,9 @@ class NStrain(Rules):
         Eq uses previously calculated values of each patch equlibrium and brings the patch to exactly that value.
         """
 
-        if type == 'discrete':
+        mode = self.update_mode
 
+        if mode == 'discrete':
             for i in range(0, self.patch_update_iterations):
 
                 r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
@@ -270,17 +278,48 @@ class NStrain(Rules):
 
         # If calculating via equilibrium values, set all strains in each patch to be the eq value we calculated
         # outside of the program.
-        elif type == 'eq':
-            # Todo: This is totally broken. It sets all to the eq when only the best should be set.
-            for i in range(0, self.num_strains):
-                patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (
-                            1 - self.spore_chance[i]) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
+        elif mode == 'eq':
+            self.jump_to_eq_update(patch)
 
-                patch.s_populations[i] = (self.spore_chance[i] * (
-                            (patch.c * patch.alpha * patch.gamma) * (1 - self.spore_chance[i]))) / (
-                                             (self.spore_chance[i] - 1)(patch.c * patch.mu_s))
+        else:
+            raise Exception(f"{type} is not a valid update mode.")
 
-                patch.resources = -patch.mu_v / ((self.spore_chance[i] - 1) * patch.alpha * patch.c)
+    def jump_to_eq_update(self, patch):
+        """
+        This jumps a patch directly to the calculated equilibrium.
+
+        Args:
+            patch: The patch to set to eq
+
+        """
+
+        i = helpers.find_winner(patch.v_populations, patch.s_populations)  # This is the index of the best competitor
+
+        if i == "no winner":
+            return
+
+        # Sporulation chance of winner
+        s = self.spore_chance[i]
+
+        # Set all strains to be extinct
+        patch.v_populations = [0]*self.num_strains
+        patch.s_populations = [0]*self.num_strains
+
+        # Set winning strain to eq
+        patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (1 - s) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
+        if s != 1:
+            patch.s_populations[i] = (s * (
+                    (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((s - 1)*(patch.c * patch.mu_s))
+
+            patch.resources = -patch.mu_v / ((s - 1) * patch.alpha * patch.c)
+        # Special case: If spore chace is 1 then just make the numerator real small
+        else:
+            patch.s_populations[i] = (s * (
+                    (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((.999999 - 1) * (patch.c * patch.mu_s))
+
+            patch.resources = -patch.mu_v / ((.999999 - 1) * patch.alpha * patch.c)
+
+
 
     def colonize(self, world):
         """The colonize function switches between a couple modes."""

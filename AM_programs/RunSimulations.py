@@ -142,18 +142,20 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'Colonization 1-1000'
+    folder_name = 'Colonization 100'
 
+    r = 4  # Times to repeat for average
+    steps = 10
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 20, 20)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, steps, r)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 20, 20)
+    double_spore_curve(folder_name, steps, r)
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, 20, folder_name)  # Run a basic simulation on n strains and i loops
+    basic_sim(10, r, folder_name)  # Run a basic simulation on n strains and i loops
     #
     # print("Starting Server")
     # dashboard.run_dash_server(folder_name)
