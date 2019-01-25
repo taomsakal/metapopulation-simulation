@@ -24,7 +24,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     # sc = spaced_probs(num_strains)
     sc = sorted(helpers.random_probs(num_strains))
     # sc = [0.35, 0.5, 0.8]
-    gc = [1] * num_strains  # Germination Chance
+    gc = [0] * num_strains  # Germination Chance
     fvs = [0] * num_strains  # Fly Veg Survival
     fss = [1] * num_strains  # Fly Spore Survival
     if sc_override:
@@ -39,7 +39,6 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
         # Run multiple simulations and get average
         for i in range(0, num_loops):
             print(f"Running basic sim {i}/{num_loops}")
-            # print(f"The probability vectors are...\n{sc}\n{gc}\n{fvs}\n{fss}")
 
             world = World(NStrain(num_strains, folder_name=name, console_input=False, spore_chance=sc, germ_chance=gc,
                                   fly_s_survival=fss,
@@ -53,7 +52,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
             run_sum = sum(run_pop)
             try:
                 if run_sum != 0:
-                    run_strain_eqs = [strain / run_sum for strain in run_pop]
+                    run_strain_eqs = [strain / run_sum for strain in run_pop]  # Calculate the freq of each strain
                     final_eqs.append(run_strain_eqs)  # Append final census total
                     final_pops.append(run_pop)
                 else:
@@ -63,9 +62,6 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
             except:
                 logging.warning("Error dealing with an eq value. Skipping.")
 
-            # print('runpop', run_pop)
-            # print('runsum', run_sum)
-            # print('run_strain_eqs', run_strain_eqs)
 
 
     # Find average final eq values
@@ -105,8 +101,6 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
         returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name+"/single_spore_curve", sc_override=[prob], save_data=False)
         pops.append(pop_avg[0])  # Take first intext because list isn't flat
 
-    #avg_pops = sum(pops)/len(pops)
-    #print('avg pops for 1 strain', avg_pops)
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/single_strain_averages.csv", 'a') as f:
         for chance, eq in zip(sc, pops):
@@ -137,7 +131,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
         print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
         returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
                                                   sc_override=[prob, sc_2])
-        eqs.append(avg_eqs[0])  # Take first intext because list isn't flat
+        eqs.append(avg_eqs[0])  # Take first index because list isn't flat
 
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/double_strain_averages.csv", 'a') as f:
@@ -148,18 +142,18 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'Type 2 Discrete Flies'
+    folder_name = '8888'
 
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 20, 10)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 20, 5)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 20, 10)
+    double_spore_curve(folder_name, 20, 5)
 
-    # Run i times. Report back
-    print("\nBASIC SIM")
-    basic_sim(20, 10, folder_name)  # Run a basic simulation on n strains and i loops
+    # # Run i times. Report back
+    # print("\nBASIC SIM")
+    # basic_sim(20, 5, folder_name)  # Run a basic simulation on n strains and i loops
 
 
     print("Starting Server")

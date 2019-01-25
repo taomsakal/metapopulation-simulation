@@ -86,3 +86,16 @@ class Rules:
         logging.warning(f"stop_condition() for {world.name} always returns true, so the program never stops running.")
         return True
 
+    def print_params(self, world=None):
+        """
+        Prints out the current parameters for the rules
+        """
+
+        print("\nCurrent Parameters")
+        for d in self.__dict__.items():
+            print("    " + d[0] + ':', d[1])
+
+        if world:
+            print("    World Parameters:")
+            for d in world.__dict__.items():
+                print("        " + d[0] + ':', d[1])

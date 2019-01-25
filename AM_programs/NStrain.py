@@ -84,22 +84,23 @@ class NStrain(Rules):
         self.data_save_step = 10  # Save the data every this many generations
 
         # Colonization Mode
-        self.colonize_mode = 'fly'
+        self.colonize_mode = 'fly'  # 'fly' or 'probabilities'
+        self.colonization_prob_slope = 1/500  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
-        self.fly_stomach_size = 'type 2'  # Number of cells they each. Put in "type 2" for a type 2 functional response
+        self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
         self.germinate_on_drop = True  # If true then sporulated cells germinate immediatly when they are dropped.
 
         # Update Params
-        self.update_mode = 'discrete'  # 'discrete' or 'eq'. See the update function for details
+        self.update_mode = 'eq'  # 'discrete' or 'eq'. See the update function for details
         self.patch_update_iterations = 1  # How many times to repeat the update function
 
         # Change these params if the number of yeast eaten is a type 2 functional response
         self.fly_attack_rate = 0.3
         self.fly_handling_time = 0.3
 
-        self.yeast_size = 0.01  # Size of a single yeast
+        self.yeast_size = 0.001  # Size of a single yeast
         self.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
         # Ie mush all current patches into a pool and redistribute to new patches.
 
@@ -269,9 +270,11 @@ class NStrain(Rules):
             for i in range(0, self.num_strains):
                 patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (
                             1 - self.spore_chance[i]) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
+
                 patch.s_populations[i] = (self.spore_chance[i] * (
                             (patch.c * patch.alpha * patch.gamma) * (1 - self.spore_chance[i]))) / (
                                              (self.spore_chance[i] - 1)(patch.c * patch.mu_s))
+
                 patch.resources = -patch.mu_v / ((self.spore_chance[i] - 1) * patch.alpha * patch.c)
 
     def colonize(self, world):
@@ -281,6 +284,8 @@ class NStrain(Rules):
             self.colonize_fly_mode(world)
         elif self.colonize_mode == 'probabilities':
             self.probability_colonize_mode(world)
+        else:
+            raise ValueError(f"{self.colonize_mode} is not a valid colonization mode. (Choose 'fly' or 'probabilities'")
 
     def colonize_fly_mode(self, world):
         """
@@ -303,7 +308,6 @@ class NStrain(Rules):
             elif self.fly_stomach_size >= 0:
                 num_eaten = self.fly_stomach_size
 
-            # print(f"num_eaten for patch {patch.id}: {num_eaten}")
             # If actually eat any yeast, then see which survive and drop into new neighboring patch.
             if num_eaten > 0:
                 try:
@@ -322,10 +326,9 @@ class NStrain(Rules):
                         logging.info(f"Patch {patch.id} is empty, the fly dies a slow sad death of starvation...")
                         hitchhikers = {}
 
-                # print(patch.populations)
-                # print(hitchhikers)
                 v_survivors = [0] * self.num_strains
                 s_survivors = [0] * self.num_strains
+
                 # Remove the cell from the population. For each cell, check if it survives. If so, place it in survivors
                 for j in hitchhikers:
                     if j < self.num_strains:
@@ -364,7 +367,7 @@ class NStrain(Rules):
         veg = propagules[1]
         spores = propagules[2]
 
-        #Make sure no negatives in veg and spores. If any set to 0.
+        # Make sure no negatives in veg and spores. If any set to 0.
         veg = [v if v >= 0 else 0 for v in veg]
         spores = [s if s >= 0 else 0 for s in spores]
 
@@ -385,7 +388,7 @@ class NStrain(Rules):
 
     def colonization_prob(self, n):
 
-        prob = n/100
+        prob = n * self.colonization_prob_slope
 
         if prob > 1:
             prob = 1
@@ -469,7 +472,9 @@ class NStrain(Rules):
             if world.age % self.data_save_step == 0:
                 self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
                 self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
-                print("    Veg, Spore sums:", round(sum(v_population_totals), 5), round(sum(s_population_totals), 5))
+
+        if world.age % 500 == 0:
+            print("    Veg, Spore, Resource:", round(sum(v_population_totals), 3), round(sum(s_population_totals), 3), round(total_resources, 3))
 
         # Print current progress.
         # print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
@@ -495,19 +500,23 @@ class NStrain(Rules):
 
         self.sum_populations(world)
 
-        # Make a csv with final equilibrium
-        helpers.init_csv(self.data_path, "final_eq.csv",
-                         ["id", "Sporulation Probability", "Total Population", "Veg Population", "Spore Population",
-                          "Frequency"])
-        with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
-            for i in range(0, self.num_strains):
-                final_eq.write(
-                    f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},")
-                self.write_frequency(world, i)
-                final_eq.write("\n")
 
-        self.chance_by_sum_file.close()
-        self.total_file.close()
+        if self.save_data:
+            # Make a csv with final equilibrium
+            helpers.init_csv(self.data_path, "final_eq.csv",
+                             ["id", "Sporulation Probability", "Total Population", "Veg Population", "Spore Population",
+                              "Frequency"])
+            with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
+                for i in range(0, self.num_strains):
+                    final_eq.write(
+                        f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},")
+                    self.write_frequency(world, i)
+                    final_eq.write("\n")
+
+            self.chance_by_sum_file.close()
+            self.total_file.close()
+
+        self.print_params(world)
 
     def write_frequency(self, world, n):
         "Writes a line with the frequency of the strain n"
@@ -521,7 +530,6 @@ class NStrain(Rules):
             logging.error(
                 f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
 
-    # Todo: Is possible for all to go extinct and there to be problems calculating frequency because of division by zero
     def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
         """ Updates the chance by sum csv """
         # Write to totals save file
@@ -542,3 +550,6 @@ class NStrain(Rules):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write("\n")
 
+if __name__ == "__main__":
+
+    pass
