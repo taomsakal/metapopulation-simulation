@@ -142,10 +142,10 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = 'Colonization 100'
+    folder_name = 'Colonization 1000'
 
-    r = 4  # Times to repeat for average
-    steps = 10
+    r = 10  # Times to repeat for average
+    steps = 20
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)  #todo: for some reason this overwrites the single non-looped data

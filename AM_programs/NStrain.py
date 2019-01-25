@@ -82,12 +82,12 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(50)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 5000  # Iterations to run
+        self.stop_time = 200  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
         self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1/100  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonization_prob_slope =1/1000  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
@@ -295,15 +295,18 @@ class NStrain(Rules):
 
         i = helpers.find_winner(patch.v_populations, patch.s_populations)  # This is the index of the best competitor
 
+        # Set all strains to be extinct
+        patch.v_populations = [0]*self.num_strains
+        patch.s_populations = [0]*self.num_strains
+
+
         if i == "no winner":
+            patch.resources = patch.gamma / patch.mu_R
             return
 
         # Sporulation chance of winner
         s = self.spore_chance[i]
 
-        # Set all strains to be extinct
-        patch.v_populations = [0]*self.num_strains
-        patch.s_populations = [0]*self.num_strains
 
         # Set winning strain to eq
         patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (1 - s) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
@@ -312,7 +315,7 @@ class NStrain(Rules):
                     (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((s - 1)*(patch.c * patch.mu_s))
 
             patch.resources = -patch.mu_v / ((s - 1) * patch.alpha * patch.c)
-        # Special case: If spore chace is 1 then just make the numerator real small
+        # Special case: If spore chance is 1 then just make the numerator real small
         else:
             patch.s_populations[i] = (s * (
                     (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((.999999 - 1) * (patch.c * patch.mu_s))

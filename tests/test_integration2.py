@@ -351,13 +351,14 @@ class TestNStrainEq:
             rules.dt = 1  # Timestep size
             rules.worldmap = nx.complete_graph(10)  # The worldmap
             rules.prob_death = 0.00  # Probability of a patch dying.
-            rules.stop_time = 10000  # Iterations to run
+            rules.stop_time = 1000  # Iterations to run
             rules.num_flies = 0  # Number of flies each colonization event
             rules.fly_attack_rate = 0.3
             rules.fly_handling_time = 0.3
             rules.fly_stomach_size = random.choice([1, 2, 3, 4, 'type2'])
             rules.reset_all_on_colonize = False  # If true reset all patches during a "pool" colonization
             rules.update_mode = 'eq'
+            rules.colonize_mode = "fly"
 
             world = World(rules)
 
