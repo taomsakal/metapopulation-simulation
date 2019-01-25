@@ -128,7 +128,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     sc_2 = 0.3  # The strain we hold constant's spore prob
     coexistences = []
     for i, prob in enumerate(sc):
-        print(f'Calculating Single Spore Curve {sc}... {i}/{resolution}')
+        print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
         returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
                                                   sc_override=[prob, sc_2])
         eqs.append(avg_eqs[0])  # Take first index because list isn't flat
@@ -142,19 +142,20 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 if __name__ == "__main__":
 
-    folder_name = '8888'
+    folder_name = 'Colonization 1-1000'
 
 
     print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, 20, 5)  #todo: for some reason this overwrites the single non-looped data
+    single_spore_curve(folder_name, 20, 20)  #todo: for some reason this overwrites the single non-looped data
 
     print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, 20, 5)
+    double_spore_curve(folder_name, 20, 20)
 
-    # # Run i times. Report back
-    # print("\nBASIC SIM")
-    # basic_sim(20, 5, folder_name)  # Run a basic simulation on n strains and i loops
+    # Run i times. Report back
+    print("\nBASIC SIM")
+    basic_sim(10, 20, folder_name)  # Run a basic simulation on n strains and i loops
+    #
+    # print("Starting Server")
+    # dashboard.run_dash_server(folder_name)
 
-
-    print("Starting Server")
-    dashboard.run_dash_server(folder_name)
+    print("Done!")

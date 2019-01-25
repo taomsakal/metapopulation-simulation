@@ -17,7 +17,7 @@ import dashboard
 
 class NStrain(Rules):
 
-    def __init__(self, num_strains, console_input=False, spore_chance=None, germ_chance=None,
+    def __init__(self, num_strains, run_name=None, console_input=False, spore_chance=None, germ_chance=None,
                  fly_v_survival=None, fly_s_survival=None, folder_name=None, save_data=True):
         """
         Creates a discrete multi-strain simulation. The individuals each have two states (sporulated/vegetative) but
@@ -32,10 +32,12 @@ class NStrain(Rules):
             fly_v_survival: A vector like above but for fly survival chance of vegetative cells
             folder_name: Name of the folder where we store all the data. This is by default in the data folder.
                         If none then the console will ask for input.
+            run_name: Name of the specific simulation run
         """
 
         super().__init__()
         self.console_input = console_input
+        self.run_name = run_name
 
         # Default patch specific parameters
         # These are passed into the patch, which always uses it's own, meaning we can change these per patch.
@@ -80,12 +82,12 @@ class NStrain(Rules):
         self.dt = 0.5  # Timestep size
         self.worldmap = nx.complete_graph(50)  # The worldmap
         self.prob_death = 0.004  # Probability of a patch dying.
-        self.stop_time = 10000  # Iterations to run
+        self.stop_time = 1000  # Iterations to run
         self.data_save_step = 10  # Save the data every this many generations
 
         # Colonization Mode
-        self.colonize_mode = 'fly'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1/500  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
+        self.colonization_prob_slope = 1/1000  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 3  # Number of flies each colonization event
@@ -123,6 +125,8 @@ class NStrain(Rules):
                                                        ["Iteration, Resources"] + [f"Strain {i}" for i in
                                                                                    range(0, num_strains)] + [
                                                            "Frequency"])
+
+
 
 
     def safety_checks(self, world):
@@ -267,6 +271,7 @@ class NStrain(Rules):
         # If calculating via equilibrium values, set all strains in each patch to be the eq value we calculated
         # outside of the program.
         elif type == 'eq':
+            # Todo: This is totally broken. It sets all to the eq when only the best should be set.
             for i in range(0, self.num_strains):
                 patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (
                             1 - self.spore_chance[i]) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
@@ -473,7 +478,7 @@ class NStrain(Rules):
                 self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
                 self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
 
-        if world.age % 500 == 0:
+        if world.age % 100 == 0:
             print("    Veg, Spore, Resource:", round(sum(v_population_totals), 3), round(sum(s_population_totals), 3), round(total_resources, 3))
 
         # Print current progress.
@@ -513,10 +518,16 @@ class NStrain(Rules):
                     self.write_frequency(world, i)
                     final_eq.write("\n")
 
+            with open(f"{self.data_path}/params.txt", "a") as txt:
+                txt.write(f"\nCurrent Parameters for {self.run_name}")
+                for d in self.__dict__.items():
+                    txt.write("    " + d[0] + ':' + str(d[1]) + "\n")
+
+
             self.chance_by_sum_file.close()
             self.total_file.close()
 
-        self.print_params(world)
+        # self.print_params(world)
 
     def write_frequency(self, world, n):
         "Writes a line with the frequency of the strain n"
