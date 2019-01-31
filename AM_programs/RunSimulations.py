@@ -139,9 +139,9 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'Colonization 1000'
+    folder_name = 'Colonization 1k Steve Params initial changed'
 
-    r = 10  # Times to repeat for average
+    r = 5  # Times to repeat for average
     steps = 20
 
     print("\nSINGLE SPORE CURVE")

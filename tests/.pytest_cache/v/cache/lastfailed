@@ -22,14 +22,16 @@
   "test_integration2.py::TestNStrain::test_strain_with_only_spores_goes_extinct": true,
   "test_integration2.py::TestNStrain::test_strain_with_only_spores_goes_extinct_with_germ": true,
   "test_integration2.py::TestNStrainEq::test_2_strain_1_with_no_colonization": true,
+  "test_integration2.py::TestNStrainEq::test_2_strain_1_with_no_colonization_discrete": true,
   "test_integration2.py::TestNStrainEq::test_equlibrium_eq_mode": true,
   "test_integration2.py::TestNStrainEq::test_n_strain_all_but_one_with_no_pop": true,
+  "test_integration2.py::TestNStrainEq::test_no_unlimited_growth": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_heavy_death_in_patches": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_colonization_extinction": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_death": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_death_with_flies": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_death_with_flies_that_dont_eat": true,
+  "test_integration2.py::TestNStrainExtinctionPresistence::test_no_extinction": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_extinction_with_patch_death": true,
-  "test_integration2.py::TestNStrainExtinctionPresistence::test_strain_with_only_spores_goes_extinct_with_germ": true,
-  "test_integration2.py::TestNStrainExtinctionPresistence::test_strain_with_only_spores_lives_with_germ": true
+  "test_integration2.py::TestNStrainExtinctionPresistence::test_strain_with_only_spores_goes_extinct_with_germ": true
 }
