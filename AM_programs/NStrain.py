@@ -63,6 +63,7 @@ class NStrain(Rules):
         self.total_resources = 0
         self.all_population_totals = []  # The current population totals across all patches.
         self.total_pop = 0
+        self.patches_occupied = 0
 
         # todo move to bottom and init.
 
@@ -80,17 +81,18 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.5  # Timestep size
-        self.worldmap = nx.complete_graph(200)  # The worldmap
-        self.prob_death = 0.05  # Probability of a patch dying.
+        self.worldmap = nx.complete_graph(1000)  # The worldmap
+        self.patch_num = nx.number_of_nodes(self.worldmap)
+        self.prob_death = 0.07  # Probability of a patch dying.
         self.stop_time = 500  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
-        self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope =1/1000 # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonize_mode = 'fly'  # 'fly' or 'probabilities'
+        self.colonization_prob_slope =1/4000 # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
-        self.num_flies = 3  # Number of flies each colonization event
+        self.num_flies = 500  # Number of flies each colonization event
         self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
         self.germinate_on_drop = True  # If true then sporulated cells germinate immediatly when they are dropped.
 
@@ -122,11 +124,13 @@ class NStrain(Rules):
                                                                              i in range(0, num_strains)])
             # Make another totals file that compares sporulation chance to
             self.chance_by_sum_file = helpers.init_csv(self.data_path, "chance_by_sum.csv",
-                                                       ["Iteration, Resources"] + [f"Strain {i}" for i in
+                                                       ["Iteration", "Resources"] + [f"Strain {i}" for i in
                                                                                    range(0, num_strains)] + [
                                                            "Frequency"])
 
-
+            self.patch_occupancy_file = helpers.init_csv(self.data_path, "patch_occupancy.csv",
+                                                         ["Time", "Total Number Occupied", "Total Occupation Frequency"] + [f"Strain {i} Frequency" for i in
+                                                                                   range(0, num_strains)])
 
 
     def safety_checks(self, world):
@@ -137,6 +141,11 @@ class NStrain(Rules):
         logging.info("Checking that all parameters have legal values.")
         assert self.num_strains > 0 and isinstance(self.num_strains, int)
         assert self.check_param_lists([self.spore_chance, self.germ_chance, self.fly_v_survival, self.fly_s_survival])
+
+        # We will get division by 0 errors if these are zero.
+        assert self.mu_R != 0
+        assert self.mu_s != 0
+        assert self.mu_v != 0
 
         # Make sure there are populations that are not negative
         if world.age == 0:
@@ -313,7 +322,7 @@ class NStrain(Rules):
         # Set winning strain to eq
         patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (1 - s) - patch.mu_R * patch.mu_v) / (patch.c * patch.mu_v)
         if s != 1:
-            patch.s_populations[i] = (s * ((patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((s - 1)*(patch.c * patch.mu_s))
+            patch.s_populations[i] = s * (((patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R*patch.mu_v) / ((s - 1)*(patch.c * patch.mu_s))
 
             patch.resources = -patch.mu_v / ((s - 1) * patch.alpha * patch.c)
         # Special case: If spore chance is 1 then just make the numerator real small
@@ -446,7 +455,6 @@ class NStrain(Rules):
         else:
             return False
 
-
     def kill_patches(self, world):
         """ Resets population on a patch to 0 with probability prob_death """
 
@@ -486,6 +494,8 @@ class NStrain(Rules):
 
         return (self.total_resources, self.v_population_totals, self.s_population_totals, self.all_population_totals)
 
+
+
     def census(self, world):
 
         self.safety_checks(world)
@@ -515,14 +525,22 @@ class NStrain(Rules):
             if self.total_file.closed:
                 # print("Opening totals file")
                 self.total_file = open(f'{self.data_path}/totals.csv', 'a')
+            if self.patch_occupancy_file.closed:
+                self.patch_occupancy_file = open(f"{self.data_path}/patch_occupancy.csv", "a")
 
             # Update the data files every n'th step
             if world.age % self.data_save_step == 0:
                 self.update_chance_by_sum_csv(world, total_resources, v_population_totals, s_population_totals)
                 self.update_totals_csv(world, total_resources, v_population_totals, s_population_totals)
+                self.update_patch_occupancy(world)
 
-        if world.age % 100 == 0:
-            print("    Veg, Spore, Resource:", round(sum(v_population_totals), 3), round(sum(s_population_totals), 3), round(total_resources, 3))
+        if world.age % 10 == 0:
+            print("    Veg, Spore, Resource, patches occupied:",
+                  round(sum(v_population_totals), 3), round(sum(s_population_totals), 3),
+                  round(total_resources, 3), self.patches_occupied)
+
+
+
 
         # Print current progress.
         # print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
@@ -569,6 +587,7 @@ class NStrain(Rules):
 
             self.chance_by_sum_file.close()
             self.total_file.close()
+            self.patch_occupancy_file.close()
 
         # self.print_params(world)
 
@@ -603,6 +622,56 @@ class NStrain(Rules):
         for i in range(0, self.num_strains):
             self.total_file.write(str(v_population_totals[i]) + ',' + str(s_population_totals[i]) + ',')
         self.total_file.write("\n")
+
+    def update_patch_occupancy(self, world):
+        """ Updates the totals csv"""
+        # Write to totals save file
+        self.patch_occupancy_file.write(str(world.age) + "," + str(self.patches_occupied) + ","
+                              + str(self.patches_occupied/self.patch_num)+",")
+
+        # Record frequency of each strain in terms of patch occupancy
+        for v in self.measure_patch_occupancy(world):
+            self.patch_occupancy_file.write(str(v/self.patch_num) + ",")
+
+        self.patch_occupancy_file.write("\n")
+
+    def find_winning_strain(self, patch):
+
+        total_pops = [x+y for x,y in zip(patch.v_populations, patch.s_populations)]
+        total_pops = np.array(total_pops)
+        winner = np.argmax(total_pops)
+
+        if winner.size > 1 or total_pops[winner] < self.yeast_size:  # If multiple winners or the patch is empty return nothing
+            # print("No Winner")
+            return None
+
+        # print("Winning strain", winner)
+        return winner
+
+    def measure_patch_occupancy(self, world):
+        """Outputs a list with the number of patches occupied by each strain"""
+
+        # Measure Patches Occupied
+        i = 0
+        for patch in world.patches:
+            if sum(patch.s_populations + patch.v_populations) >= self.yeast_size:  # This seems to break if it is 0
+                i += 1
+
+        patches_occupied_by_strain = [0]*self.num_strains
+        for p in world.patches:
+            i = self.find_winning_strain(p)
+            if i is not None:
+                patches_occupied_by_strain[i] += 1
+
+        self.patches_occupied = sum(patches_occupied_by_strain)
+
+        return patches_occupied_by_strain
+
+    def measure_patch_frequency(self, world):
+        """Like measure patch occupancy but outputs the frequencies"""
+
+        return [i/self.patch_num for i in self.measure_patch_occupancy(world)]
+
 
 if __name__ == "__main__":
 

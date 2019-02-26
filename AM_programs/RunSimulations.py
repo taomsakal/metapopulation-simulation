@@ -18,10 +18,11 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     skip_simulation = False  # If true just display the dashboard but don't run the simulation
     final_eqs = []
     final_pops = []
+    final_patch_freqs = []
 
     # Make random strain probabilities
     # sc = spaced_probs(num_strains)
-    sc = sorted(helpers.random_probs(num_strains))
+    sc = sorted(helpers.spaced_probs(num_strains))
     gc = [0] * num_strains  # Germination Chance
     fvs = [0] * num_strains  # Fly Veg Survival
     fss = [1] * num_strains  # Fly Spore Survival
@@ -53,25 +54,37 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
                     run_strain_eqs = [strain / run_sum for strain in run_pop]  # Calculate the freq of each strain
                     final_eqs.append(run_strain_eqs)  # Append final census total
                     final_pops.append(run_pop)
+                    final_patch_freqs.append(world.rules.measure_patch_frequency(world))
                 else:
                     run_strain_eqs = [0] * world.rules.num_strains
                     final_eqs.append(run_strain_eqs)  # Append final census total
                     final_pops.append(run_pop)
+                    final_patch_freqs.append(world.rules.measure_patch_frequency(world))
             except:
                 logging.warning("Error dealing with an eq value. Skipping.")
 
     # Find average final eq values
-    print("final_eqs:", final_eqs)
     average_eqs = list(np.average(np.array(final_eqs), axis=0))
     average_pops = list(np.average(np.array(final_pops), axis=0))
-    print("average eqs:", average_eqs)
-    print("average pops:", average_pops)  # todo this is broken?
+    average_patch_freqs = list(np.average(np.array(final_patch_freqs), axis=0))
+    print("averg patch freqs", average_patch_freqs)
+
+    # Save the data
     helpers.init_csv(world.rules.data_path, "average_eqs.csv", ["Sporulation Probability", "Average Eq Frequency"])
     with open(world.rules.data_path + "/average_eqs.csv", 'a') as f:
         for chance, eq in zip(sc, average_eqs):
             f.write(f"{chance},{eq}\n")
 
-    return [sc, average_eqs, average_pops]
+    helpers.init_csv(world.rules.data_path, "average_patch_freq_eq.csv", ["Sporulation Probability"] +
+                     [f"Patch Occupancy Strain {i}" for i in range(0, num_strains)])
+    with open(world.rules.data_path + "/average_patch_freq_eq.csv", 'a') as f:
+        for chance, eq in zip(sc, [average_patch_freqs]):
+            f.write(f"{chance},")
+            for strain in eq:
+                f.write(f"{strain},")
+            f.write("\n")
+
+    return [sc, average_eqs, average_pops, average_patch_freqs]
 
 
 def single_spore_curve(folder_name, resolution, iterations_for_average, save_data=True):
@@ -92,18 +105,30 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
 
     pops = []
+    patch_freqs = []
     sc = helpers.spaced_probs(resolution)
     for i, prob in enumerate(sc):
         print(f'\nCalculating Single Spore Curve. Now on spore_prob = {sc[i]}. ({i}/{resolution})')
-        returned_sc, avg_eqs, pop_avg = basic_sim(1, iterations_for_average, folder_name + "/single_spore_curve",
+        returned_sc, avg_eqs, pop_avg, patch_freq_avg = basic_sim(1, iterations_for_average, folder_name + f"/single_spore_curve_{i}",
                                                   sc_override=[prob], save_data=False)
         pops.append(pop_avg[0])  # Take first index because list isn't flat
+        pops.append(patch_freq_avg[0])
+
+
 
     helpers.init_csv(world.rules.data_path, "single_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/single_strain_averages.csv", 'a') as f:
         for chance, eq in zip(sc, pops):
             f.write(f"{chance},{eq}\n")
 
+    helpers.init_csv(world.rules.data_path, "single_strain_patch_freq_averages.csv", ["Sporulation Probability"] +
+                     [f"Patch Occupancy Strain {i}" for i in range(0, world.rules.num_strains)])
+    with open(world.rules.data_path + "/single_strain_patch_freq_averages.csv", 'a') as f:
+        for chance, eq in zip(sc, [patch_freqs]):
+            f.write(f"{chance},")
+            for strain in eq:
+                f.write(f"{strain},")
+            f.write("\n")
 
 def double_spore_curve(folder_name, resolution, iterations_for_average):
     """
@@ -123,26 +148,38 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
 
     eqs = []
+    patch_freqs = []
     sc = helpers.spaced_probs(resolution)  # The strain we vary
     sc_2 = 0.3  # The strain we hold constant's spore prob
 
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
-        returned_sc, avg_eqs, pop_avg = basic_sim(2, iterations_for_average, folder_name + "/double_strain_curve",
+        returned_sc, avg_eqs, pop_avg, patch_freq = basic_sim(2, iterations_for_average, folder_name + f"/double_strain_curve_{i}",
                                                   sc_override=[prob, sc_2])
         eqs.append(avg_eqs[0])  # Take first index because list isn't flat
+        patch_freqs.append(patch_freq[0])
 
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/double_strain_averages.csv", 'a') as f:
         for chance, eq in zip(sc, eqs):
             f.write(f"{chance},{eq}\n")
 
+    helpers.init_csv(world.rules.data_path, "double_strain_patch_freq_avgs.csv",
+                     ["Sporulation Probability"] +
+                     [f"Patch Occupancy Strain {i}" for i in range(0, world.rules.num_strains)])
+    with open(world.rules.data_path + "/double_strain_patch_freq_avgs.csv", 'a') as f:
+        for chance, eq in zip(sc, [patch_freqs]):
+            f.write(f"{chance},")
+            for strain in eq:
+                f.write(f"{strain},")
+            f.write("\n")
+
 
 if __name__ == "__main__":
-    folder_name = 'Colonization 1k Steve Params initial changed'
+    folder_name = 'kool test run'
 
-    r = 5  # Times to repeat for average
-    steps = 20
+    r = 2  # Times to repeat for average
+    steps = 5
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
@@ -152,9 +189,10 @@ if __name__ == "__main__":
 
     # Run i times. Report back
     print("\nBASIC SIM")
-    basic_sim(10, r, folder_name)  # Run a basic simulation on n strains and i loops
-    #
-    # print("Starting Server")
-    # dashboard.run_dash_server(folder_name)
+    basic_sim(10, r, folder_name)  # Run a basic simulation on n strains and r loops
 
-    print("Done!")
+    print("Done! Graphing...")
+    time.sleep(1)
+
+    import data_analysis
+    data_analysis.make_da_graphs(folder_name)
