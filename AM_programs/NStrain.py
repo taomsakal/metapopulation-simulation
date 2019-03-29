@@ -80,19 +80,21 @@ class NStrain(Rules):
             self.fly_v_survival = fly_v_survival
 
         # Global Parameters
-        self.dt = 0.5  # Timestep size
-        self.worldmap = nx.complete_graph(1000)  # The worldmap
+        self.dt = 0.1  # Timestep size
+        self.worldmap = nx.complete_graph(2000)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.07  # Probability of a patch dying.
-        self.stop_time = 500  # Iterations to run
+        self.stop_time = 300  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
-        self.colonize_mode = 'fly'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope =1/4000 # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
+        self.colonization_prob_slope =1/3000 # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
-        self.num_flies = 500  # Number of flies each colonization event
+        self.num_flies = 0  # Number of flies each colonization event
+        if self.colonize_mode != "fly":
+            self.num_flies = 0  # Set to zero if not using. (Just to defend against potential bugs)
         self.fly_stomach_size = 1  # Number of cells they each. Put in "type 2" for a type 2 functional response
         self.germinate_on_drop = True  # If true then sporulated cells germinate immediatly when they are dropped.
 
@@ -445,7 +447,7 @@ class NStrain(Rules):
 
     def colonization_prob(self, n):
 
-        prob = n * self.colonization_prob_slope
+        prob = n * self.colonization_prob_slope * self.dt
 
         if prob > 1:
             prob = 1
@@ -460,7 +462,7 @@ class NStrain(Rules):
 
         # Kill ALL the patches
         for patch in world.patches:
-            if random.random() < self.prob_death:
+            if random.random() < self.prob_death * self.dt:
                 self.reset_patch(patch)
 
     def sum_populations(self, world):
@@ -576,7 +578,7 @@ class NStrain(Rules):
                 for i in range(0, self.num_strains):
                     final_eq.write(
                         f"{i},{self.spore_chance[i]},{self.all_population_totals[i]},{self.v_population_totals[i]},{self.s_population_totals[i]},")
-                    self.write_frequency(world, i)
+                    final_eq.write(self.write_frequency(i))
                     final_eq.write("\n")
 
             with open(f"{self.data_path}/params.txt", "a") as txt:
@@ -591,14 +593,14 @@ class NStrain(Rules):
 
         # self.print_params(world)
 
-    def write_frequency(self, world, n):
-        "Writes a line with the frequency of the strain n"
+    def write_frequency(self, n):
+        """Returns the frequency of a strain for writing"""
         try:
-            self.chance_by_sum_file.write(
-                f"{(self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop},")
+            freq = (self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop
+            return str(freq)
         except ZeroDivisionError:
             logging.warning("Population went extinct!")
-            self.chance_by_sum_file.write("-404,")  # -404 is out numeric symbol for went extinct. Species not found.
+            return f"Species {n} is extinct"
         except IndexError:
             logging.error(
                 f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
@@ -611,7 +613,7 @@ class NStrain(Rules):
         for i in range(0, self.num_strains):
             self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
         # total_pop = sum([v_population_totals[i] + s_population_totals[i] for i in range(len(v_population_totals))])
-        self.write_frequency(world, 0)
+        self.chance_by_sum_file.write(self.write_frequency(0))
         self.chance_by_sum_file.write("\n")
 
     def update_totals_csv(self, world, total_resources, v_population_totals, s_population_totals):

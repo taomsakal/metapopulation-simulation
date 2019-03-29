@@ -75,7 +75,7 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
         for chance, eq in zip(sc, average_eqs):
             f.write(f"{chance},{eq}\n")
 
-    helpers.init_csv(world.rules.data_path, "average_patch_freq_eq.csv", ["Sporulation Probability"] +
+    helpers.init_csv(world.rules.data_path, "average_patch_freq_eq.csv",
                      [f"Patch Occupancy Strain {i}" for i in range(0, num_strains)])
     with open(world.rules.data_path + "/average_patch_freq_eq.csv", 'a') as f:
         for chance, eq in zip(sc, [average_patch_freqs]):
@@ -113,6 +113,9 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
                                                   sc_override=[prob], save_data=False)
         pops.append(pop_avg[0])  # Take first index because list isn't flat
         pops.append(patch_freq_avg[0])
+        print("patch freq avg", patch_freq_avg)
+        patch_freqs.append(patch_freq_avg[0])
+    print("Patch freqs", patch_freqs)
 
 
 
@@ -124,11 +127,8 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     helpers.init_csv(world.rules.data_path, "single_strain_patch_freq_averages.csv", ["Sporulation Probability"] +
                      [f"Patch Occupancy Strain {i}" for i in range(0, world.rules.num_strains)])
     with open(world.rules.data_path + "/single_strain_patch_freq_averages.csv", 'a') as f:
-        for chance, eq in zip(sc, [patch_freqs]):
-            f.write(f"{chance},")
-            for strain in eq:
-                f.write(f"{strain},")
-            f.write("\n")
+        for chance, eq in zip(sc, patch_freqs):
+            f.write(f"{chance},{eq}\n")
 
 def double_spore_curve(folder_name, resolution, iterations_for_average):
     """
@@ -142,8 +142,8 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     Returns:
 
     """
-    # Make world just so can make path
-    world = World(NStrain(1, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
+    # Make world just so can make path  # Todo this is inelegant and leads to errors about strain number in csv. Fix
+    world = World(NStrain(2, folder_name=folder_name, console_input=False, spore_chance=[1], germ_chance=[1],
                           fly_s_survival=[1], fly_v_survival=[1], save_data=True))
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
 
@@ -157,7 +157,9 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
         returned_sc, avg_eqs, pop_avg, patch_freq = basic_sim(2, iterations_for_average, folder_name + f"/double_strain_curve_{i}",
                                                   sc_override=[prob, sc_2])
         eqs.append(avg_eqs[0])  # Take first index because list isn't flat
-        patch_freqs.append(patch_freq[0])
+        patch_freqs.append(patch_freq)
+
+    print("patch freqs", patch_freqs)
 
     helpers.init_csv(world.rules.data_path, "double_strain_averages.csv", ["Sporulation Probability", "Average Eq"])
     with open(world.rules.data_path + "/double_strain_averages.csv", 'a') as f:
@@ -168,7 +170,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
                      ["Sporulation Probability"] +
                      [f"Patch Occupancy Strain {i}" for i in range(0, world.rules.num_strains)])
     with open(world.rules.data_path + "/double_strain_patch_freq_avgs.csv", 'a') as f:
-        for chance, eq in zip(sc, [patch_freqs]):
+        for chance, eq in zip(sc, patch_freqs):
             f.write(f"{chance},")
             for strain in eq:
                 f.write(f"{strain},")
@@ -176,10 +178,10 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'kool test run'
+    folder_name = 'PHAT RUN'
 
-    r = 2  # Times to repeat for average
-    steps = 5
+    r = 20  # Times to repeat for average
+    steps = 40
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
