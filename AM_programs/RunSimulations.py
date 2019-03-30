@@ -6,6 +6,7 @@ import time
 import logging
 import numpy as np
 
+from pathlib import Path
 import dashboard
 import simrules.helpers as helpers
 from AM_programs.NStrain import NStrain
@@ -39,7 +40,9 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
         for i in range(0, num_loops):
             print(f"Running basic sim {i}/{num_loops}")
 
-            world = World(NStrain(num_strains, folder_name=name, console_input=False, spore_chance=sc, germ_chance=gc,
+            world = World(NStrain(num_strains, folder_name=Path(name) / str(i), console_input=False,
+                                  spore_chance=sc,
+                                  germ_chance=gc,
                                   fly_s_survival=fss,
                                   fly_v_survival=fvs))
             run(world)
@@ -150,7 +153,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
     eqs = []
     patch_freqs = []
     sc = helpers.spaced_probs(resolution)  # The strain we vary
-    sc_2 = 0.3  # The strain we hold constant's spore prob
+    sc_2 = 0.5  # The strain we hold constant's spore prob
 
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
@@ -178,10 +181,10 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'PHAT RUN'
+    folder_name = 'invasion test'
 
-    r = 20  # Times to repeat for average
-    steps = 40
+    r = 3  # Times to repeat for average
+    steps = 10
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)

@@ -81,7 +81,7 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.1  # Timestep size
-        self.worldmap = nx.complete_graph(2000)  # The worldmap
+        self.worldmap = nx.complete_graph(300)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.07  # Probability of a patch dying.
         self.stop_time = 300  # Iterations to run
@@ -149,11 +149,12 @@ class NStrain(Rules):
         assert self.mu_s != 0
         assert self.mu_v != 0
 
+        ## Actually we can allow this.
         # Make sure there are populations that are not negative
-        if world.age == 0:
-            for patch in world.patches:
-                assert not sum(patch.v_populations) < 0
-                assert not sum(patch.s_populations) < 0
+        # if world.age == 0:
+        #     for patch in world.patches:
+        #         assert not sum(patch.v_populations) < 0
+        #         assert not sum(patch.s_populations) < 0
 
         if self.num_strains > 1:
             for i in range(1, self.num_strains):
