@@ -25,8 +25,8 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
     # sc = spaced_probs(num_strains)
     sc = sorted(helpers.spaced_probs(num_strains))
     gc = [0] * num_strains  # Germination Chance
-    fvs = [0] * num_strains  # Fly Veg Survival
-    fss = [1] * num_strains  # Fly Spore Survival
+    fvs = [0.2] * num_strains  # Fly Veg Survival
+    fss = [.8] * num_strains  # Fly Spore Survival
     if sc_override:
         sc = sc_override
 
@@ -48,7 +48,6 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
             run(world)
 
             # Make a list of final eq values
-            # todo: Put these in the simulation itself
             resources = list(world.rules.sum_populations(world))[0]
             run_pop = list(world.rules.sum_populations(world))[-1]
             run_sum = sum(run_pop)
@@ -181,7 +180,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'invasion test'
+    folder_name = 'invasion test 2'
 
     r = 3  # Times to repeat for average
     steps = 10

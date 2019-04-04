@@ -81,10 +81,10 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.1  # Timestep size
-        self.worldmap = nx.complete_graph(300)  # The worldmap
+        self.worldmap = nx.complete_graph(1000)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.07  # Probability of a patch dying.
-        self.stop_time = 300  # Iterations to run
+        self.stop_time = 500  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
@@ -307,16 +307,18 @@ class NStrain(Rules):
 
         """
 
-        i = helpers.find_winner(patch.v_populations, patch.s_populations)  # This is the index of the best competitor
+        winners = helpers.find_winner(patch.v_populations, patch.s_populations, self.spore_chance)  # This is the index of the best competitor
 
         # Set all strains to be extinct
         patch.v_populations = [0]*self.num_strains
         patch.s_populations = [0]*self.num_strains
 
 
-        if i == "no winner":
+        if winners == []: # No winners, patch empty
             patch.resources = patch.gamma / patch.mu_R
             return
+        else:
+            i = random.choice(winners)
 
         # Sporulation chance of winner
         s = self.spore_chance[i]
