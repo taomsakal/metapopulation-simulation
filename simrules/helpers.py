@@ -142,7 +142,7 @@ def random_probs(n):
         A list of random probabilities length n
     """
 
-    return sorted([random.random() for x in range(0, n)])
+    return sorted([round(random.random(), 5) for x in range(0, n)])
 
 
 def spaced_probs(n):
@@ -159,23 +159,54 @@ def spaced_probs(n):
 
     l = []
     for i in range(0, n):
-        l.append(i / n)  # Normalize so that between 0 and one
+        num = i/n
+        if num == 1:
+            l.append(.999999) # Not allowed to go to 1
+        else:
+            l.append(num)  # Normalize so that between 0 and one
     l.append(1)
 
     return sorted(l)
 
-def find_winner(v_pops, s_pops):
-    # Todo: add a mode for when we do not know the order. Right now we assume the lowest number has lowest sporulation
+def find_winner(v_pops : list, s_pops : list, spore_chance : list, germinate_spores=False) -> list:
+    """
+    Returns the greatest competitor's strain index for all present strains.
+    It can return multiple best competitors.
+    Args:
+        v_pops:
+        s_pops:
+        spore_chance: The sporulation chance. The lower this is the better competitor the strain is.
+        gereminate_spores: If true then add all spores to the population when deciding if a strain is present.
 
-    # Find the best competitor
-    totals = [a + b for a, b in zip(v_pops, s_pops)]  # Todo: During summation we should note the patch populations so do not have to recalculate?
-    totals = [x for x in enumerate(totals) if x[1] > 0] # Make list of form [(strain num, pop)), .... ]
+    Returns:
 
-    # If no strains then return string saying so
-    if not totals:
-        return "no winner"
+    """
 
-    # Strains are ordered by sporulation prob, so choose smallest to be winner.
-    winner = totals[0][0]
+    for sc in spore_chance:
+        assert not sc > 1
 
-    return winner
+    if germinate_spores:
+        pop = [x + y for x, y in zip(v_pops, s_pops)]
+    else:
+        pop = v_pops
+
+    present_strains = [x[0] for x in enumerate(pop) if x[1] > 0]  # Return only the strain numbers that are present in the patch
+
+    if not present_strains:
+        return []
+
+    best_sc = 1  # The best competitors sporulation chance. 1 is worst and 0 is best.
+    best_strains = []
+    for strain_num in present_strains:
+        sc = spore_chance[strain_num]
+        # if find better competitor make it new best .
+        if sc < best_sc:
+            best_sc = sc
+            best_strains = []  # Reset best strains
+            best_strains.append(strain_num)
+        elif sc == best_sc:
+            best_strains.append(strain_num)  # If there is a tie for best strain
+        else:
+            pass
+
+    return best_strains

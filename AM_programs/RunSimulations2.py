@@ -46,7 +46,7 @@ def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True
     for i in range(0, num_loops):
         print(f"Running basic sim {i}/{num_loops}")
 
-        world = World(NStrain(num_strains, folder_name=Path(name) / str(i), console_input=False,
+        world = World(NStrain(num_strains, folder_name=Path(name) / str(i), replicate_number=i,
                               spore_chance=sc,
                               germ_chance=gc,
                               fly_s_survival=fss,
@@ -96,10 +96,10 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'invasion test new data saver'
+    folder_name = 'invasion test big boi'
 
-    r = 2  # Times to repeat for average
-    steps = 10
+    r = 20  # Times to repeat for average
+    steps = 20
     num_strains = 10 # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")
@@ -111,6 +111,9 @@ if __name__ == "__main__":
     # Run i times. Report back
     print("\nMULTI STRAIN SIM")
     multiple_sims(num_strains, r, Path(folder_name) / "multi strain")  # Run a basic simulation on n strains and r loops
+
+    # Special invasion test
+    multiple_sims(2, 10, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
 
     # print("Done! Graphing...")
 

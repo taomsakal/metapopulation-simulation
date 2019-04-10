@@ -5,3 +5,5 @@
 venv
 venv/*
 params.txt
+*.png
+*.jpg

@@ -8,8 +8,8 @@ import general
 from simrules import testrules
 
 
-logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
-logging.info("--- Started " + "-" * 50)
+# logging.basicConfig(filename='test_world.log', level=logging.DEBUG)
+# logging.info("--- Started " + "-" * 50)
 
 
 def add_one(patch):
@@ -87,7 +87,7 @@ class TestInit:
         assert list(world1.worldmap.neighbors(0)) == [1, 2, 3, 4]
         assert list(world1.worldmap[0]) == [1, 2, 3, 4]
 
-        assert world1.patches[0].neighbor_ids() == [1, 2, 3, 4]
+        assert world1.patches[0].neighbor_ids() == [0, 1, 2, 3, 4]
 
 class TestPatchUpdates:
 

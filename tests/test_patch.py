@@ -8,8 +8,8 @@ from rules import Rules
 import general
 from simrules import testrules
 
-logging.basicConfig(filename='test_patch.log', level=logging.DEBUG)
-logging.info('Started')
+# logging.basicConfig(filename='test_patch.log', level=logging.DEBUG)
+# logging.info('Started')
 
 
 def add_double(patch):
@@ -108,10 +108,16 @@ class TestMap():
         assert len(world.patches) == 10
 
         logging.info(world.patches[0].neighbor_ids())
-        assert world.patches[0].neighbor_ids() == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        assert world.patches[0].neighbor_ids(self_loop=False) == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        assert world.patches[0].neighbor_ids() == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         for i, patch in enumerate(world.patches):
             nids = patch.neighbor_ids()
+            l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            assert nids == l
+
+        for i, patch in enumerate(world.patches):
+            nids = patch.neighbor_ids(self_loop=False)
             l = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
             l.remove(i)
             assert nids == l
@@ -123,7 +129,8 @@ class TestMap():
         assert len(world.patches) == 1
 
         logging.info(world.patches[0].neighbor_ids())
-        assert world.patches[0].neighbor_ids() == []
+        assert world.patches[0].neighbor_ids() == [0]
+        assert world.patches[0].neighbor_ids(self_loop=False) == []
 
     def test_neighbors_path_world(self):
         world = path_world()
@@ -133,10 +140,10 @@ class TestMap():
         assert len(world.patches) == 4
 
         logging.info(world.patches[0].neighbor_ids())
-        assert world.patches[0].neighbor_ids() == [1]
-        assert world.patches[1].neighbor_ids() == [0, 2]
-        assert world.patches[2].neighbor_ids() == [1, 3]
-        assert world.patches[3].neighbor_ids() == [2]
+        assert world.patches[0].neighbor_ids() == [0, 1]
+        assert world.patches[1].neighbor_ids() == [0, 1, 2]
+        assert world.patches[2].neighbor_ids(self_loop=False) == [1, 3]
+        assert world.patches[3].neighbor_ids() == [2, 3]
 
 class TestMisc:
 

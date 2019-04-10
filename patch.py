@@ -79,16 +79,22 @@ class Patch:
         #     else:
         #         raise Exception("Error with patch_update for patch {}.".format(self.id))
 
-    def neighbor_ids(self):
+    def neighbor_ids(self, self_loop=True):
         """
         Gets a list of all patches exactly distance 1 away.
+        If self_loop is True then the patch is a neighbor of itself.
 
         Returns:
             A list of patch ids.
         """
 
         neighbors = self.world.worldmap[self.id]  # This goes to the worldmap adjacency matrix to find all neighbors
-        return list(neighbors)
+        nbs = list(neighbors)\
+
+        if self_loop:
+            nbs.append(self.id)
+
+        return sorted(nbs)
 
     def random_neighbor(self):
         """ Returns a random neighboring patch """
