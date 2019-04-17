@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import sys
 import matplotlib.pyplot as plt
+import seaborn as sns
 from pathlib import Path
 
 from simrules import helpers
@@ -204,7 +205,7 @@ if __name__ == "__main__":
 
     paths = []
 
-    name = "invasion test self loops"
+    name = "invasion test big boi"
 
     folder_path = Path.cwd() / 'AM_programs' / 'save_data' / name
 
@@ -213,6 +214,12 @@ if __name__ == "__main__":
     print(df.head(5))
     df = df.dropna(axis="columns")
     print(df)
+
+    sns.set()
+    # plt = sns.load_dataset(df)
+    sns.relplot(x="Iteration", y="Global Patch Occupancy",
+                data=df, kind="line", legend="full")
+    plt.show()
     # for folder in os.listdir(folder_path):
     #     csv_list = []
     #     for run in os.listdir(folder_path / folder):

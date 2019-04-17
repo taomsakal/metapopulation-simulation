@@ -48,8 +48,8 @@ def basic_sim(num_strains, num_loops, name, sc_override=None, save_data=True):
             run(world)
 
             # Make a list of final eq values
-            resources = list(world.rules.sum_populations(world))[0]
-            run_pop = list(world.rules.sum_populations(world))[-1]
+            resources = list(world.rules.book_keeping(world))[0]
+            run_pop = list(world.rules.book_keeping(world))[-1]
             run_sum = sum(run_pop)
             try:
                 if run_sum != 0:

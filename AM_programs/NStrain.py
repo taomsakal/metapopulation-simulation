@@ -86,9 +86,9 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.1  # Timestep size
-        self.worldmap = nx.complete_graph(1000)  # The worldmap
+        self.worldmap = nx.complete_graph(300)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
-        self.prob_death = 0.07  # Probability of a patch dying.
+        self.prob_death = 0.03  # Probability of a patch dying.
         self.stop_time = 500  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
@@ -211,7 +211,7 @@ class NStrain(Rules):
             for patch in world.patches:
                 self.files.append(open('save_data/patch_' + str(patch.id) + '.csv', 'a+'))
 
-        self.sum_populations(world)
+        self.book_keeping(world)
 
     def reset_patch(self, patch):
         """
@@ -314,7 +314,8 @@ class NStrain(Rules):
         patch.v_populations = [0] * self.num_strains
         patch.s_populations = [0] * self.num_strains
 
-        if winners == []:  # No winners, patch empty
+        # If multiple winners choose a random one.
+        if winners == []:
             patch.resources = patch.gamma / patch.mu_R
             return
         else:
@@ -426,7 +427,7 @@ class NStrain(Rules):
             None
         """
 
-        propagules = self.sum_populations(world)
+        propagules = self.book_keeping(world)
         veg = propagules[1]
         spores = propagules[2]
 
@@ -468,7 +469,7 @@ class NStrain(Rules):
             if random.random() < self.prob_death * self.dt:
                 self.reset_patch(patch)
 
-    def sum_populations(self, world):
+    def book_keeping(self, world):
         """
         Sums the populations for all the patches to give a final number.
         Also sets the number for the entire simulation
@@ -511,9 +512,9 @@ class NStrain(Rules):
                 self.patches_occupied += 1
 
         self.total_pop = sum(self.all_population_totals)
+        self.patches_occupied = self.patches_occupied/self.patch_num  # Turns patches_occupied into a frequency
         self.patch_occupancy = [p / self.patch_num for p in
                                 self.patch_occupancy]  # Turns number of patches occupied into frequency
-
 
         return (self.total_resources, self.v_population_totals, self.s_population_totals, self.all_population_totals)
 
@@ -522,14 +523,7 @@ class NStrain(Rules):
         self.safety_checks(world)
 
         logging.info("Censusing and saving data")
-        total_resources, v_population_totals, s_population_totals, final_totals = self.sum_populations(world)
-
-        # print("\nIndividual Patch Info")
-        # for patch in world.patches:
-        #     print(f"Patch {patch.id}")
-        #     print(f"    Vegetative Population: {str(patch.v_populations)}")
-        #     print(f"    Sporulated Population: {str(patch.s_populations)}")
-        #     print(f"    Resources: {patch.init_resources_per_patch}")
+        total_resources, v_population_totals, s_population_totals, final_totals = self.book_keeping(world)
 
         # Write to individual patch save files
         if self.save_patch_data:
@@ -553,18 +547,11 @@ class NStrain(Rules):
                   round(sum(v_population_totals), 3), round(sum(s_population_totals), 3),
                   round(total_resources, 3), self.patches_occupied)
 
-        # Print current progress.
-        # print(f"\nGEN {world.age}/{self.stop_time}\nTOTALS: "
-        # f"\n    Veg: {str(v_population_totals)}"
-        # f"\n    Spore:{str(s_population_totals)}"
-        # f"\n    Resources: {str(total_resources)}"
-        # )
-
     def stop_condition(self, world):
         if world.age > self.stop_time:
             self.last_things(world)
             return True
-        elif sum(world.rules.sum_populations(world)[-1]) == 0:
+        elif sum(world.rules.book_keeping(world)[-1]) == 0:
             logging.warning(f"Population went extinct at gen {world.age}! Ending Simulation!")
             return True
         else:
@@ -575,41 +562,15 @@ class NStrain(Rules):
         Last steps before exiting the simulation.
         """
 
-        self.sum_populations(world)
+        self.book_keeping(world)
 
         if self.save_data:
             with open(f'{self.data_path}/final_eq.csv', 'a') as final_eq:
-                total_resources, v_population_totals, s_population_totals, final_totals = self.sum_populations(world)
+                total_resources, v_population_totals, s_population_totals, final_totals = self.book_keeping(world)
                 self.record_observations(final_eq, world, total_resources, v_population_totals,
                                          s_population_totals)
 
             self.total_file.close()
-
-        # self.print_params(world)
-
-    #     def write_frequency(self, n):
-
-    # """Returns the frequency of a strain for writing"""
-    #     try:
-    #         freq = (self.v_population_totals[n] + self.s_population_totals[n]) / self.total_pop
-    #         return str(freq)
-    #     except ZeroDivisionError:
-    #         logging.warning("Population went extinct!")
-    #         return f"Species {n} is extinct"
-    #     except IndexError:
-    #         logging.error(
-    #             f"Something crazy happened. We have population index {n} unable to be found in {self.v_population_totals}, or {self.s_population_totals}")
-
-    # def update_chance_by_sum_csv(self, world, total_resources, v_population_totals, s_population_totals):
-    #     """ Updates the chance by sum csv """
-    #     # Write to totals save file
-    #     self.chance_by_sum_file.write(f"{world.age},")
-    #     self.chance_by_sum_file.write(str(total_resources) + ",")
-    #     for i in range(0, self.num_strains):
-    #         self.chance_by_sum_file.write(f"{v_population_totals[i] + s_population_totals[i]},")
-    #     # total_pop = sum([v_population_totals[i] + s_population_totals[i] for i in range(len(v_population_totals))])
-    #     self.chance_by_sum_file.write(self.write_frequency(0))
-    #     self.chance_by_sum_file.write("\n")
 
     def record_observations(self, file, world, total_resources, v_population_totals, s_population_totals):
         """ Updates the totals csv
@@ -642,56 +603,6 @@ class NStrain(Rules):
                 file.write(str(self.replicate_number))
                 file.write("\n")
 
-    # def update_patch_occupancy(self, world):
-    #     """ Updates the totals csv"""
-    #     # Write to totals save file
-    #     self.patch_occupancy_file.write(str(world.age) + "," + str(self.patches_occupied) + ","
-    #                           + str(self.patches_occupied/self.patch_num)+",")
-    #
-    #     # Record frequency of each strain in terms of patch occupancy
-    #     for v in self.measure_patch_occupancy(world):
-    #         self.patch_occupancy_file.write(str(v/self.patch_num) + ",")
-    #
-    #     self.patch_occupancy_file.write("\n")
-
-    def find_winning_strain(self, patch):
-
-        total_pops = [x + y for x, y in zip(patch.v_populations, patch.s_populations)]
-        total_pops = np.array(total_pops)
-        winner = np.argmax(total_pops)
-
-        if winner.size > 1 or total_pops[
-            winner] < self.yeast_size:  # If multiple winners or the patch is empty return nothing
-            # print("No Winner")
-            return None
-
-        # print("Winning strain", winner)
-        return winner
-
-    # def measure_patch_occupancy(self, world):
-    #     """Outputs a list with the number of patches occupied by each strain"""
-    #
-    #
-    #     # Measure Patches Occupied
-    #     i = 0
-    #     for patch in world.patches:
-    #         if sum(patch.s_populations + patch.v_populations) >= self.yeast_size:  # This seems to break if it is 0
-    #             i += 1
-    #
-    #     patches_occupied_by_strain = [0]*self.num_strains
-    #     for p in world.patches:
-    #         i = self.find_winning_strain(p)
-    #         if i is not None:
-    #             patches_occupied_by_strain[i] += 1
-    #
-    #     self.patches_occupied = sum(patches_occupied_by_strain)
-    #
-    #     return patches_occupied_by_strain
-    #
-    # def measure_patch_frequency(self, world):
-    #     """Like measure patch occupancy but outputs the frequencies"""
-    #
-    #     return [i/self.patch_num for i in self.measure_patch_occupancy(world)]
 
 
 if __name__ == "__main__":

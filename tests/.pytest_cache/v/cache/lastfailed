@@ -24,6 +24,5 @@
   "test_integration2.py::TestNStrainEq::test_2_strain_1_with_no_colonization": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_extinction": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_no_extinction_discrete": true,
-  "test_integration2.py::TestNStrainExtinctionPresistence::test_strain_with_only_spores_goes_extinct_no_germination": true,
   "test_integration2.py::TestNStrainExtinctionPresistence::test_strain_with_only_spores_goes_extinct_with_germ": true
 }

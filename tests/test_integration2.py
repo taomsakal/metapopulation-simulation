@@ -241,8 +241,8 @@ class TestNStrainEq:
 
 
 
-        world1pop = sum(world.rules.sum_populations(world)[-1])
-        world2pop = sum(world2.rules.sum_populations(world2)[-1])
+        world1pop = sum(world.rules.book_keeping(world)[-1])
+        world2pop = sum(world2.rules.book_keeping(world2)[-1])
 
         assert within_percent(world1pop, world2pop, 0.15, epsilon=0.0005)
 
@@ -285,8 +285,8 @@ class TestNStrainEq:
             main.run(world2)
 
 
-        world1pop = world.rules.sum_populations(world)[0]
-        world2pop = world2.rules.sum_populations(world2)[0]
+        world1pop = world.rules.book_keeping(world)[0]
+        world2pop = world2.rules.book_keeping(world2)[0]
 
         assert within_percent(world1pop, world2pop, 0.35, epsilon=0.0005)
 
@@ -327,8 +327,8 @@ class TestNStrainEq:
             main.run(world2)
 
 
-        world1pop = world.rules.sum_populations(world)[0]
-        world2pop = world2.rules.sum_populations(world2)[0]
+        world1pop = world.rules.book_keeping(world)[0]
+        world2pop = world2.rules.book_keeping(world2)[0]
 
         assert within_percent(world1pop, world2pop, 0.25, epsilon=0.0005)
 
@@ -357,8 +357,8 @@ class TestNStrainEq:
             main.run(world2)
 
 
-            pop1 = sum(world.rules.sum_populations(world)[-1])
-            pop2 = sum(world2.rules.sum_populations(world)[-1])
+            pop1 = sum(world.rules.book_keeping(world)[-1])
+            pop2 = sum(world2.rules.book_keeping(world)[-1])
 
 
             if pop1 + pop2 != 0:
@@ -664,8 +664,8 @@ class TestNStrainExtinctionPresistence:
 
             main.simulate(world)
 
-            print(rules.sum_populations(world)[-1])
-            assert sum(rules.sum_populations(world)[-1]) > 1  # The sum of all cells should be much larger than zero
+            print(rules.book_keeping(world)[-1])
+            assert sum(rules.book_keeping(world)[-1]) > 1  # The sum of all cells should be much larger than zero
 
     def test_no_colonization_extinction(self):
         """We expect that if strains cannot colonize then they all eventually go extinct, even if cells are nearly immortal"""
@@ -767,7 +767,9 @@ class TestNStrainExtinctionPresistence:
             rules.fly_v_survival = [0] * rules.num_strains
             rules.germinate_on_drop = False
             rules.prob_death = 0.000  # Make sure that dead prob is low
+            rules.colonize_mode = "fly"  # if eq then germinate on drop and test will fail
             world = World(rules)
+
 
             main.simulate(world)
 
