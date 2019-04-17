@@ -96,10 +96,10 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'tidy big boy 2'
+    folder_name = 'big boi'
 
-    r = 5  # Times to repeat for average
-    steps = 10
+    r = 10  # Times to repeat for average
+    steps = 40
     num_strains = 10 # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")

@@ -86,10 +86,10 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 0.1  # Timestep size
-        self.worldmap = nx.complete_graph(300)  # The worldmap
+        self.worldmap = nx.complete_graph(1000)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.03  # Probability of a patch dying.
-        self.stop_time = 500  # Iterations to run
+        self.stop_time = 700  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
@@ -435,17 +435,23 @@ class NStrain(Rules):
         veg = [v if v >= 0 else 0 for v in veg]
         spores = [s if s >= 0 else 0 for s in spores]
 
+        # Calculate the "total colonization power" globaly
         # Weight each entry by Strainpop * Survival chance
         weighted_veg = [a * b for a, b in zip(veg, self.fly_v_survival)]
         weighted_spore = [a * b for a, b in zip(spores, self.fly_s_survival)]
         weights = weighted_veg + weighted_spore
         weighted_sum = sum(weights)
 
+        # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
             if self.colonization_prob(weighted_sum):
+                # Figure out which strain and type colonizes based off "colonization power" of each type.
                 colonist = random.choices(range(0, self.num_strains * 2), weights=weights, k=1)[0]
-                if colonist > self.num_strains - 1:  # If index says is a spore
-                    patch.s_populations[colonist - self.num_strains] += self.yeast_size
+                if colonist > self.num_strains - 1:  # If a spore colonize...
+                    if self.germinate_on_drop:  # ... and it germinates on drop add one veg cell to the patch.
+                        patch.v_populations[colonist - self.num_strains] += self.yeast_size
+                    else:  # Otherwise add one spore to the patch.
+                        patch.s_populations[colonist - self.num_strains] += self.yeast_size
                 else:  # Otherwise must be a veg cell
                     patch.v_populations[colonist] += self.yeast_size
 
