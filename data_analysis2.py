@@ -54,7 +54,9 @@ def meta_concat_dataframes(folder_prefix, file_name, folder_path):
         df = concat_dataframes(file_name, folder_path / folder)
         dfs.append(df)
 
+    print("Dfs:", dfs)
     df = pd.concat(dfs)
+    print("df:", df)
 
     return df
 
@@ -104,7 +106,7 @@ if __name__ == "__main__":
 
     paths = []
 
-    name = "big boi"
+    name = "testy testy"
 
     sns.set()
 
@@ -115,7 +117,7 @@ if __name__ == "__main__":
     print("Calculating patch occupancy curves")
     # strain_patch_occupancy_curve(totals_df)
     # global_patch_occupancy_curve(totals_df)
-    # strain_pop(totals_df)
+    strain_pop(totals_df)
 
     print("Making final eq dataframes...")
     eqs_df_double = meta_concat_dataframes("double_strain_curve_", "final_eq.csv", path)

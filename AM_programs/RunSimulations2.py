@@ -40,8 +40,11 @@ def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True
     gc = [0] * num_strains  # Germination Chance
     fvs = [0] * num_strains  # Fly Veg Survival
     fss = [1] * num_strains  # Fly Spore Survival
+
     if sc_override:
         sc = sc_override
+    elif len(sc) <= 1:
+        logging.warning(f"The sporulation chance vector is {sc}.")
 
     for i in range(0, num_loops):
         print(f"Running basic sim {i}/{num_loops}")
@@ -52,6 +55,8 @@ def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True
                               fly_s_survival=fss,
                               fly_v_survival=fvs))
         run(world)
+
+    return world
 
 
 
@@ -96,11 +101,11 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'big boi'
+    folder_name = 'testy testy'
 
-    r = 10  # Times to repeat for average
-    steps = 40
-    num_strains = 10 # Number of strains for the multiple strain run
+    r = 5  # Times to repeat for average
+    steps = 10
+    num_strains = 4 # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
@@ -110,7 +115,10 @@ if __name__ == "__main__":
 
     # Run i times. Report back
     print("\nMULTI STRAIN SIM")
-    multiple_sims(num_strains, r, Path(folder_name) / "multi strain")  # Run a basic simulation on n strains and r loops
+    world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain",
+                          sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
+
+    print(world.rules.num_strains)
 
     # # Special invasion test
     # multiple_sims(2, 10, Path(folder_name) / "special invasion test", sc_override=[.3, .3])

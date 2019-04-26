@@ -47,12 +47,12 @@ class NStrain(Rules):
         # These are passed into the patch, which always uses it's own, meaning we can change these per patch.
         # For example, we can make some patches more dangerous than others.
         logging.info("Setting default patch parameters")
-        self.c = 1  # Consumption rate for init_resources_per_patch.
-        self.alpha = 0.5  # Conversion factor for init_resources_per_patch into cells
-        self.mu_v = 0.2  # Background death rate for vegetative cells
+        self.c = 0.1  # Consumption rate for init_resources_per_patch.
+        self.alpha = 0.2  # Conversion factor for init_resources_per_patch into cells
+        self.mu_v = 0.1  # Background death rate for vegetative cells
         self.mu_s = 0.05  # Background death rate for sporulated cells
         self.mu_R = 0.01  # "death" rate for init_resources_per_patch.
-        self.gamma = .5  # Rate of resource renewal
+        self.gamma = 1  # Rate of resource renewal
         self.num_strains = num_strains
         self.init_resources_per_patch = 0.5  # Initial resource value for each patch
 
@@ -85,16 +85,16 @@ class NStrain(Rules):
             self.fly_v_survival = fly_v_survival
 
         # Global Parameters
-        self.dt = 0.1  # Timestep size
+        self.dt = 1  # Timestep size
         self.worldmap = nx.complete_graph(1000)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.03  # Probability of a patch dying.
-        self.stop_time = 700  # Iterations to run
+        self.stop_time = 500  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
         self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1 / 3000  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonization_prob_slope = 1 / 8000  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 0  # Number of flies each colonization event
@@ -182,28 +182,17 @@ class NStrain(Rules):
         """
         For each patch give a random strain.
         """
-        initial_v = []
-        initial_s = []
-
-        # decide on initial cells for each strain
-        if self.console_input:
-            for i in range(0, self.num_strains):  # Iterate through each strain
-                # Initial Vegetative Cells
-                initial_v.append(float(input("Initial Vegetative Cells of Strain " + str(i + 1) + ": ")))
-                # Initial Vegetative Cells
-                initial_s.append(float(input("Initial Sporulated Cells of Strain " + str(i + 1) + ": ")))
-        else:
-            # todo: for now just give each strain an intial number
-            initial_s = [self.yeast_size] * self.num_strains
-            initial_v = [self.yeast_size] * self.num_strains
 
         # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
-            # if random.random() < 0.5:
-            strain = i % world.rules.num_strains
-            # Fill the patch with a single strain
-            patch.v_populations[strain] += initial_v[strain]
-            patch.s_populations[strain] += initial_s[strain]
+            if i % 4 ==0: # for testing
+                strain = i % world.rules.num_strains
+                # Fill the patch with a single strain
+                patch.v_populations[strain] += self.yeast_size
+                patch.s_populations[strain] += self.yeast_size
+            else:
+                patch.v_populations[strain] += 0
+                patch.s_populations[strain] += 0
 
         # Prepare an array of save files for each patch
         # todo: move this line to a better location
@@ -441,6 +430,7 @@ class NStrain(Rules):
         weighted_spore = [a * b for a, b in zip(spores, self.fly_s_survival)]
         weights = weighted_veg + weighted_spore
         weighted_sum = sum(weights)
+        print("Weights", weighted_sum)
 
         # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
@@ -459,8 +449,12 @@ class NStrain(Rules):
 
         prob = n * self.colonization_prob_slope * self.dt
 
+
+
         if prob > 1:
             prob = 1
+
+        # print("Probability", prob)
 
         if random.random() < prob:
             return True
@@ -554,7 +548,7 @@ class NStrain(Rules):
                   round(total_resources, 3), self.patches_occupied)
 
     def stop_condition(self, world):
-        if world.age > self.stop_time:
+        if world.age >= self.stop_time:
             self.last_things(world)
             return True
         elif sum(world.rules.book_keeping(world)[-1]) == 0:

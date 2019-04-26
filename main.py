@@ -27,9 +27,9 @@ def simulate(world):
     world.rules.set_initial_conditions(world)
     while not world.rules.stop_condition(world):
         world.rules.census(world)
-        world.rules.kill_patches(world)
         world.update_patches()
         world.rules.colonize(world)
+        world.rules.kill_patches(world)
         world.age += 1
 
     logging.info(f"Finished simulating world {world.name}")
