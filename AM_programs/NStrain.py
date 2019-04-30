@@ -431,6 +431,7 @@ class NStrain(Rules):
         weights = weighted_veg + weighted_spore
         weighted_sum = sum(weights)
         print("Weights", weighted_sum)
+        weighted_sum = weighted_sum / self.patch_num
 
         # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
