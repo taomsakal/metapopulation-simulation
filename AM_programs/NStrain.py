@@ -86,15 +86,15 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 1  # Timestep size
-        self.worldmap = nx.complete_graph(1000)  # The worldmap
+        self.worldmap = nx.complete_graph(2000)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.03  # Probability of a patch dying.
-        self.stop_time = 500  # Iterations to run
+        self.stop_time = 100  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
         self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1 / 8000  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonization_prob_slope = 1 / 60  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 0  # Number of flies each colonization event
@@ -160,9 +160,7 @@ class NStrain(Rules):
                     assert self.spore_chance[i - 1] <= self.spore_chance[
                         i]  # If fails then direct jump to eq update type won't work because it assumes they are ordered
                 except:
-                    Exception(f"Our sporulation chances are not ordered correctly. "
-                              f"Specifically {self.spore_chance[i - 1]} is not less than {self.spore_chance[i]} \n" +
-                              f"The spore chance vector is {self.spore_chance}")
+                    Exception(f"Our sporulation chances are not ordered correctly. Specifically {self.spore_chance[i - 1]} is not less than {self.spore_chance[i]} \n The spore chance vector is {self.spore_chance}")
 
     def ask_for_input(self, num_strains):
         """Asks for the parameter input instead of reading the default"""
@@ -185,7 +183,7 @@ class NStrain(Rules):
 
         # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
-            if i % 4 ==0: # for testing
+            if i % 2 ==0: # for testing
                 strain = i % world.rules.num_strains
                 # Fill the patch with a single strain
                 patch.v_populations[strain] += self.yeast_size
@@ -430,8 +428,9 @@ class NStrain(Rules):
         weighted_spore = [a * b for a, b in zip(spores, self.fly_s_survival)]
         weights = weighted_veg + weighted_spore
         weighted_sum = sum(weights)
-        print("Weights", weighted_sum)
-        weighted_sum = weighted_sum / self.patch_num
+        # print("Weights", weighted_sum)
+        weighted_sum = weighted_sum / self.patch_num  # Take average so that number of patches does not affect chance.
+        print("Colonization Prob", weighted_sum * self.colonization_prob_slope * self.dt)
 
         # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
@@ -553,6 +552,7 @@ class NStrain(Rules):
             self.last_things(world)
             return True
         elif sum(world.rules.book_keeping(world)[-1]) == 0:
+            self.last_things(world)
             logging.warning(f"Population went extinct at gen {world.age}! Ending Simulation!")
             return True
         else:

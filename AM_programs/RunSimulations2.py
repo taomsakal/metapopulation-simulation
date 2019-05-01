@@ -90,7 +90,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
     """
     sc = helpers.spaced_probs(resolution)  # The strain we vary
-    sc_2 = 0.5  # The strain we hold constant's spore prob
+    sc_2 = 0.3  # The strain we hold constant's spore prob
 
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
@@ -101,11 +101,11 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
 
 if __name__ == "__main__":
-    folder_name = 'testy testy'
+    folder_name = 'testy testy testy 2'
 
-    r = 5  # Times to repeat for average
+    r = 4  # Times to repeat for average
     steps = 10
-    num_strains = 4 # Number of strains for the multiple strain run
+    num_strains = 10 # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
@@ -115,8 +115,8 @@ if __name__ == "__main__":
 
     # Run i times. Report back
     print("\nMULTI STRAIN SIM")
-    world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain",
-                          sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
+    world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
+                          # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
 
     print(world.rules.num_strains)
 
