@@ -86,15 +86,15 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 1  # Timestep size
-        self.worldmap = nx.complete_graph(2000)  # The worldmap
+        self.worldmap = nx.complete_graph(1500)  # The worldmap
         self.patch_num = nx.number_of_nodes(self.worldmap)
-        self.prob_death = 0.03  # Probability of a patch dying.
-        self.stop_time = 100  # Iterations to run
+        self.prob_death = 0.2  # Probability of a patch dying.
+        self.stop_time = 1500  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
         self.colonize_mode = 'probabilities'  # 'fly' or 'probabilities'
-        self.colonization_prob_slope = 1 / 60  # Total weighted number of yeast times this is the prob that a patch is colonized
+        self.colonization_prob_slope = 1  # Total weighted number of yeast times this is the prob that a patch is colonized
 
         # Fly Params
         self.num_flies = 0  # Number of flies each colonization event
@@ -183,14 +183,13 @@ class NStrain(Rules):
 
         # Give each patch a strain
         for i, patch in enumerate(world.patches):  # Iterate through each patch
-            if i % 2 ==0: # for testing
-                strain = i % world.rules.num_strains
-                # Fill the patch with a single strain
-                patch.v_populations[strain] += self.yeast_size
-                patch.s_populations[strain] += self.yeast_size
-            else:
-                patch.v_populations[strain] += 0
-                patch.s_populations[strain] += 0
+            strain = i % world.rules.num_strains
+            # Fill the patch with a single strain
+            patch.v_populations[strain] += self.yeast_size
+            patch.s_populations[strain] += self.yeast_size
+        else:
+            patch.v_populations[strain] += 0
+            patch.s_populations[strain] += 0
 
         # Prepare an array of save files for each patch
         # todo: move this line to a better location
@@ -430,7 +429,7 @@ class NStrain(Rules):
         weighted_sum = sum(weights)
         # print("Weights", weighted_sum)
         weighted_sum = weighted_sum / self.patch_num  # Take average so that number of patches does not affect chance.
-        print("Colonization Prob", weighted_sum * self.colonization_prob_slope * self.dt)
+        # print("Colonization Prob", weighted_sum * self.colonization_prob_slope * self.dt)
 
         # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
@@ -542,10 +541,10 @@ class NStrain(Rules):
                 self.record_observations(self.total_file, world, total_resources, v_population_totals,
                                          s_population_totals)
 
-        if world.age % 10 == 0:
-            print("    Veg, Spore, Resource, patches occupied:",
-                  round(sum(v_population_totals), 3), round(sum(s_population_totals), 3),
-                  round(total_resources, 3), self.patches_occupied)
+        # if world.age % 10 == 0:
+            # print("    Veg, Spore, Resource, patches occupied:",
+            #       round(sum(v_population_totals), 3), round(sum(s_population_totals), 3),
+            #       round(total_resources, 3), self.patches_occupied)
 
     def stop_condition(self, world):
         if world.age >= self.stop_time:

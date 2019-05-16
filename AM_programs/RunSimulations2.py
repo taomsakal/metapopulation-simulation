@@ -90,22 +90,44 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
     """
     sc = helpers.spaced_probs(resolution)  # The strain we vary
-    sc_2 = 0.3  # The strain we hold constant's spore prob
+    sc_2 = 0.4  # The strain we hold constant's spore prob
 
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
         multiple_sims(2, iterations_for_average, folder_name + f"/double_strain_curve_{i}",
                       sc_override=[prob, sc_2])
 
+def sanity_check():
+    """
+    This iterates through many simulations of two strains with the exact same parameters.
+    We should find that they on average have 50% patch occupancy. Otherwise something is wrong.
+    This function just runs the simulations.
+    """
+    # Same param test
+    for i in range(0, 10):
+        for j in range(0, 20):
+            print(f"Running sanity test. (Make sure same strain does the same) {i}-{j}")
+            prob=helpers.spaced_probs(10)[i]
+            world = World(NStrain(2, folder_name=Path("SanityTest") / f"{i}-{j}", replicate_number=j,
+                                  spore_chance=[prob, prob],
+                                  germ_chance=[0, 0],
+                                  fly_s_survival=[.8, .8],
+                                  fly_v_survival=[.2, .2]))
+            from main import run  # For some reason I need this a second time?
+            run(world)
+
 
 
 
 if __name__ == "__main__":
-    folder_name = 'testy testy testy 2'
 
-    r = 4  # Times to repeat for average
+
+
+    folder_name = 'Kelly Graphs sc 4'
+
+    r = 5  # Times to repeat for average
     steps = 10
-    num_strains = 10 # Number of strains for the multiple strain run
+    num_strains = 10  # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
@@ -116,14 +138,17 @@ if __name__ == "__main__":
     # Run i times. Report back
     print("\nMULTI STRAIN SIM")
     world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
-                          # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
+    # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
 
     print(world.rules.num_strains)
 
-    # # Special invasion test
-    # multiple_sims(2, 10, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
+    # Special invasion test
+    multiple_sims(2, 10, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
 
-    # print("Done! Graphing...")
+    print("Done! Graphing...")
 
-    # import data_analysis
-    # data_analysis.make_da_graphs(folder_name)
+    import data_analysis
+    data_analysis.make_da_graphs(folder_name)
+
+
+    # sanity_check()

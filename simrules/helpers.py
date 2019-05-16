@@ -210,3 +210,10 @@ def find_winner(v_pops : list, s_pops : list, spore_chance : list, germinate_spo
             pass
 
     return best_strains
+    # return present_strains
+
+    # print(present_strains)
+    # if len(present_strains) == 1:
+    #     return [0]
+    # else:
+    #     return [1]
