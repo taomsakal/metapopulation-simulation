@@ -66,6 +66,7 @@ def strain_pop(df, title=None):
 
     sns.relplot(x="Iteration", y="Population",
                 data=df, kind="line", legend="full", hue="Strain Number")#.set_title("Strain Population")
+    plt.tight_layout()
     plt.show()
 
 
@@ -79,8 +80,8 @@ def global_patch_occupancy_curve(df, title=None):
     plot = sns.relplot(x="Iteration", y="Global Patch Occupancy",
                 data=df, kind="line", style="Type")
 
-    plot.savefig("Patch Occupancy (Global)")
-
+    plt.tight_layout()
+    plt.show()
 
 def strain_patch_occupancy_curve(df, title=None):
     """Makes a patch occupancy curve seperated by strains"""
@@ -88,13 +89,18 @@ def strain_patch_occupancy_curve(df, title=None):
     df = df[df.Type == "Both"]
     plot = sns.lineplot(x="Iteration", y="Patch Occupancy of Strain", data=df, legend="full",
                 hue="Strain Number").set_title("Strain Patch Occupancy")
-    plot.savefig("Patch Occupancy (By Strain)")
+    plt.tight_layout()
+    plt.show()
+    # plot.savefig("Patch Occupancy (By Strain)")
 
 def eq_values(df, title=None):
 
     plot = sns.barplot(x="Sporulation Chance", y="Patch Occupancy of Strain", color="b",
                 data=df)#.set_title("Final Eq Values")
-    plot.savefig("Final Eq Averages")
+
+    # plot.savefig("Final Eq Averages")
+    plt.tight_layout()
+    plt.show()
 
 def double_strain_plot(df):
     f, ax = plt.subplots()
@@ -117,8 +123,8 @@ def double_strain_plot(df):
            xlabel="Double Strain Curve")
     sns.despine(left=True, bottom=True)
 
-    f.savefig("Double Strain Curve")
-
+    # f.savefig("Double Strain Curve")
+    plt.show()
 
 if __name__ == "__main__":
     # sns.set()
@@ -129,45 +135,45 @@ if __name__ == "__main__":
 
     paths = []
 
-    name = "SanityTest"
+    name = "Morn pt5 mu"
 
     sns.set()
 
     path = Path.cwd() / 'AM_programs' / 'save_data' / Path(name)
 
 
-    data =[]
-    for folder in os.listdir(path):
-        print(f"Adding {folder}")
-        data.append(load_csv_to_df(path/ folder / "final_eq.csv"))
-    data = pd.concat(data)
+    # data =[]
+    # for folder in os.listdir(path):
+    #     print(f"Adding {folder}")
+    #     data.append(load_csv_to_df(path/ folder / "final_eq.csv"))
+    # data = pd.concat(data)
 
-    print(data)
-    data.to_csv(path / "SanityTest.csv")
+    # print(data)
+    # data.to_csv(path / "SanityTest.csv")
 
-    # totals_df = concat_dataframes("totals.csv", path / "multi strain")
-    # print(totals_df["Strain Number"])
-    # #
-    # print("Calculating patch occupancy curves")
-    # strain_patch_occupancy_curve(totals_df)
-    # global_patch_occupancy_curve(totals_df)
-    # # strain_pop(totals_df)
+    totals_df = concat_dataframes("totals.csv", path / "multi strain")
+    print(totals_df["Strain Number"])
     #
-    # print("Making double strain curve...")
-    # eqs_df_double = meta_concat_dataframes("double_strain_curve_", "final_eq.csv", path)
-    # double_strain_plot(eqs_df_double)
-    #
-    # print("Calculating final eq values...")
-    # # eq_values(eqs_multi)
-    # print(eqs_df_double)
-    # eqs_multi = concat_dataframes("final_eq.csv", path / "multi strain")
-    # eqs_df_single = meta_concat_dataframes("single_spore_curve_", "final_eq.csv", path)
-    # eq_values(eqs_df_single)
-    #
-    # data = concat_dataframes("totals.csv", path / "double_strain_curve_8")
-    # sns.relplot()
-    #
-    # print("DONE")
+    print("Calculating patch occupancy curves")
+    strain_patch_occupancy_curve(totals_df)
+    global_patch_occupancy_curve(totals_df)
+    # strain_pop(totals_df)
+
+    print("Making double strain curve...")
+    eqs_df_double = meta_concat_dataframes("double_strain_curve_", "final_eq.csv", path)
+    double_strain_plot(eqs_df_double)
+
+    print("Calculating final eq values...")
+    # eq_values(eqs_multi)
+    print(eqs_df_double)
+    eqs_multi = concat_dataframes("final_eq.csv", path / "multi strain")
+    eqs_df_single = meta_concat_dataframes("single_spore_curve_", "final_eq.csv", path)
+    eq_values(eqs_df_single)
+
+    data = concat_dataframes("totals.csv", path / "double_strain_curve_8")
+    sns.relplot()
+
+    print("DONE")
 
 
 

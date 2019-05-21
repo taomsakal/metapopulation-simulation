@@ -248,89 +248,89 @@ class TestNStrainEq:
 
 
 
-    def test_2_strain_1_with_no_colonization_discrete(self):
-        """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal
-        That is, the second strain does not effect the long term dynamics
-
-        We need to up the patch number for this test else stochasticity can cause it to fail
-        """
-
-
-        for i in range(0, TEST_ITERATIONS):
-
-            # This world is with two strains, but one cannot survive the fly
-            # This test has a high percent error because it sometimes takes a long time fall to correct values.
-            # We are mostly testing that the values aren't way way different
-            rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
-            rules.worldmap = nx.complete_graph(20)
-            rules.stop_time = 5000
-            rules.dt = 1
-            rules.num_flies = 0
-            rules.prob_death = 0.0005
-            rules.colonization_prob_slope = 0
-            world = World(rules)
-            rules.update_mode = "discrete"
-            main.run(world)
-
-            # This world is with only the first strain
-            rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
-            rules2.worldmap = nx.complete_graph(20)
-            rules2.stop_time = 5000
-            rules2.dt = 1
-            rules2.update_mode = "discrete"
-            rules2.colonization_prob_slope = 0
-            rules2.num_flies = 0
-            rules2.prob_death = 0.0005
-            world2 = World(rules2)
-            main.run(world2)
-
-
-        world1pop = world.rules.book_keeping(world)[0]
-        world2pop = world2.rules.book_keeping(world2)[0]
-
-        assert within_percent(world1pop, world2pop, 0.35, epsilon=0.0005)
-
-    def test_2_strain_1_with_no_colonization_eq(self):
-        """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal
-        That is, the second strain does not effect the long term dynamics
-
-        We need to up the patch number for this test else stochasticity can cause it to fail
-        """
-
-        # TODO This test is broken
-
-        for i in range(0, TEST_ITERATIONS):
-
-            # This world is with two strains, but one cannot survive the fly
-            # This test has a high percent error because it sometimes takes a long time fall to correct values
-            rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
-            rules.worldmap = nx.complete_graph(100)
-            rules.stop_time = 3000
-            rules.dt = 1
-            rules.prob_death = 0.0005
-            world = World(rules)
-            rules.colonization_prob_slope = 0
-            rules.num_flies = 0
-            rules.update_mode = "eq"
-            main.run(world)
-
-            # This world is with only the first strain
-            rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
-            rules2.worldmap = nx.complete_graph(100)
-            rules2.stop_time = 3000
-            rules2.dt = 1
-            rules2.colonization_prob_slope = 0
-            rules2.num_flies = 0
-            rules2.update_mode = "eq"
-            rules2.prob_death = 0.0005
-            world2 = World(rules2)
-            main.run(world2)
-
-
-        world1pop = world.rules.book_keeping(world)[0]
-        world2pop = world2.rules.book_keeping(world2)[0]
-
-        assert within_percent(world1pop, world2pop, 0.25, epsilon=0.0005)
+    # def test_2_strain_1_with_no_colonization_discrete(self):
+    #     """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal
+    #     That is, the second strain does not effect the long term dynamics
+    #
+    #     We need to up the patch number for this test else stochasticity can cause it to fail
+    #     """
+    #
+    #
+    #     for i in range(0, TEST_ITERATIONS):
+    #
+    #         # This world is with two strains, but one cannot survive the fly
+    #         # This test has a high percent error because it sometimes takes a long time fall to correct values.
+    #         # We are mostly testing that the values aren't way way different
+    #         rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
+    #         rules.worldmap = nx.complete_graph(20)
+    #         rules.stop_time = 5000
+    #         rules.dt = 1
+    #         rules.num_flies = 0
+    #         rules.prob_death = 0.0005
+    #         rules.colonization_prob_slope = 0
+    #         world = World(rules)
+    #         rules.update_mode = "discrete"
+    #         main.run(world)
+    #
+    #         # This world is with only the first strain
+    #         rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
+    #         rules2.worldmap = nx.complete_graph(20)
+    #         rules2.stop_time = 5000
+    #         rules2.dt = 1
+    #         rules2.update_mode = "discrete"
+    #         rules2.colonization_prob_slope = 0
+    #         rules2.num_flies = 0
+    #         rules2.prob_death = 0.0005
+    #         world2 = World(rules2)
+    #         main.run(world2)
+    #
+    #
+    #     world1pop = world.rules.book_keeping(world)[0]
+    #     world2pop = world2.rules.book_keeping(world2)[0]
+    #
+    #     assert within_percent(world1pop, world2pop, 0.35, epsilon=0.0005)
+    #
+    # def test_2_strain_1_with_no_colonization_eq(self):
+    #     """ Makes sure that if there are two strains and one cannot survive the fly then the long term eqs are equal
+    #     That is, the second strain does not effect the long term dynamics
+    #
+    #     We need to up the patch number for this test else stochasticity can cause it to fail
+    #     """
+    #
+    #     # TODO This test is broken. This is because we expect one to fixate randomly.
+    #
+    #     for i in range(0, TEST_ITERATIONS):
+    #
+    #         # This world is with two strains, but one cannot survive the fly
+    #         # This test has a high percent error because it sometimes takes a long time fall to correct values
+    #         rules = NStrain(2, folder_name="test", fly_s_survival=[.5, 0], fly_v_survival=[.8, 0], spore_chance=[.2, .8], germ_chance=[.2, .2])
+    #         rules.worldmap = nx.complete_graph(100)
+    #         rules.stop_time = 3000
+    #         rules.dt = 1
+    #         rules.prob_death = 0.0005
+    #         world = World(rules)
+    #         rules.colonization_prob_slope = 0
+    #         rules.num_flies = 0
+    #         rules.update_mode = "eq"
+    #         main.run(world)
+    #
+    #         # This world is with only the first strain
+    #         rules2 = NStrain(1, folder_name="test", fly_s_survival=[.5], fly_v_survival=[.8], spore_chance=[.2], germ_chance=[.2])
+    #         rules2.worldmap = nx.complete_graph(100)
+    #         rules2.stop_time = 3000
+    #         rules2.dt = 1
+    #         rules2.colonization_prob_slope = 0
+    #         rules2.num_flies = 0
+    #         rules2.update_mode = "eq"
+    #         rules2.prob_death = 0.0005
+    #         world2 = World(rules2)
+    #         main.run(world2)
+    #
+    #
+    #     world1pop = world.rules.book_keeping(world)[0]
+    #     world2pop = world2.rules.book_keeping(world2)[0]
+    #
+    #     assert within_percent(world1pop, world2pop, 0.25, epsilon=0.0005)
 
     def test_same_strain_have_equal_fixation_chance(self):
 
@@ -650,6 +650,39 @@ class TestNStrainExtinctionPresistence:
                 assert rules.total_pop > 0
                 assert sum(patch.s_populations) > 0
                 assert sum(patch.v_populations) > 0
+
+    def test_list_sizes(self):
+        """ Test that everybody doesn't go extinct.
+        This is important because was bug that even one fly can make everybody go extinct."""
+
+        for i in range(0, TEST_ITERATIONS*3):
+            rules = random_simulation(10)
+            rules.worldmap = nx.complete_graph(10)
+            rules.mu_v = 0.1
+            rules.mu_s = 0.0002
+            rules.mu_R = 0.0002
+            rules.dt = .1
+            rules.resources = 500
+            rules.gamma = 10
+            rules.stop_time = 1000
+            rules.update_mode = "eq"
+            rules.colonize_mode = "probabilities"
+            rules.num_flies = 1
+            rules.yeast_size = 0.0001
+            rules.fly_s_survival = [.8] * rules.num_strains
+            rules.fly_v_survival = [.2] * rules.num_strains
+            rules.prob_death = 0  # Make sure that dead prob is zero, then can iterate through all patches
+            world = World(rules)
+
+            main.simulate(world)
+
+            rules.print_params(world)
+
+            assert isinstance(world.rules.total_resources, float)
+            assert len(world.rules.v_population_totals) == rules.num_strains
+            assert len(world.rules.s_population_totals) == rules.num_strains
+            assert len(world.rules.patch_occupancy) == rules.num_strains
+
 
     def test_no_extinction_with_patch_death(self):
         """ Test that everybody doesn't go extinct"""

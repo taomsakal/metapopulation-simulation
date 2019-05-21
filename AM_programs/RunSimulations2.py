@@ -13,7 +13,9 @@ from AM_programs.NStrain import NStrain
 from world import World
 from main import run
 import matplotlib.pyplot as plt
+import networkx as nx
 
+WORLDMAP = nx.complete_graph(1000)
 
 def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True):
     """
@@ -49,7 +51,7 @@ def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True
     for i in range(0, num_loops):
         print(f"Running basic sim {i}/{num_loops}")
 
-        world = World(NStrain(num_strains, folder_name=Path(name) / str(i), replicate_number=i,
+        world = World(NStrain(num_strains, folder_name=Path(name) / str(i), replicate_number=i, worldmap=WORLDMAP,
                               spore_chance=sc,
                               germ_chance=gc,
                               fly_s_survival=fss,
@@ -108,7 +110,7 @@ def sanity_check():
         for j in range(0, 20):
             print(f"Running sanity test. (Make sure same strain does the same) {i}-{j}")
             prob=helpers.spaced_probs(10)[i]
-            world = World(NStrain(2, folder_name=Path("SanityTest") / f"{i}-{j}", replicate_number=j,
+            world = World(NStrain(2, folder_name=Path("SanityTest") / f"{i}-{j}", replicate_number=j, worldmap=WORLDMAP,
                                   spore_chance=[prob, prob],
                                   germ_chance=[0, 0],
                                   fly_s_survival=[.8, .8],
@@ -123,11 +125,11 @@ if __name__ == "__main__":
 
 
 
-    folder_name = 'Kelly Graphs sc 4'
+    folder_name = 'Lookup Table Run'
 
     r = 5  # Times to repeat for average
     steps = 10
-    num_strains = 10  # Number of strains for the multiple strain run
+    num_strains = 12  # Number of strains for the multiple strain run
 
     print("\nSINGLE SPORE CURVE")
     single_spore_curve(folder_name, steps, r)
@@ -143,12 +145,9 @@ if __name__ == "__main__":
     print(world.rules.num_strains)
 
     # Special invasion test
-    multiple_sims(2, 10, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
+    # multiple_sims(2, 3, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
 
     print("Done! Graphing...")
-
-    import data_analysis
-    data_analysis.make_da_graphs(folder_name)
 
 
     # sanity_check()

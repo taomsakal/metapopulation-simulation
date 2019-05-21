@@ -18,7 +18,7 @@ import dashboard
 
 class NStrain(Rules):
 
-    def __init__(self, num_strains, replicate_number=None, run_name=None, console_input=False, spore_chance=None,
+    def __init__(self, num_strains, worldmap=nx.complete_graph(100), replicate_number=None, run_name=None, console_input=False, spore_chance=None,
                  germ_chance=None,
                  fly_v_survival=None, fly_s_survival=None, folder_name=None, save_data=True):
         """
@@ -42,6 +42,8 @@ class NStrain(Rules):
         self.console_input = console_input
         self.run_name = run_name
         self.replicate_number = replicate_number
+
+        random.seed = 42  # Set seed for replicable results
 
         # Default patch specific parameters
         # These are passed into the patch, which always uses it's own, meaning we can change these per patch.
@@ -86,10 +88,10 @@ class NStrain(Rules):
 
         # Global Parameters
         self.dt = 1  # Timestep size
-        self.worldmap = nx.complete_graph(1500)  # The worldmap
+        self.worldmap = worldmap  # The worldmap. This should be a networkx graph
         self.patch_num = nx.number_of_nodes(self.worldmap)
-        self.prob_death = 0.2  # Probability of a patch dying.
-        self.stop_time = 1500  # Iterations to run
+        self.prob_death = 0.4  # Probability of a patch dying.
+        self.stop_time = 1000  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode
@@ -117,6 +119,12 @@ class NStrain(Rules):
 
         self.files = []
 
+        #Patch Lookup table
+        self.all_patches_same = True  # If all patches are the same only need to make one lookup table
+        self.first_run = True
+        self.lookup_table = {}
+
+
         if folder_name is None:
             self.data_path = input("What shall we name the data folder for this simulation?")
         else:
@@ -133,6 +141,13 @@ class NStrain(Rules):
             # Make a csv with final equilibrium
             helpers.init_csv(self.data_path, "final_eq.csv", column_names)
 
+
+            # Save parameters
+            with open(f"{self.data_path}/params.txt", "a") as txt:
+                txt.write(f"\nCurrent Parameters for {self.run_name}")
+                for d in self.__dict__.items():
+                    txt.write("    " + d[0] + ':' + str(d[1]) + "\n")
+
     def safety_checks(self, world):
         """
         Checks to make sure nothing greatly concerning is going on in terms of parameters. If not fails an assertion.
@@ -146,6 +161,8 @@ class NStrain(Rules):
         assert self.mu_R != 0
         assert self.mu_s != 0
         assert self.mu_v != 0
+
+        assert self.worldmap is not None
 
         ## Actually we can allow this.
         # Make sure there are populations that are not negative
@@ -237,52 +254,54 @@ class NStrain(Rules):
         mode = self.update_mode
 
         if mode == 'discrete':
-            for i in range(0, self.patch_update_iterations):
-
-                r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
-
-                for i in range(0, self.num_strains):  # Iterate through strains of patch
-
-                    # Vegetative cell change
-                    # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
-                    v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
-                            1 - self.spore_chance[i]) \
-                               - (patch.mu_v * patch.v_populations[i]) + (
-                                       self.germ_chance[i] * patch.resources * patch.s_populations[i])
-
-                    # Sporulated cell change
-                    # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
-                    s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
-                        self.spore_chance[i]) \
-                               - (patch.mu_s * patch.s_populations[i]) - (
-                                       self.germ_chance[i] * patch.resources * patch.s_populations[i])
-
-                    r_change -= patch.c * patch.resources * patch.v_populations[
-                        i]  # Resource change -= eaten init_resources_per_patch
-
-                    # Add population changes
-                    patch.v_populations[i] += v_change * self.dt
-                    patch.s_populations[i] += s_change * self.dt
-
-                patch.resources += r_change * self.dt  # Add resource changes
-
-                # Make sure none become negative
-                for i in range(0, self.num_strains):
-                    if patch.v_populations[i] < 0:
-                        patch.v_populations[i] = 0
-                    if patch.s_populations[i] < 0:
-                        patch.s_populations[i] = 0
-
-                if patch.resources < 0:
-                    patch.resources = 0
-
-        # If calculating via equilibrium values, set all strains in each patch to be the eq value we calculated
-        # outside of the program.
+            self.discrete_update(patch)
         elif mode == 'eq':
             self.jump_to_eq_update(patch)
-
         else:
             raise Exception(f"{type} is not a valid update mode.")
+
+    def discrete_update(self, patch):
+        """Do discrete updates. THat is don't go all the way to eq but only to a certain time.
+        Note that this mode is not fully implemented and still buggy."""
+        for i in range(0, self.patch_update_iterations):
+
+            r_change = patch.gamma - patch.mu_R * patch.resources  # Constant init_resources_per_patch, death proportional to population
+
+            for i in range(0, self.num_strains):  # Iterate through strains of patch
+
+                # Vegetative cell change
+                # (new veg)*(prop remaining veg) - (dead veg) + (germinated spores)
+                v_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
+                        1 - self.spore_chance[i]) \
+                           - (patch.mu_v * patch.v_populations[i]) + (
+                                   self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+                # Sporulated cell change
+                # (birth from resource consumption)*(prop spores) - (spore death) - (germinated spores)
+                s_change = (patch.alpha * patch.c * patch.resources * patch.v_populations[i]) * (
+                    self.spore_chance[i]) \
+                           - (patch.mu_s * patch.s_populations[i]) - (
+                                   self.germ_chance[i] * patch.resources * patch.s_populations[i])
+
+                r_change -= patch.c * patch.resources * patch.v_populations[
+                    i]  # Resource change -= eaten init_resources_per_patch
+
+                # Add population changes
+                patch.v_populations[i] += v_change * self.dt
+                patch.s_populations[i] += s_change * self.dt
+
+            patch.resources += r_change * self.dt  # Add resource changes
+
+            # Make sure none become negative
+            for i in range(0, self.num_strains):
+                if patch.v_populations[i] < 0:
+                    patch.v_populations[i] = 0
+                if patch.s_populations[i] < 0:
+                    patch.s_populations[i] = 0
+
+            if patch.resources < 0:
+                patch.resources = 0
+
 
     def jump_to_eq_update(self, patch):
         """
@@ -293,39 +312,84 @@ class NStrain(Rules):
 
         """
 
-        winners = helpers.find_winner(patch.v_populations, patch.s_populations,
-                                      self.spore_chance)  # This is the index of the best competitor
-
-        # Set all strains to be extinct
-        patch.v_populations = [0] * self.num_strains
-        patch.s_populations = [0] * self.num_strains
-
-        # If multiple winners choose a random one.
-        if winners == []:
-            patch.resources = patch.gamma / patch.mu_R
-            return
+        if self.first_run:
+            self.make_eq_lookup_table(patch)
         else:
-            i = random.choice(winners)
+            winners = helpers.find_winner(patch.v_populations, patch.s_populations,
+                                          self.spore_chance)  # This is the index of the best competitor
 
-        # Sporulation chance of winner
-        s = self.spore_chance[i]
+            # Set all strains to be extinct
+            patch.v_populations = [0] * self.num_strains
+            patch.s_populations = [0] * self.num_strains
 
-        # Set winning strain to eq
-        patch.v_populations[i] = ((patch.c * patch.alpha * patch.gamma) * (1 - s) - patch.mu_R * patch.mu_v) / (
+            # If multiple winners choose a random one.
+            if not winners:
+                patch.resources = self.lookup_table["Empty"]["Resources"]
+                return
+            else:
+                i = random.choice(winners)
+
+            s = self.spore_chance[i]  # Sporulation chance of winner
+
+            # Set winning strain to eq
+            patch.v_populations[i] = self.lookup_table[i]["Veg"]
+            if s != 1:
+                patch.s_populations[i] = self.lookup_table[i]["Spore"]
+
+                patch.resources = self.lookup_table[i]["Resources"]
+            else:  # Special case: If spore chance is 1 then just make the numerator real small
+                patch.s_populations[i] = self.lookup_table[i]["Spore"]
+                patch.resources = self.lookup_table[i]["Resources"]
+
+
+
+
+
+    def make_eq_lookup_table(self, patch):
+        """Makes a dictionary of {Winner Strain Number: Eq values}. The eq values themselves are a dictionary
+        containing the following keys.
+            - Resources
+            - Strain # Veg
+            - Strain # Spore
+        The value is the associated equilibrium.
+        Todo: For now we allume all losing strains go to 0 and that all patches are the same.
+        """
+
+        # No strain case
+
+        self.lookup_table["Empty"] = {}
+        self.lookup_table["Empty"]["Resources"] = patch.gamma / patch.mu_R
+        self.lookup_table["Empty"]["Veg"] = 0
+        self.lookup_table["Empty"]["Spore"] = 0
+
+        for i in range(0,self.num_strains):  # i is the winning strain
+
+
+            # Sporulation chance of winner
+            s = self.spore_chance[i]
+
+            self.lookup_table[i] = {}
+
+            # Calculate the veg population
+            self.lookup_table[i]["Veg"] = ((patch.c * patch.alpha * patch.gamma) * (1 - s) - patch.mu_R * patch.mu_v) / (
                     patch.c * patch.mu_v)
-        if s != 1:
-            patch.s_populations[i] = s * (
+
+            # Calculate the spore population
+            if s != 1:
+                self.lookup_table[i]["Spore"] = s * (
                         ((patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R * patch.mu_v) / (
                                                  (s - 1) * (patch.c * patch.mu_s))
 
-            patch.resources = -patch.mu_v / ((s - 1) * patch.alpha * patch.c)
-        # Special case: If spore chance is 1 then just make the numerator real small
-        else:
-            patch.s_populations[i] = (s * (
-                    (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R * patch.mu_v) / (
+                self.lookup_table[i]["Resources"] = -patch.mu_v / ((s - 1) * patch.alpha * patch.c)
+            # Special case: If spore chance is 1 then just make the numerator real small
+            else:
+                self.lookup_table[i]["Spore"] = (s * (
+                        (patch.c * patch.alpha * patch.gamma) * (s - 1)) + patch.mu_R * patch.mu_v) / (
                                                  (.999999 - 1) * (patch.c * patch.mu_s))
 
-            patch.resources = -patch.mu_v / ((.999999 - 1) * patch.alpha * patch.c)
+                self.lookup_table[i]["Resources"] = -patch.mu_v / ((.999999 - 1) * patch.alpha * patch.c)
+
+        self.first_run = False
 
     def colonize(self, world):
         """The colonize function switches between a couple modes."""
@@ -433,7 +497,7 @@ class NStrain(Rules):
 
         # Each patch has a chance of being colonized. Higher colonization power means higher chance.
         for patch in world.patches:
-            if self.colonization_prob(weighted_sum):
+            if self.colonization_prob(weighted_sum):  # todo: can turn this into binomial draw
                 # Figure out which strain and type colonizes based off "colonization power" of each type.
                 colonist = random.choices(range(0, self.num_strains * 2), weights=weights, k=1)[0]
                 if colonist > self.num_strains - 1:  # If a spore colonize...
@@ -481,34 +545,51 @@ class NStrain(Rules):
 
         """
 
-        # Reset the global counts
-        self.v_population_totals = [0] * self.num_strains
-        self.s_population_totals = [0] * self.num_strains
-        self.all_population_totals = [0] * self.num_strains
-        self.total_resources = 0
-        self.patch_occupancy = [0] * self.num_strains  # The patch occupancy for each strain.
-        self.patches_occupied = 0
 
-        # Gather for totals from each patch
-        for patch in world.patches:
-            self.total_resources += patch.resources
 
-            has_occupant = False
-            for i in range(0, self.num_strains):
-                v = patch.v_populations[i]
-                s = patch.s_populations[i]
 
-                self.v_population_totals[i] += v
-                self.s_population_totals[i] += s
-                self.all_population_totals[i] += v + s
+        # # Reset the global counts
+        # self.v_population_totals = [0] * self.num_strains
+        # self.s_population_totals = [0] * self.num_strains
+        # self.all_population_totals = [0] * self.num_strains
+        # self.total_resources = 0
+        # self.patch_occupancy = [0] * self.num_strains  # The patch occupancy for each strain.
+        # self.patches_occupied = 0
 
-                # Update strain by strain patch occupancy.
-                if v > 0 or s > 0:
-                    self.patch_occupancy[i] += 1
-                    has_occupant = True
+        #
+        #
+        # # Gather for totals from each patch
+        # for patch in world.patches:
+        #     self.total_resources += patch.resources
+        #
+        #     has_occupant = False
+        #
+        #     for i in range(0, self.num_strains):
+        #         v = patch.v_populations[i]
+        #         s = patch.s_populations[i]
+        #
+        #         self.v_population_totals[i] += v
+        #         self.s_population_totals[i] += s
+        #         self.all_population_totals[i] += v + s
+        #
+        #         # Update strain by strain patch occupancy.
+        #         if v > 0 or s > 0:
+        #             self.patch_occupancy[i] += 1
+        #             has_occupant = True
+        #
+        #     if has_occupant:
+        #         self.patches_occupied += 1
 
-            if has_occupant:
-                self.patches_occupied += 1
+        self.total_resources = sum((patch.resources for patch in world.patches))
+        self.v_population_totals = [sum(patch.v_populations[i] for patch in world.patches) for i in range(0, self.num_strains)]
+        self.s_population_totals = [sum(patch.s_populations[i] for patch in world.patches) for i in range(0, self.num_strains)]
+        self.all_population_totals = [v + s for v, s in zip(self.v_population_totals, self.s_population_totals)]
+
+        self.patches_occupied = sum([1 if (any(patch.v_populations) or any(patch.s_populations)) else 0 for patch in world.patches])
+        self.patch_occupancy = [sum(1 if (patch.v_populations[i] >= self.yeast_size or patch.s_populations[i] >= self.yeast_size) else 0 for patch in world.patches)
+                             for i in range(0, self.num_strains)]
+
+
 
         self.total_pop = sum(self.all_population_totals)
         self.patches_occupied = self.patches_occupied/self.patch_num  # Turns patches_occupied into a frequency
@@ -519,7 +600,8 @@ class NStrain(Rules):
 
     def census(self, world):
 
-        self.safety_checks(world)
+        if world.age % 100 == 0:
+            self.safety_checks(world)  # Do this only once in a while for performance reasons
 
         logging.info("Censusing and saving data")
         total_resources, v_population_totals, s_population_totals, final_totals = self.book_keeping(world)
@@ -550,7 +632,7 @@ class NStrain(Rules):
         if world.age >= self.stop_time:
             self.last_things(world)
             return True
-        elif sum(world.rules.book_keeping(world)[-1]) == 0:
+        elif self.total_pop == 0:
             self.last_things(world)
             logging.warning(f"Population went extinct at gen {world.age}! Ending Simulation!")
             return True
@@ -587,6 +669,7 @@ class NStrain(Rules):
                 file.write(str(i) + ",")  # Strain Num
                 file.write(str(self.spore_chance[i]) + ",")  # Strain Num
 
+                # Type and population
                 if case == "spore":
                     file.write("Spore,")
                     file.write(str(s_population_totals[i]) + ',')
@@ -597,8 +680,8 @@ class NStrain(Rules):
                     file.write("Both,")
                     file.write(str(v_population_totals[i] + s_population_totals[i]) + ',')
 
-                file.write(str(self.patch_occupancy[i]) + ',')
-                file.write(str(self.patches_occupied) + ",")
+                file.write(str(self.patch_occupancy[i]) + ',')  # Patch occupancy of strain
+                file.write(str(self.patches_occupied) + ",")  # Global patch occupancy
 
                 file.write(str(self.replicate_number))
                 file.write("\n")

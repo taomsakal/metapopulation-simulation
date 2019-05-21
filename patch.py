@@ -68,7 +68,7 @@ class Patch:
             (These are generally the same, unless the patch function has been manually rewritten.)
         """
 
-        logging.debug("Patch {} updating with patch_update function {}".format(self.id, self.update))
+        # logging.debug("Patch {} updating with patch_update function {}".format(self.id, self.update))
 
         # try:
         self.patch_update(self)
