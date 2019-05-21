@@ -91,7 +91,7 @@ class NStrain(Rules):
         self.worldmap = worldmap  # The worldmap. This should be a networkx graph
         self.patch_num = nx.number_of_nodes(self.worldmap)
         self.prob_death = 0.4  # Probability of a patch dying.
-        self.stop_time = 1000  # Iterations to run
+        self.stop_time = 400  # Iterations to run
         self.data_save_step = 1  # Save the data every this many generations
 
         # Colonization Mode

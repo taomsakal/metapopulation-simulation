@@ -15,7 +15,10 @@ from main import run
 import matplotlib.pyplot as plt
 import networkx as nx
 
-WORLDMAP = nx.complete_graph(1000)
+
+WORLDMAP = nx.complete_graph(1200)
+VAL1 = None  # Parameter to iterate over
+VAL2 = None
 
 def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True):
     """
@@ -56,6 +59,9 @@ def multiple_sims(num_strains, num_loops, name, sc_override=None, save_data=True
                               germ_chance=gc,
                               fly_s_survival=fss,
                               fly_v_survival=fvs))
+
+        world.rules.prob_death = VAL1
+        world.rules.colonization_prob_slope = VAL2
         run(world)
 
     return world
@@ -75,7 +81,7 @@ def single_spore_curve(folder_name, resolution, iterations_for_average, save_dat
     sc = helpers.spaced_probs(resolution)
     for i, prob in enumerate(sc):
         print(f'\nCalculating Single Spore Curve. Now on spore_prob = {sc[i]}. ({i}/{resolution})')
-        multiple_sims(1, iterations_for_average, folder_name + f"/single_spore_curve_{i}",
+        multiple_sims(1, iterations_for_average, Path(folder_name) / f"single_spore_curve_{i}",
                       sc_override=[prob], save_data=False)
 
 
@@ -96,7 +102,7 @@ def double_spore_curve(folder_name, resolution, iterations_for_average):
 
     for i, prob in enumerate(sc):
         print(f'Calculating Double Spore Curve {sc}... {i}/{resolution}')
-        multiple_sims(2, iterations_for_average, folder_name + f"/double_strain_curve_{i}",
+        multiple_sims(2, iterations_for_average, Path(folder_name) / f"double_strain_curve_{i}",
                       sc_override=[prob, sc_2])
 
 def sanity_check():
@@ -115,6 +121,10 @@ def sanity_check():
                                   germ_chance=[0, 0],
                                   fly_s_survival=[.8, .8],
                                   fly_v_survival=[.2, .2]))
+
+            world.rules.prob_death = VAL1
+            world.rules.colonization_prob_slope = VAL2
+
             from main import run  # For some reason I need this a second time?
             run(world)
 
@@ -125,29 +135,35 @@ if __name__ == "__main__":
 
 
 
-    folder_name = 'Lookup Table Run'
+    for val1 in [0, .01, .02, .1, .2, .3, .5, .8, .99, 1]:  # patch death
+        for val2 in [0, .01, .1, .2, .5, 1, 2, 5]:
 
-    r = 5  # Times to repeat for average
-    steps = 10
-    num_strains = 12  # Number of strains for the multiple strain run
+            VAL1 = val1
+            VAL2 = val2
 
-    print("\nSINGLE SPORE CURVE")
-    single_spore_curve(folder_name, steps, r)
+            folder_name = Path("patch death x col prob") / f'{val1}x{val2}'
 
-    print("\nDOUBLE SPORE CURVE")
-    double_spore_curve(folder_name, steps, r)
+            r = 5  # Times to repeat for average
+            steps = 20
+            num_strains = 12  # Number of strains for the multiple strain run
 
-    # Run i times. Report back
-    print("\nMULTI STRAIN SIM")
-    world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
-    # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
+            print("\nSINGLE SPORE CURVE")
+            single_spore_curve(folder_name, steps, r)
 
-    print(world.rules.num_strains)
+            print("\nDOUBLE SPORE CURVE")
+            double_spore_curve(folder_name, steps, r)
 
-    # Special invasion test
-    # multiple_sims(2, 3, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
+            # Run i times. Report back
+            print("\nMULTI STRAIN SIM")
+            world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
+            # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
 
-    print("Done! Graphing...")
+            print(world.rules.num_strains)
+
+            # Special invasion test
+            # multiple_sims(2, 3, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
+
+            print("Done! Graphing...")
 
 
-    # sanity_check()
+            # sanity_check()

@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     paths = []
 
-    name = "Morn pt5 mu"
+    name = "Lookup Table Run comp"
 
     sns.set()
 
