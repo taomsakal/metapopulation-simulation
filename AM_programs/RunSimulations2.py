@@ -112,18 +112,15 @@ def sanity_check():
     This function just runs the simulations.
     """
     # Same param test
-    for i in range(0, 10):
-        for j in range(0, 20):
+    for i in range(2, 8):  # Avoid doing test for 0 and 1 because both strains go extinct and this messes up the results.
+        for j in range(1, 15):
             print(f"Running sanity test. (Make sure same strain does the same) {i}-{j}")
-            prob=helpers.spaced_probs(10)[i]
+            prob=helpers.spaced_probs(9)[i]
             world = World(NStrain(2, folder_name=Path("SanityTest") / f"{i}-{j}", replicate_number=j, worldmap=WORLDMAP,
                                   spore_chance=[prob, prob],
                                   germ_chance=[0, 0],
                                   fly_s_survival=[.8, .8],
                                   fly_v_survival=[.2, .2]))
-
-            world.rules.prob_death = VAL1
-            world.rules.colonization_prob_slope = VAL2
 
             from main import run  # For some reason I need this a second time?
             run(world)
@@ -135,35 +132,34 @@ if __name__ == "__main__":
 
 
 
-    for val1 in [0, .01, .02, .1, .2, .3, .5, .8, .99, 1]:  # patch death
-        for val2 in [0, .01, .1, .2, .5, 1, 2, 5]:
-
-            VAL1 = val1
-            VAL2 = val2
-
-            folder_name = Path("patch death x col prob") / f'{val1}x{val2}'
-
-            r = 5  # Times to repeat for average
-            steps = 20
-            num_strains = 12  # Number of strains for the multiple strain run
-
-            print("\nSINGLE SPORE CURVE")
-            single_spore_curve(folder_name, steps, r)
-
-            print("\nDOUBLE SPORE CURVE")
-            double_spore_curve(folder_name, steps, r)
-
-            # Run i times. Report back
-            print("\nMULTI STRAIN SIM")
-            world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
-            # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
-
-            print(world.rules.num_strains)
-
-            # Special invasion test
-            # multiple_sims(2, 3, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
-
-            print("Done! Graphing...")
-
-
-            # sanity_check()
+    # for val1 in [0, .01, .02, .1, .2, .3, .5, .8, .99, 1]:  # patch death
+    #     for val2 in [0, .01, .1, .2, .5, 1, 2, 5]:
+    #
+    #         VAL1 = val1
+    #         VAL2 = val2
+    #
+    #         folder_name = Path("patch death x col prob") / f'{val1}x{val2}'
+    #
+    #         r = 5  # Times to repeat for average
+    #         steps = 20
+    #         num_strains = 12  # Number of strains for the multiple strain run
+    #
+    #         print("\nSINGLE SPORE CURVE")
+    #         single_spore_curve(folder_name, steps, r)
+    #
+    #         print("\nDOUBLE SPORE CURVE")
+    #         double_spore_curve(folder_name, steps, r)
+    #
+    #         # Run i times. Report back
+    #         print("\nMULTI STRAIN SIM")
+    #         world = multiple_sims(num_strains, r, Path(folder_name) / "multi strain")
+    #         # sc_override=[.1, .4, .6, .9])  # Run a basic simulation on n strains and r loops
+    #
+    #         print(world.rules.num_strains)
+    #
+    #         # Special invasion test
+    #         # multiple_sims(2, 3, Path(folder_name) / "special invasion test", sc_override=[.3, .3])
+    #
+    #         print("Done! Graphing...")
+    #
+    sanity_check()

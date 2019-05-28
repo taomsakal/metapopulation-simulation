@@ -45,12 +45,10 @@ def meta_concat_dataframes(folder_prefix, file_name, folder_path):
     valid_folders = []
     for folder in os.listdir(folder_path):
         if folder_prefix in str(folder):
-            print("added!")
             valid_folders.append(folder)
 
     dfs = []
     for folder in valid_folders:
-        print(folder)
         file_name = Path(file_name)
         df = concat_dataframes(file_name, folder_path / folder)
         dfs.append(df)
@@ -58,51 +56,63 @@ def meta_concat_dataframes(folder_prefix, file_name, folder_path):
 
     return dfs
 
-def strain_pop(df, title=None):
+def strain_pop(df, path, name):
     """Makes a graph of strain population"""
-
+    plot, ax = plt.subplots()
     # Look at only one entry for each timestep. Don't think we need this but putting it in just in case.
     df = df[df.Type == "Both"]
 
     sns.relplot(x="Iteration", y="Population",
                 data=df, kind="line", legend="full", hue="Strain Number")#.set_title("Strain Population")
     plt.tight_layout()
-    plt.show()
+
+    # plt.show()
+
+    ax.set_title(name)
+    plot.savefig(path / f"{name}.png")
 
 
-def global_patch_occupancy_curve(df, title=None):
+def global_patch_occupancy_curve(df, path, name):
     """Makes the global patch occupancy curve"""
-
+    plot, ax = plt.subplots()
     # Look at only one entry for each timestep. Don't think we need this but putting it in just in case.
-    # df = df[df.Type == "Both"]
-    df = df[df["Strain Number"] == 0]
-
-    plot = sns.relplot(x="Iteration", y="Global Patch Occupancy",
-                data=df, kind="line", style="Type")
-
-    plt.tight_layout()
-    plt.show()
-
-def strain_patch_occupancy_curve(df, title=None):
-    """Makes a patch occupancy curve seperated by strains"""
-
     df = df[df.Type == "Both"]
-    plot = sns.lineplot(x="Iteration", y="Patch Occupancy of Strain", data=df, legend="full",
-                hue="Strain Number").set_title("Strain Patch Occupancy")
-    plt.tight_layout()
-    plt.show()
-    # plot.savefig("Patch Occupancy (By Strain)")
+    # df = df[df["Strain Number"] == 0]
 
-def eq_values(df, title=None):
+    sns.relplot(x="Iteration", y="Global Patch Occupancy",
+                data=df, kind="line")
 
-    plot = sns.barplot(x="Sporulation Chance", y="Patch Occupancy of Strain", color="b",
-                data=df)#.set_title("Final Eq Values")
+    # plt.tight_layout()
+    # plt.show()
+
+    ax.set_title(name)
+    plot.savefig(path / f"{name}.png")
+
+def strain_patch_occupancy_curve(df, path, name):
+    """Makes a patch occupancy curve seperated by strains"""
+    plot, ax = plt.subplots()
+    df = df[df.Type == "Both"]
+    sns.lineplot(x="Iteration", y="Patch Occupancy of Strain", data=df, legend="full",
+                hue="Strain Number")
+    # plt.tight_layout()
+    # plt.show()
+
+    ax.set_title(name)
+    plot.savefig(path / f"{name}.png")
+
+def eq_values(df, path, name):
+    plot, ax= plt.subplots()
+    sns.barplot(x="Sporulation Chance", y="Patch Occupancy of Strain", color="b",
+                data=df)
 
     # plot.savefig("Final Eq Averages")
-    plt.tight_layout()
-    plt.show()
+    # plt.tight_layout()
+    # plt.show()
 
-def double_strain_plot(df):
+    ax.set_title(name)
+    plot.savefig(path / f"{name}.png")
+
+def double_strain_plot(df, path, name):
     f, ax = plt.subplots()
 
     # Plot the crashes where alcohol was involved
@@ -123,8 +133,9 @@ def double_strain_plot(df):
            xlabel="Double Strain Curve")
     sns.despine(left=True, bottom=True)
 
-    # f.savefig("Double Strain Curve")
-    plt.show()
+    ax.set_title(name)
+    f.savefig(path / f"{name}.png")
+    # plt.show()
 
 if __name__ == "__main__":
     # sns.set()
@@ -135,11 +146,13 @@ if __name__ == "__main__":
 
     paths = []
 
-    name = "Lookup Table Run comp"
+    name = "patch death x col prob"
+    # name = "Lookup Table Run"
+    # name = "SanityTest"
 
     sns.set()
 
-    path = Path.cwd() / 'AM_programs' / 'save_data' / Path(name)
+    path1 = Path.cwd() / 'AM_programs' / 'save_data' / Path(name)
 
 
     # data =[]
@@ -147,33 +160,39 @@ if __name__ == "__main__":
     #     print(f"Adding {folder}")
     #     data.append(load_csv_to_df(path/ folder / "final_eq.csv"))
     # data = pd.concat(data)
-
+    #
     # print(data)
     # data.to_csv(path / "SanityTest.csv")
 
-    totals_df = concat_dataframes("totals.csv", path / "multi strain")
-    print(totals_df["Strain Number"])
-    #
-    print("Calculating patch occupancy curves")
-    strain_patch_occupancy_curve(totals_df)
-    global_patch_occupancy_curve(totals_df)
-    # strain_pop(totals_df)
+    for folder in os.listdir(path1):
+        try:
+            path = Path(path1) / folder
 
-    print("Making double strain curve...")
-    eqs_df_double = meta_concat_dataframes("double_strain_curve_", "final_eq.csv", path)
-    double_strain_plot(eqs_df_double)
+            print(f"\nMAKING GRAPHS FOR {folder}")
 
-    print("Calculating final eq values...")
-    # eq_values(eqs_multi)
-    print(eqs_df_double)
-    eqs_multi = concat_dataframes("final_eq.csv", path / "multi strain")
-    eqs_df_single = meta_concat_dataframes("single_spore_curve_", "final_eq.csv", path)
-    eq_values(eqs_df_single)
+            totals_df = concat_dataframes("totals.csv", path / "multi strain")
+            #
+            print("Calculating patch occupancy curves")
+            strain_patch_occupancy_curve(totals_df, path, f"Patch occupancy (multi strain) {folder}")
+            global_patch_occupancy_curve(totals_df, path, f"Global patch occupancy (multi strain) {folder}")
+            # strain_pop(totals_df)
 
-    data = concat_dataframes("totals.csv", path / "double_strain_curve_8")
-    sns.relplot()
+            print("Making double strain curve...")
+            eqs_df_double = meta_concat_dataframes("double_strain_curve_", "final_eq.csv", path)
+            double_strain_plot(eqs_df_double, path, f"Patch occupancy (two strains) {folder}")
 
-    print("DONE")
+            print("Calculating final eq values...")
+            eqs_multi = concat_dataframes("final_eq.csv", path / "multi strain")
+            eq_values(eqs_multi, path, f"Average Patch Occupancy eqs (multi strain) {folder}")
+
+            # Single strain curve
+            eqs_df_single = meta_concat_dataframes("single_spore_curve_", "final_eq.csv", path)
+            eq_values(eqs_df_single, path, f"Average Patch occupancy eqs (single strain) {folder}")
+
+
+            print("DONE")
+        except:
+            print(f"folder {folder} failed")
 
 
 
